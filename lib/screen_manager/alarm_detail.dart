@@ -1,19 +1,18 @@
-// 성경 //
 import 'package:flutter/material.dart';
 import './manager_home.dart';
 
-class TaskDetails extends StatelessWidget {
-  const TaskDetails({Key? key}) : super(key: key);
+class AlarmDetails extends StatelessWidget {
+  const AlarmDetails({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '업무 상세보기',
+      title: '긴급 알림 상세보기',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: '업무'),
+      home: const MyHomePage(title: '긴급 알림'),
     );
   }
 }
@@ -81,10 +80,20 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                       ),
                       ListTile(
-                        title: Text('본사 납품 도정 공정 작업 지시 요청\nAze 12 L-font 10,000 ea 화이트 크림 WC9 도정 작업완료 후 검수팀에게 재요청 금요일까지 완료', style: TextStyle(fontSize: 15)),
+                        leading: Text('알림 구분', style: TextStyle(color: Colors.grey)),
+                        title: Text('설비 시스템'),
+                      ),
+                      ListTile(
+                        leading: Text('알림 명칭', style: TextStyle(color: Colors.grey)),
+                        title: Text('냉동 창고 3호'),
+                      ),
+                      ListTile(
+                        leading: Text('알림 메시지', style: TextStyle(color: Colors.grey)),
+                        title: Text('온도 상승 경고,원인 확인 및 조치내역을 등록하세요.', style: TextStyle(fontSize: 15)),
                         onTap: () {
                         },
                       ),
+
                       ListTile(
                         visualDensity: VisualDensity(vertical: 3),  // listtile 세로 길이 늘림
                         contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 16.0),
@@ -118,10 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ListTile(
                         leading: Text('등록시간', style: TextStyle(color: Colors.grey)),
                         trailing: Text('2022.12.26(월) 오후 12:17'),
-                      ),
-                      ListTile(
-                        leading: Text('마감일자', style: TextStyle(color: Colors.grey)),
-                        trailing: Text('2022.12.26(월) 오후 04:30'),
                       ),
                       ListTile(
                         leading: Text('첨부파일', style: TextStyle(color: Colors.grey)),
