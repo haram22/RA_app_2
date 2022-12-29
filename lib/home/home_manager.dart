@@ -4,6 +4,8 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
+import '../screen_manager/manager_home.dart';
+
 class Home_m extends StatefulWidget {
   const Home_m({super.key});
 
@@ -67,6 +69,13 @@ class _Home_mState extends State<Home_m> {
                   ],
                 ),
               ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Manager_home()));
+              },
+              child: Text('성경파트 바로가기'),
             ),
             Container(
               padding: EdgeInsets.all(20.0),
