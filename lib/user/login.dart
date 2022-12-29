@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../home/home_manager.dart';
+import '../home/home_worker.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -9,12 +10,14 @@ class login extends StatefulWidget {
   State<login> createState() => _loginState();
 }
 
+int? _value = 0;
+
 class _loginState extends State<login> {
-  int? _value = 0;
   List<String> role = ["작업자", "관리자"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: EdgeInsets.only(top: 308.0, left: 20, right: 20),
         child: Column(
@@ -79,6 +82,7 @@ class _loginState extends State<login> {
                           onSelected: (bool selected) {
                             setState(() {
                               _value = selected ? index : null;
+                              print(index);
                             });
                           },
                         );
@@ -94,10 +98,17 @@ class _loginState extends State<login> {
               width: 277,
               child: OutlinedButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return Home_m();
-                    }));
+                    if (_value == 0) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Home_w();
+                      }));
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Home_m();
+                      }));
+                    }
                   },
                   child: Text(
                     "Login",
