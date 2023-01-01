@@ -4,7 +4,9 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
+import '../screen_manager/alarm_detail.dart';
 import '../screen_manager/manager_home.dart';
+import '../screen_manager/work_detail.dart';
 
 class Home_w extends StatefulWidget {
   const Home_w({super.key});
@@ -113,15 +115,27 @@ class _Home_wState extends State<Home_w> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(width: 20),
                       Text(
                         "📢 오늘의 공지",
                         style: TextStyle(color: Colors.red, fontSize: 17),
                       ),
                       SizedBox(height: 10),
-                      Text("\t\t\t\t✔️ 3번 작업장 기계2 부품 고장"),
-                      Text("\t\t\t\t✔️ 3번 작업장 기계2 부품 고장"),
-                      Text("\t\t\t\t✔️ 3번 작업장 기계2 부품 고장")
+                      ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity(vertical: -4),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmDetails()));
+                        },
+                        title: Text("✔️ 3번 작업장 기계2 부품 고장",style: TextStyle(fontSize: 13),),
+                      ),
+                      ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity(vertical: -4),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmDetails()));
+                        },
+                        title: Text("✔️ 작업 시 안전모를 꼭 착용하세요.",style: TextStyle(fontSize: 13),),
+                      ),
                     ],
                   ),
                 ),
@@ -148,19 +162,32 @@ class _Home_wState extends State<Home_w> {
                           ],
                         ),
                         ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(vertical: -3),
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => TaskDetails()));
+                          },
                           trailing: IconButton(
                             onPressed: () {},
                             icon: Icon(Icons.more_horiz_rounded),
                           ),
-                          leading: Checkbox(
-                              // fillColor: Colors.yellow,
-                              value: _isChecked1,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _isChecked1 = value!;
-                                });
-                              }),
+                          leading: Icon(Icons.check_box_outlined,color: Colors.grey,),
                           title: Text("3번 작업장 청소"),
+                          subtitle: Text("15:30까지",style: TextStyle(fontSize: 12),),
+                        ),
+                        ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(vertical: -3),
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => TaskDetails()));
+                          },
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.more_horiz_rounded),
+                          ),
+                          leading: Icon(Icons.check_box_outlined,color: Colors.grey,),
+                          title: Text("기계2 부품 확인"),
+                          subtitle: Text("18:00까지",style: TextStyle(fontSize: 12),),
                         ),
                       ],
                     )),
@@ -250,6 +277,19 @@ class _Home_wState extends State<Home_w> {
                               }),
                           title: Text("안전모 닦기"),
                         ),
+                        //성경 파트 연결 버튼
+                        /*Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => Manager_home()));
+                              },
+                              child: Text('+',style: TextStyle(fontSize: 30),),
+                            ),
+                          ],
+                        ),*/
                       ],
                     )),
               ),

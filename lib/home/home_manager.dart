@@ -2,8 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
+import '../screen_manager/add_notice.dart';
+import '../screen_manager/add_urgent_alarm.dart';
+import '../screen_manager/add_work.dart';
 import '../screen_manager/manager_home.dart';
 
 class Home_m extends StatefulWidget {
@@ -164,22 +168,56 @@ class _Home_mState extends State<Home_m> {
                     )),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Manager_home()));
-                  },
-                  child: Text('+',style: TextStyle(fontSize: 30),),
-                ),
-              ],
-            ),
           ],
         ),
       ),
-      // bottomNavigationBar: ,
+      floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.menu_close,
+          visible: true,
+          curve: Curves.bounceIn,
+          backgroundColor: Colors.indigo.shade900,
+          children: [
+          SpeedDialChild(
+          child: const Icon(Icons.notification_add, color: Colors.indigo),
+            label: "공지 올리기",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            backgroundColor: Colors.white,
+            labelBackgroundColor: Colors.indigo.shade900,
+            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>AddNotice()));}),
+          SpeedDialChild(
+          child: const Icon(
+            Icons.add_chart,
+            color: Colors.indigo,
+            ),
+            label: "업무 추가하기",
+            backgroundColor: Colors.white,
+            labelBackgroundColor: Colors.indigo.shade900,
+            labelStyle: const TextStyle(
+            fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+            onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>AddTask()));
+              }),
+            SpeedDialChild(
+                child: const Icon(
+                  Icons.add_alarm_outlined,
+                  color: Colors.red,
+                ),
+                label: "긴급 알림 추가하기",
+                backgroundColor: Colors.white,
+                labelBackgroundColor: Colors.indigo.shade900,
+                labelStyle: const TextStyle(
+                    fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddAlarm()));
+                }
+            ),
+          ]
+        )
     );
+      // bottomNavigationBar: ,
   }
+
 }
