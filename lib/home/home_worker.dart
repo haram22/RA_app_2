@@ -31,67 +31,32 @@ class _Home_wState extends State<Home_w> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight:70,
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white70,
         actions: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Chip(label: Text("관리자에게 문의하기")),
-              Icon(Icons.notifications, color: Colors.red[200], size: 30),
-              SizedBox(width: 20)
+              Image.asset(
+                'assets/profile.png',
+                width: 50,
+              ),
+              SizedBox(width: 10,)
             ],
           )
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 20, left: 20.0, right: 20),
+        padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Manager_home()));
-              },
-              child: Text('성경파트 바로가기'),
-            ),
-            SizedBox(
-              height: 50,
-              width: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-                elevation: 0,
-                child: Row(
-                  children: [
-                    SizedBox(width: 20),
-                    Text(
-                      "🚨  긴급",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    SizedBox(width: 20),
-                    Text("3번 작업장 기계2 부품 고장")
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 100.0, top: 10),
-              child: Text("00님! 오늘 하루도 안전한 하루 되세요 :)"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0, right: 280),
-              child: Image.asset(
-                'assets/profile.png',
-                width: 50,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 280.0),
-              child: Text("나"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("00님! 오늘 하루도 안전한 하루 되세요 :)",
+                  style: TextStyle(fontSize: 15.5),),
+              ],
             ),
             Container(
               padding: EdgeInsets.all(20.0),
@@ -102,7 +67,7 @@ class _Home_wState extends State<Home_w> {
                   // Padding(
                   //   padding: EdgeInsets.all(10),
                   // ),
-                  Text(_selectedValue.toString()),
+                  //Text(_selectedValue.toString()),
                   // Padding(
                   //   padding: EdgeInsets.all(20),
                   // ),
@@ -132,7 +97,7 @@ class _Home_wState extends State<Home_w> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 140,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -143,7 +108,7 @@ class _Home_wState extends State<Home_w> {
                 ),
                 elevation: 0,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 18.0, top: 18),
+                  padding: const EdgeInsets.only(left: 20, top: 18, bottom: 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,33 +119,31 @@ class _Home_wState extends State<Home_w> {
                         style: TextStyle(color: Colors.red, fontSize: 17),
                       ),
                       SizedBox(height: 10),
-                      Text("✔️ 3번 작업장 기계2 부품 고장")
+                      Text("\t\t\t\t✔️ 3번 작업장 기계2 부품 고장"),
+                      Text("\t\t\t\t✔️ 3번 작업장 기계2 부품 고장"),
+                      Text("\t\t\t\t✔️ 3번 작업장 기계2 부품 고장")
                     ],
                   ),
                 ),
               ),
             ),
             SizedBox(
+              height:180,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
+                  side: BorderSide(color: Colors.black),
                 ),
                 elevation: 0,
                 child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 18),
+                    padding: const EdgeInsets.only(left: 18.0, top: 18, bottom: 5),
                     child: Column(
                       children: [
                         Row(
                           children: [
-                            Text(
-                              "📑 오늘의 할 일",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 17),
-                            ),
+                            Text("📑 오늘의 할 일",
+                              style:TextStyle(color: Colors.black, fontSize: 17)),
                             Spacer()
                           ],
                         ),
@@ -204,6 +167,7 @@ class _Home_wState extends State<Home_w> {
               ),
             ),
             SizedBox(
+              height : 135,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(

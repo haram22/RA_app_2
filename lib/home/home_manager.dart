@@ -31,13 +31,18 @@ class _Home_mState extends State<Home_m> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight:70,
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white70,
         actions: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(Icons.notifications, color: Colors.red[200], size: 30),
-              SizedBox(width: 20)
+              Image.asset(
+                'assets/profile.png',
+                width: 50,
+              ),
+              SizedBox(width: 10,)
             ],
           )
         ],
@@ -46,37 +51,8 @@ class _Home_mState extends State<Home_m> {
         padding: EdgeInsets.only(top: 20, left: 20.0, right: 20),
         child: Column(
           children: [
-            SizedBox(
-              height: 50,
-              width: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-                elevation: 0,
-                child: Row(
-                  children: [
-                    SizedBox(width: 20),
-                    Text(
-                      "🚨  긴급",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    SizedBox(width: 20),
-                    Text("3번 작업장 기계2 부품 고장")
-                  ],
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Manager_home()));
-              },
-              child: Text('성경파트 바로가기'),
-            ),
+            Text("00님! 오늘 하루도 안전한 하루 되세요 :)",
+              style: TextStyle(fontSize: 15.5),),
             Container(
               padding: EdgeInsets.all(20.0),
               color: Colors.white,
@@ -86,7 +62,7 @@ class _Home_mState extends State<Home_m> {
                   // Padding(
                   //   padding: EdgeInsets.all(10),
                   // ),
-                  Text(_selectedValue.toString()),
+                  //Text(_selectedValue.toString()),
                   // Padding(
                   //   padding: EdgeInsets.all(20),
                   // ),
@@ -116,7 +92,7 @@ class _Home_mState extends State<Home_m> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 180,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -145,6 +121,7 @@ class _Home_mState extends State<Home_m> {
               ),
             ),
             SizedBox(
+              height: 230,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -187,98 +164,17 @@ class _Home_mState extends State<Home_m> {
                     )),
               ),
             ),
-            SizedBox(
-              width: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Manager_home()));
+                  },
+                  child: Text('+',style: TextStyle(fontSize: 30),),
                 ),
-                elevation: 0,
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 18),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "📑 할 일",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 17),
-                            ),
-                            Spacer()
-                          ],
-                        ),
-                        ListTile(
-                          trailing: IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        // Text({_dateTime}),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        TimePickerSpinner(
-                                          is24HourMode: false,
-                                          normalTextStyle: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.deepOrange),
-                                          highlightedTextStyle: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.yellow),
-                                          spacing: 50,
-                                          itemHeight: 80,
-                                          isForce2Digits: true,
-                                          onTimeChange: (time) {
-                                            setState(() {
-                                              _dateTime = time;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          _dateTime.hour
-                                                  .toString()
-                                                  .padLeft(2, '0') +
-                                              ':' +
-                                              _dateTime.minute
-                                                  .toString()
-                                                  .padLeft(2, '0'),
-                                          style: TextStyle(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              // setState(() {
-                                              //   _dateTime
-                                              // });
-                                            },
-                                            child: Text("확인"))
-                                      ],
-                                    );
-                                  });
-                            },
-                            icon: Icon(Icons.more_horiz_rounded),
-                          ),
-                          leading: Checkbox(
-                              // fillColor: Colors.yellow,
-                              value: _isChecked2,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _isChecked2 = value!;
-                                });
-                              }),
-                          title: Text("작업자 진행상황 확인"),
-                        ),
-                      ],
-                    )),
-              ),
+              ],
             ),
           ],
         ),
