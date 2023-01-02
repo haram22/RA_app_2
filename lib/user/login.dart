@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_manager.dart';
@@ -14,6 +15,9 @@ int? _value = 0;
 
 class _loginState extends State<login> {
   List<String> role = ["작업자", "관리자"];
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +27,7 @@ class _loginState extends State<login> {
         child: Column(
           children: [
             TextField(
+              controller: idController,
               decoration: InputDecoration(
                 labelText: 'ID',
                 hintText: 'ID 번호를 입력해주세요.',
@@ -43,6 +48,7 @@ class _loginState extends State<login> {
             ),
             SizedBox(height: 30),
             TextField(
+              controller: pwController,
               decoration: InputDecoration(
                 labelText: '비밀번호',
                 hintText: '비밀번호를 입력해주세요.',
@@ -97,17 +103,59 @@ class _loginState extends State<login> {
               height: 57,
               width: 277,
               child: OutlinedButton(
-                  onPressed: () {
-                    if (_value == 0) {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Home_w();
-                      }));
+                  onPressed: () async{
+                    FocusScope.of(context).unfocus();
+                    String id = idController.text.trim();
+                    String pw = pwController.text.trim();
+
+                    if(id.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("아이디를 입력해주세요"),
+                      ));
+                    } else if(pw.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("비밀번호를 입력해주세요"),
+                      ));
                     } else {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Home_m();
-                      }));
+                      QuerySnapshot snap = await FirebaseFirestore.instance
+                          .collection("작업자").where('id', isEqualTo: id).get();
+
+                      try {
+                        if(pw == snap.docs[0]['pw']) {
+                          if (_value == 0) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return Home_w();
+                                }));
+                          } else {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return Home_m();
+                                }));
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text("비밀번호가 일치하지 않습니다"),
+                          ));
+                        }
+                      } catch(e) {
+                        String error = " ";
+                        if(e.toString() == "RangeError (index): Invalid value: Valid value range is empty: 0") {
+                          setState(() {
+                            error = "일치하는 아이디가 존재하지 않습니다";
+                          });
+                        } else {
+                          setState(() {
+                            error = "Error occured";
+                          });
+                        }
+
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(error),
+                        ));
+                      }
+
+                      print("⭐️⭐️id: " + snap.docs[0]['id']);
                     }
                   },
                   child: Text(
