@@ -4,7 +4,9 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
+import '../screen_manager/alarm_detail.dart';
 import '../screen_manager/manager_home.dart';
+import '../screen_manager/work_detail.dart';
 
 class Home_w extends StatefulWidget {
   const Home_w({super.key});
@@ -31,67 +33,32 @@ class _Home_wState extends State<Home_w> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight:70,
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white70,
         actions: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Chip(label: Text("관리자에게 문의하기")),
-              Icon(Icons.notifications, color: Colors.red[200], size: 30),
-              SizedBox(width: 20)
+              Image.asset(
+                'assets/profile.png',
+                width: 50,
+              ),
+              SizedBox(width: 10,)
             ],
           )
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(top: 20, left: 20.0, right: 20),
+        padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Manager_home()));
-              },
-              child: Text('성경파트 바로가기'),
-            ),
-            SizedBox(
-              height: 50,
-              width: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-                elevation: 0,
-                child: Row(
-                  children: [
-                    SizedBox(width: 20),
-                    Text(
-                      "🚨  긴급",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    SizedBox(width: 20),
-                    Text("3번 작업장 기계2 부품 고장")
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 100.0, top: 10),
-              child: Text("00님! 오늘 하루도 안전한 하루 되세요 :)"),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0, right: 280),
-              child: Image.asset(
-                'assets/profile.png',
-                width: 50,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 280.0),
-              child: Text("나"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("00님! 오늘 하루도 안전한 하루 되세요 :)",
+                  style: TextStyle(fontSize: 15.5),),
+              ],
             ),
             Container(
               padding: EdgeInsets.all(20.0),
@@ -102,7 +69,7 @@ class _Home_wState extends State<Home_w> {
                   // Padding(
                   //   padding: EdgeInsets.all(10),
                   // ),
-                  Text(_selectedValue.toString()),
+                  //Text(_selectedValue.toString()),
                   // Padding(
                   //   padding: EdgeInsets.all(20),
                   // ),
@@ -132,7 +99,7 @@ class _Home_wState extends State<Home_w> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 140,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -143,67 +110,91 @@ class _Home_wState extends State<Home_w> {
                 ),
                 elevation: 0,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 18.0, top: 18),
+                  padding: const EdgeInsets.only(left: 20, top: 18, bottom: 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(width: 20),
                       Text(
                         "📢 오늘의 공지",
                         style: TextStyle(color: Colors.red, fontSize: 17),
                       ),
                       SizedBox(height: 10),
-                      Text("✔️ 3번 작업장 기계2 부품 고장")
+                      ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity(vertical: -4),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmDetails()));
+                        },
+                        title: Text("✔️ 3번 작업장 기계2 부품 고장",style: TextStyle(fontSize: 13),),
+                      ),
+                      ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity(vertical: -4),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AlarmDetails()));
+                        },
+                        title: Text("✔️ 작업 시 안전모를 꼭 착용하세요.",style: TextStyle(fontSize: 13),),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
             SizedBox(
+              height:180,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
+                  side: BorderSide(color: Colors.black),
                 ),
                 elevation: 0,
                 child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 18),
+                    padding: const EdgeInsets.only(left: 18.0, top: 18, bottom: 5),
                     child: Column(
                       children: [
                         Row(
                           children: [
-                            Text(
-                              "📑 오늘의 할 일",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 17),
-                            ),
+                            Text("📑 오늘의 할 일",
+                              style:TextStyle(color: Colors.black, fontSize: 17)),
                             Spacer()
                           ],
                         ),
                         ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(vertical: -3),
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => TaskDetails()));
+                          },
                           trailing: IconButton(
                             onPressed: () {},
                             icon: Icon(Icons.more_horiz_rounded),
                           ),
-                          leading: Checkbox(
-                              // fillColor: Colors.yellow,
-                              value: _isChecked1,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _isChecked1 = value!;
-                                });
-                              }),
+                          leading: Icon(Icons.check_box_outlined,color: Colors.grey,),
                           title: Text("3번 작업장 청소"),
+                          subtitle: Text("15:30까지",style: TextStyle(fontSize: 12),),
+                        ),
+                        ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity(vertical: -3),
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => TaskDetails()));
+                          },
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.more_horiz_rounded),
+                          ),
+                          leading: Icon(Icons.check_box_outlined,color: Colors.grey,),
+                          title: Text("기계2 부품 확인"),
+                          subtitle: Text("18:00까지",style: TextStyle(fontSize: 12),),
                         ),
                       ],
                     )),
               ),
             ),
             SizedBox(
+              height : 135,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -286,6 +277,19 @@ class _Home_wState extends State<Home_w> {
                               }),
                           title: Text("안전모 닦기"),
                         ),
+                        //성경 파트 연결 버튼
+                        /*Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => Manager_home()));
+                              },
+                              child: Text('+',style: TextStyle(fontSize: 30),),
+                            ),
+                          ],
+                        ),*/
                       ],
                     )),
               ),
