@@ -215,6 +215,62 @@ class _Home_wState extends State<Home_w> {
                               style:
                                   TextStyle(color: Colors.black, fontSize: 17),
                             ),
+                            IconButton(
+                              onPressed: () {
+                                showModalBottomSheet<void>(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadiusDirectional.only(
+                                        topEnd: Radius.circular(25),
+                                        topStart: Radius.circular(25),
+                                      ),
+                                    ),
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding: const EdgeInsets.all(20),
+                                        height: MediaQuery.of(context).size.height*0.4,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            const Text(
+                                                '나의 할 일 추가하기',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                            ),
+                                            SizedBox(height: 40),
+                                            Container(
+                                              height: 100,
+                                              child: TextField(
+                                                    decoration: InputDecoration(
+                                                    border: UnderlineInputBorder(),
+                                                    filled: true,
+                                                    fillColor: Colors.grey[100],
+                                                    labelText: '할 일을 추가하기',
+                                                  )
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: <Widget> [
+                                                ElevatedButton(
+                                                  child: const Text('취소'),
+                                                  onPressed: () => Navigator.pop(context),
+                                                ),
+                                                SizedBox(width: 20),
+                                                ElevatedButton(
+                                                  child: const Text('저장'),
+                                                  onPressed: () => Navigator.pop(context),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                );
+                              },
+                              icon: Icon(Icons.add),
+                            ),
                             Spacer()
                           ],
                         ),
