@@ -145,10 +145,42 @@ class _Home_wState extends State<Home_w> {
                         dense: true,
                         visualDensity: VisualDensity(vertical: -4),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AlarmDetails()));
+
+                          showModalBottomSheet<void>(
+                              isScrollControlled: true,
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadiusDirectional.only(
+                                  topEnd: Radius.circular(25),
+                                  topStart: Radius.circular(25),
+                                ),
+                              ),
+                              builder: (BuildContext context) {
+                                return Container(
+                                  padding: const EdgeInsets.all(20),
+                                  height: MediaQuery.of(context).size.height*0.4,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const Text(
+                                        '안전모를 꼭 착용하고 작업하시기 바랍니다.',
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                      ),
+                                      SizedBox(height: 40),
+                                      Container(
+                                        height: 100,
+                                        child: Text('공지 상세 내용'),
+                                      ),
+                                      ElevatedButton(
+                                            child: const Text('확인'),
+                                            onPressed: () => Navigator.pop(context),
+                                          ),
+                                    ],
+                                  ),
+                                );
+                              }
+                          );
+
                         },
                         title: Text(
                           "✔️ 작업 시 안전모를 꼭 착용하세요.",
@@ -253,6 +285,62 @@ class _Home_wState extends State<Home_w> {
                               "📑 내가 추가한 일",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 17),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showModalBottomSheet<void>(
+                                    isScrollControlled: true,
+                                    context: context,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadiusDirectional.only(
+                                        topEnd: Radius.circular(25),
+                                        topStart: Radius.circular(25),
+                                      ),
+                                    ),
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding: const EdgeInsets.all(20),
+                                        height: MediaQuery.of(context).size.height*0.4,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            const Text(
+                                                '나의 할 일 추가하기',
+                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                            ),
+                                            SizedBox(height: 40),
+                                            Container(
+                                              height: 100,
+                                              child: TextField(
+                                                    decoration: InputDecoration(
+                                                    border: UnderlineInputBorder(),
+                                                    filled: true,
+                                                    fillColor: Colors.grey[100],
+                                                    labelText: '할 일을 추가하기',
+                                                  )
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: <Widget> [
+                                                ElevatedButton(
+                                                  child: const Text('취소'),
+                                                  onPressed: () => Navigator.pop(context),
+                                                ),
+                                                SizedBox(width: 20),
+                                                ElevatedButton(
+                                                  child: const Text('저장'),
+                                                  onPressed: () => Navigator.pop(context),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                );
+                              },
+                              icon: Icon(Icons.add),
                             ),
                             Spacer()
                           ],
