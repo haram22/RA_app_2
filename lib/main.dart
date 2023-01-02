@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'screen_worker/setting_w.dart';
 import 'user/login.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //test
-      home: login(),
+      home: setting_w(),
       //
     );
   }
