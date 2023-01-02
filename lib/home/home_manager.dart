@@ -2,8 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
+import '../screen_manager/add_notice.dart';
+import '../screen_manager/add_urgent_alarm.dart';
+import '../screen_manager/add_work.dart';
 import '../screen_manager/manager_home.dart';
 
 class Home_m extends StatefulWidget {
@@ -31,13 +35,18 @@ class _Home_mState extends State<Home_m> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        toolbarHeight:70,
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white70,
         actions: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(Icons.notifications, color: Colors.red[200], size: 30),
-              SizedBox(width: 20)
+              Image.asset(
+                'assets/profile.png',
+                width: 50,
+              ),
+              SizedBox(width: 10,)
             ],
           )
         ],
@@ -46,37 +55,8 @@ class _Home_mState extends State<Home_m> {
         padding: EdgeInsets.only(top: 20, left: 20.0, right: 20),
         child: Column(
           children: [
-            SizedBox(
-              height: 50,
-              width: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-                elevation: 0,
-                child: Row(
-                  children: [
-                    SizedBox(width: 20),
-                    Text(
-                      "🚨  긴급",
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    SizedBox(width: 20),
-                    Text("3번 작업장 기계2 부품 고장")
-                  ],
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Manager_home()));
-              },
-              child: Text('성경파트 바로가기'),
-            ),
+            Text("00님! 오늘 하루도 안전한 하루 되세요 :)",
+              style: TextStyle(fontSize: 15.5),),
             Container(
               padding: EdgeInsets.all(20.0),
               color: Colors.white,
@@ -86,7 +66,7 @@ class _Home_mState extends State<Home_m> {
                   // Padding(
                   //   padding: EdgeInsets.all(10),
                   // ),
-                  Text(_selectedValue.toString()),
+                  //Text(_selectedValue.toString()),
                   // Padding(
                   //   padding: EdgeInsets.all(20),
                   // ),
@@ -116,7 +96,7 @@ class _Home_mState extends State<Home_m> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 180,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -145,6 +125,7 @@ class _Home_mState extends State<Home_m> {
               ),
             ),
             SizedBox(
+              height: 230,
               width: 400,
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -187,103 +168,56 @@ class _Home_mState extends State<Home_m> {
                     )),
               ),
             ),
-            SizedBox(
-              width: 400,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(
-                    color: Colors.black,
-                  ),
-                ),
-                elevation: 0,
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 18),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "📑 할 일",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 17),
-                            ),
-                            Spacer()
-                          ],
-                        ),
-                        ListTile(
-                          trailing: IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        // Text({_dateTime}),
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        TimePickerSpinner(
-                                          is24HourMode: false,
-                                          normalTextStyle: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.deepOrange),
-                                          highlightedTextStyle: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.yellow),
-                                          spacing: 50,
-                                          itemHeight: 80,
-                                          isForce2Digits: true,
-                                          onTimeChange: (time) {
-                                            setState(() {
-                                              _dateTime = time;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          _dateTime.hour
-                                                  .toString()
-                                                  .padLeft(2, '0') +
-                                              ':' +
-                                              _dateTime.minute
-                                                  .toString()
-                                                  .padLeft(2, '0'),
-                                          style: TextStyle(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              // setState(() {
-                                              //   _dateTime
-                                              // });
-                                            },
-                                            child: Text("확인"))
-                                      ],
-                                    );
-                                  });
-                            },
-                            icon: Icon(Icons.more_horiz_rounded),
-                          ),
-                          leading: Checkbox(
-                              // fillColor: Colors.yellow,
-                              value: _isChecked2,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _isChecked2 = value!;
-                                });
-                              }),
-                          title: Text("작업자 진행상황 확인"),
-                        ),
-                      ],
-                    )),
-              ),
-            ),
           ],
         ),
       ),
-      // bottomNavigationBar: ,
+      floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.menu_close,
+          visible: true,
+          curve: Curves.bounceIn,
+          backgroundColor: Colors.indigo.shade900,
+          children: [
+          SpeedDialChild(
+          child: const Icon(Icons.notification_add, color: Colors.indigo),
+            label: "공지 올리기",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            backgroundColor: Colors.white,
+            labelBackgroundColor: Colors.indigo.shade900,
+            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>AddNotice()));}),
+          SpeedDialChild(
+          child: const Icon(
+            Icons.add_chart,
+            color: Colors.indigo,
+            ),
+            label: "업무 추가하기",
+            backgroundColor: Colors.white,
+            labelBackgroundColor: Colors.indigo.shade900,
+            labelStyle: const TextStyle(
+            fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+            onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>AddTask()));
+              }),
+            SpeedDialChild(
+                child: const Icon(
+                  Icons.add_alarm_outlined,
+                  color: Colors.red,
+                ),
+                label: "긴급 알림 추가하기",
+                backgroundColor: Colors.white,
+                labelBackgroundColor: Colors.indigo.shade900,
+                labelStyle: const TextStyle(
+                    fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddAlarm()));
+                }
+            ),
+          ]
+        )
     );
+      // bottomNavigationBar: ,
   }
+
 }

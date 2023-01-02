@@ -13,7 +13,7 @@ class TaskDetails extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: '업무'),
+      home: const MyHomePage(title: '3번 작업장 청소'),
     );
   }
 }
