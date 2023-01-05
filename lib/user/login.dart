@@ -123,10 +123,10 @@ class _loginState extends State<login> {
                       try {
                         if(pw == snap.docs[0]['pw']) {
                           if (_value == 0) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                                  return Home_w();
-                                }));
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) {
+                            //       return Home_w();
+                            //     }));
                           } else {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {

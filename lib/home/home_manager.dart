@@ -84,10 +84,12 @@ class _Home_mState extends State<Home_m> {
                         // DateTime.now().add(Duration(days: 4)),
                         // DateTime.now().add(Duration(days: 7))
                       ],
+
                       onDateChange: (date) {
                         // New date selected
                         setState(() {
                           _selectedValue = date;
+                          print("❗️❗️selectedDate: ${_selectedValue}");
                         });
                       },
                     ),
