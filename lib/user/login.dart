@@ -103,44 +103,48 @@ class _loginState extends State<login> {
               height: 57,
               width: 277,
               child: OutlinedButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     FocusScope.of(context).unfocus();
                     String id = idController.text.trim();
                     String pw = pwController.text.trim();
 
-                    if(id.isEmpty) {
+                    if (id.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("아이디를 입력해주세요"),
                       ));
-                    } else if(pw.isEmpty) {
+                    } else if (pw.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("비밀번호를 입력해주세요"),
                       ));
                     } else {
                       QuerySnapshot snap = await FirebaseFirestore.instance
-                          .collection("작업자").where('id', isEqualTo: id).get();
+                          .collection("작업자")
+                          .where('id', isEqualTo: id)
+                          .get();
 
                       try {
-                        if(pw == snap.docs[0]['pw']) {
+                        if (pw == snap.docs[0]['pw']) {
                           if (_value == 0) {
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //       return Home_w();
-                            //     }));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return home_worker();
+                            }));
                           } else {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return Home_m();
-                                }));
+                              return Home_m();
+                            }));
                           }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
                             content: Text("비밀번호가 일치하지 않습니다"),
                           ));
                         }
-                      } catch(e) {
+                      } catch (e) {
                         String error = " ";
-                        if(e.toString() == "RangeError (index): Invalid value: Valid value range is empty: 0") {
+                        if (e.toString() ==
+                            "RangeError (index): Invalid value: Valid value range is empty: 0") {
                           setState(() {
                             error = "일치하는 아이디가 존재하지 않습니다";
                           });
@@ -151,7 +155,7 @@ class _loginState extends State<login> {
                         }
 
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(error),
+                          content: Text(error),
                         ));
                       }
 
