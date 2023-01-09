@@ -4,11 +4,13 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
+import 'package:ra_application/screen_manager/check_detail.dart';
 
 import '../screen_manager/add_notice.dart';
 import '../screen_manager/add_urgent_alarm.dart';
 import '../screen_manager/add_work.dart';
 import '../screen_manager/manager_home.dart';
+import '../screen_manager/setting_m.dart';
 import '../screen_worker/setting_w.dart';
 
 enum SingingCharacter { ten, fifteen, twenty, none }
@@ -37,11 +39,11 @@ class _Home_mState extends State<Home_m> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xffe8c869),
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: Colors.white70,
+          backgroundColor: Color(0xffe8c869),
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -50,7 +52,7 @@ class _Home_mState extends State<Home_m> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return setting_w();
+                      return setting_m();
                     }));
                   },
                   iconSize: 70,
@@ -64,7 +66,7 @@ class _Home_mState extends State<Home_m> {
           ],
         ),
         body: Padding(
-          padding: EdgeInsets.only(top: 20, left: 20.0, right: 20),
+          padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
           child: Column(
             children: [
               Text(
@@ -73,7 +75,6 @@ class _Home_mState extends State<Home_m> {
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                color: Colors.white,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -91,7 +92,7 @@ class _Home_mState extends State<Home_m> {
                         height: 80,
                         controller: _controller,
                         initialSelectedDate: DateTime.now(),
-                        selectionColor: Colors.black,
+                        selectionColor: Color(0xff316a62),
                         selectedTextColor: Colors.white,
                         inactiveDates: [
                           // DateTime.now().add(Duration(days: 3)),
@@ -113,13 +114,11 @@ class _Home_mState extends State<Home_m> {
                 height: 180,
                 width: 400,
                 child: Card(
+                  color: Color(0xfffcf8ee),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: Colors.black,
-                    ),
                   ),
-                  elevation: 0,
+                  elevation: 5,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0, top: 18),
                     child: Column(
@@ -138,17 +137,16 @@ class _Home_mState extends State<Home_m> {
                   ),
                 ),
               ),
+              Spacer(flex: 1,),
               SizedBox(
-                height: 230,
+                height: 330,
                 width: 400,
                 child: Card(
+                  color: Color(0xfffcf8ee),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: Colors.black,
-                    ),
                   ),
-                  elevation: 0,
+                  elevation: 5,
                   child: Padding(
                       padding: const EdgeInsets.only(left: 18.0, top: 18),
                       child: Column(
@@ -164,6 +162,12 @@ class _Home_mState extends State<Home_m> {
                             ],
                           ),
                           ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CheckTast()));
+                            },
                             trailing: IconButton(
                               onPressed: () {
                                 showModalBottomSheet<void>(
@@ -241,6 +245,7 @@ class _Home_mState extends State<Home_m> {
                       )),
                 ),
               ),
+              Spacer(),
             ],
           ),
         ),
@@ -248,18 +253,18 @@ class _Home_mState extends State<Home_m> {
             animatedIcon: AnimatedIcons.menu_close,
             visible: true,
             curve: Curves.bounceIn,
-            backgroundColor: Colors.indigo.shade900,
+            backgroundColor: Color(0xff316a62),
             children: [
               SpeedDialChild(
                   child:
-                      const Icon(Icons.notification_add, color: Colors.indigo),
+                      const Icon(Icons.notification_add, color: Color(0xff316a62)),
                   label: "공지 올리기",
                   labelStyle: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                       fontSize: 13.0),
                   backgroundColor: Colors.white,
-                  labelBackgroundColor: Colors.indigo.shade900,
+                  labelBackgroundColor: Color(0xff316a62),
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => AddNotice()));
@@ -267,11 +272,11 @@ class _Home_mState extends State<Home_m> {
               SpeedDialChild(
                   child: const Icon(
                     Icons.add_chart,
-                    color: Colors.indigo,
+                    color: Color(0xff316a62),
                   ),
                   label: "업무 추가하기",
                   backgroundColor: Colors.white,
-                  labelBackgroundColor: Colors.indigo.shade900,
+                  labelBackgroundColor: Color(0xff316a62),
                   labelStyle: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -279,22 +284,6 @@ class _Home_mState extends State<Home_m> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => AddTask()));
-                  }),
-              SpeedDialChild(
-                  child: const Icon(
-                    Icons.add_alarm_outlined,
-                    color: Colors.red,
-                  ),
-                  label: "긴급 알림 추가하기",
-                  backgroundColor: Colors.white,
-                  labelBackgroundColor: Colors.indigo.shade900,
-                  labelStyle: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 13.0),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddAlarm()));
                   }),
             ]));
     // bottomNavigationBar: ,

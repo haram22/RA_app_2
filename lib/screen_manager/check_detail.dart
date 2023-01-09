@@ -5,19 +5,19 @@ import '../home/home_manager.dart';
 late List<dynamic> team = <dynamic>["A팀", "B팀", "C팀", "D팀", "E팀", "F팀", "G팀", "H팀", "I팀", "J팀"];
 
 
-class AddNotice extends StatelessWidget {
-  const AddNotice({Key? key}) : super(key: key);
+class CheckTast extends StatelessWidget {
+  const CheckTast({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '공지추가(관리자)',
+      title: '진행사항 확인',
       theme: ThemeData(
         fontFamily: 'BM Hanna Pro',
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: '공지 추가'),
+      home: const MyHomePage(title: '진행사항 확인'),
     );
   }
 }
@@ -247,49 +247,49 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
 
           // const SizedBox(height: 200),
-              Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget> [
-                          ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                          primary:Color(0xff316a62),
-                          shape: RoundedRectangleBorder(	//모서리를 둥글게
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget> [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary:Color(0xff316a62),
+                      shape: RoundedRectangleBorder(	//모서리를 둥글게
                           borderRadius: BorderRadius.circular(15)),
-                          minimumSize: Size(30, 36),
-                          ),
-                                    child: const Text('취소',
-                                    style: TextStyle(
-                                    fontSize: 17,
-                                    color: Color(0xffffffff),
-                                    ),
-                                    textAlign: TextAlign.center,
-                          ),
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
-                          }),
-                          ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                          primary:Color(0xff316a62),
-                          shape: RoundedRectangleBorder(	//모서리를 둥글게
-                          borderRadius: BorderRadius.circular(15)),
-                          minimumSize: Size(30, 36),
-
-                          ),
-                          child: const Text('저장',
-                          style: TextStyle(
-                          fontSize: 17,
-                          color: Color(0xffffffff),
-                          ),
-                          textAlign: TextAlign.center,
-                          ),
-                          onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
-                          },)
-                    ],
+                      minimumSize: Size(30, 36),
                     ),
-              ),
+                    child: const Text('취소',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color(0xffffffff),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
+                    }),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary:Color(0xff316a62),
+                    shape: RoundedRectangleBorder(	//모서리를 둥글게
+                        borderRadius: BorderRadius.circular(15)),
+                    minimumSize: Size(30, 36),
+
+                  ),
+                  child: const Text('저장',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xffffffff),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
+                  },)
+              ],
+            ),
+          ),
         ],
       ),
     );

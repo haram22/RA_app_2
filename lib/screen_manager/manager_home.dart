@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './add_work.dart';
 import './add_urgent_alarm.dart';
 import './work_detail.dart';
-import './alarm_detail.dart';
+import './check_detail.dart';
 import '../user/login.dart';
 
 class Manager_home extends StatelessWidget {
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AlarmDetails())
+                    MaterialPageRoute(builder: (context) => CheckTast())
                 );
               },
               child: Text('긴급 알림 상세보기 바로가기'),

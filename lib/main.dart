@@ -21,10 +21,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'BM Hanna Pro',
         primarySwatch: Colors.blue,
       ),
       //test
-      home: login(),
+      home: login()
       //
     );
   }
