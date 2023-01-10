@@ -19,10 +19,12 @@ class _setting_wState extends State<setting_w> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: Color(0xffe8c869),
           title: Text(
             '설정',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white,),
           ),
           centerTitle: true,
         ),
@@ -30,13 +32,14 @@ class _setting_wState extends State<setting_w> {
           child: Column(
             children: [
               SizedBox(
-                height: 30,
+                height: 50,
               ),
               CircleAvatar(
-                maxRadius: 50,
+                backgroundColor: Colors.white,
+                maxRadius: 75,
                 minRadius: 50,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(100),
                     child: _imagefile != null
                         ? Image.file(
                             _imagefile!,
@@ -47,9 +50,11 @@ class _setting_wState extends State<setting_w> {
                         : Image.asset(
                             'assets/profile.png',
                             fit: BoxFit.cover,
-                          )),
+                          )
+                ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Align(
                       alignment: Alignment.center,
@@ -67,6 +72,20 @@ class _setting_wState extends State<setting_w> {
                         icon: Icon(Icons.camera_alt_rounded),
                       )),
                 ],
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: TextButton(onPressed:() {},
+                    child:
+                    Text('로그아웃',
+                      style: TextStyle(fontSize: 20,color:
+                          Color(0xffBCBCBC),
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 1.5,
+                      ),
+                    )
+                ),
               ),
             ],
           ),

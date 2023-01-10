@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
+import '../home/home_manager.dart';
 import './manager_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,8 +23,10 @@ class AddTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: '업무추가(관리자)',
       theme: ThemeData(
+        fontFamily: 'BM Hanna Pro',
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: '업무 추가'),
@@ -66,6 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: Color(0xffe8c869),
         centerTitle: true,
         title: Text(widget.title),
       ),
@@ -79,7 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       context: context,
                       tiles: [
                         ListTile(
-                          title: Text('부서'),
+                          visualDensity: VisualDensity(vertical: 2),
+                          title: Text('부서',style: TextStyle(fontSize: 18),),
                           trailing: IconButton(onPressed: () {
                             showModalBottomSheet<void>(
                                 isScrollControlled: true,
@@ -128,18 +135,49 @@ class _MyHomePageState extends State<MyHomePage> {
                                               }
                                           ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: <Widget> [
-                                            ElevatedButton(
-                                              child: const Text('취소'),
-                                              onPressed: () => Navigator.pop(context),
-                                            ),
-                                            ElevatedButton(
-                                              child: const Text('선택'),
-                                              onPressed: () => Navigator.pop(context),
-                                            ),
-                                          ],
+                                        //취소,확인버튼
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom: 0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: <Widget> [
+                                              ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary:Color(0xff316a62),
+                                                    shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                        borderRadius: BorderRadius.circular(15)),
+                                                    minimumSize: Size(30, 36),
+                                                  ),
+                                                  child: const Text('취소',
+                                                    style: TextStyle(
+                                                      fontSize: 17,
+                                                      color: Color(0xffffffff),
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  }),
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  primary:Color(0xff316a62),
+                                                  shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                      borderRadius: BorderRadius.circular(15)),
+                                                  minimumSize: Size(30, 36),
+
+                                                ),
+                                                child: const Text('저장',
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    color: Color(0xffffffff),
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },)
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -148,12 +186,65 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           }, icon: Icon(Icons.arrow_forward_ios)),
                         ),
-                        ListTile(
-                          title: Text('업무 내용'),
-                          onTap: () {
-                          },
-                          // trailing: Icon(Icons.arrow_forward_ios),
+                        Padding(
+                          padding: const EdgeInsets.only(top:10,bottom: 20),
+                          child: SizedBox(
+                            height: 110,
+                            child: ListTile(
+                              title: Text('업무 제목',style: TextStyle(fontSize: 18),),
+                              subtitle: new Container(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                width: 280.0,
+                                height: 170,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 3,
+                                      child: TextField(
+                                        minLines: 1,
+                                        maxLines: 3,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ), // trailing: Icon(Icons.arrow_forward_ios),
+                            ),
+                          ),
                         ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top:10,bottom: 20),
+                          child: SizedBox(
+                            child: ListTile(
+                              title: Text('업무 내용',style: TextStyle(fontSize: 18),),
+                              subtitle: new Container(
+                                padding: const EdgeInsets.only(top:20,bottom: 10),
+                                width: 280.0,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Expanded(
+                                      flex: 3,
+                                      child: TextField(
+                                        minLines: 3,
+                                        maxLines: 10,
+                                        style: TextStyle(fontSize: 15),
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ), // trailing: Icon(Icons.arrow_forward_ios),
+                            ),
+                          ),
+
+/*
                         TextFormField(
                           decoration: InputDecoration(
                             // labelText: '업무 내용',
@@ -170,7 +261,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                           controller: inputController1,
                           minLines: 1,
-                          maxLines: 5,
+                          maxLines: 5,*/
+
                         ),
                         ListTile(
                           title: Text('담당자'),
@@ -191,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        const Text('담당자'),
+                                        const Text('담당자',style: TextStyle(fontSize: 20,color:  Color(0xff316a62)),),
                                         Expanded(
                                           child: ListView.builder(
                                               shrinkWrap: true,
@@ -200,7 +292,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                               itemBuilder: (context, index) {
                                                 return ListTile(
                                                   leading: CircleAvatar(
-                                                    backgroundImage: AssetImage('assets/images/user.png'),
+                                                    backgroundColor: Colors.white,
+                                                    backgroundImage: AssetImage('assets/profile.png'),
                                                   ),
 
                                                   title: Text('${name[index]}'),
@@ -260,11 +353,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                       builder: (BuildContext context) {
                                         return Container(
                                           padding: const EdgeInsets.all(20),
-                                          height: MediaQuery.of(context).size.height*0.7,
+                                          height: MediaQuery.of(context).size.height*0.65,
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
-                                              const Text('날짜 선택'),
+                                              const Text('날짜 선택',style: TextStyle(fontSize:20,color: Color(0xff316a62) ),),
+                                              SizedBox(height: 20,),
                                               CalendarDatePicker(
                                                 initialDate: DateTime.now(),
                                                 firstDate: DateTime.now(),
@@ -275,6 +369,51 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   });
                                                 },
                                               ),
+
+                                              Spacer(),
+                                              Padding(
+                                                padding: const EdgeInsets.only(bottom: 0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: <Widget> [
+                                                    ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                          primary:Color(0xff316a62),
+                                                          shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                              borderRadius: BorderRadius.circular(15)),
+                                                          minimumSize: Size(30, 36),
+                                                        ),
+                                                        child: const Text('취소',
+                                                          style: TextStyle(
+                                                            fontSize: 17,
+                                                            color: Color(0xffffffff),
+                                                          ),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        }),
+                                                    ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                        primary:Color(0xff316a62),
+                                                        shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                            borderRadius: BorderRadius.circular(15)),
+                                                        minimumSize: Size(30, 36),
+
+                                                      ),
+                                                      child: const Text('저장',
+                                                        style: TextStyle(
+                                                          fontSize: 17,
+                                                          color: Color(0xffffffff),
+                                                        ),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);;
+                                                      },)
+                                                  ],
+                                                ),
+/*
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                 children: <Widget> [
@@ -289,7 +428,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
                                                     },
                                                   ),
-                                                ],
+                                                ],*/
+
                                               ),
                                             ],
                                           ),
@@ -297,7 +437,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       }
                                   );
                                 },
-                                child: const Text('날짜 선택'),
+                                child: const Text('날짜 선택',style: TextStyle(color: Color(0xff316a62) )),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -317,20 +457,51 @@ class _MyHomePageState extends State<MyHomePage> {
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
-                                              const Text('시간 선택'),
+                                              const Text('시간 선택',style: TextStyle(fontSize: 20,color:  Color(0xff316a62)),),
+                                              Spacer(),
 
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: <Widget> [
-                                                  ElevatedButton(
-                                                    child: const Text('취소'),
-                                                    onPressed: () => Navigator.pop(context),
-                                                  ),
-                                                  ElevatedButton(
-                                                    child: const Text('선택'),
-                                                    onPressed: () => Navigator.pop(context),
-                                                  ),
-                                                ],
+                                              Padding(
+                                                padding: const EdgeInsets.only(bottom: 0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: <Widget> [
+                                                    ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                          primary:Color(0xff316a62),
+                                                          shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                              borderRadius: BorderRadius.circular(15)),
+                                                          minimumSize: Size(30, 36),
+                                                        ),
+                                                        child: const Text('취소',
+                                                          style: TextStyle(
+                                                            fontSize: 17,
+                                                            color: Color(0xffffffff),
+                                                          ),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        }),
+                                                    ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                        primary:Color(0xff316a62),
+                                                        shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                            borderRadius: BorderRadius.circular(15)),
+                                                        minimumSize: Size(30, 36),
+
+                                                      ),
+                                                      child: const Text('저장',
+                                                        style: TextStyle(
+                                                          fontSize: 17,
+                                                          color: Color(0xffffffff),
+                                                        ),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);;
+                                                      },)
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -338,7 +509,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       }
                                   );
                                 },
-                                child: const Text('시간 선택'),
+                                child: const Text('시간 선택',style: TextStyle(color: Color(0xff316a62) )),
                               ),
                             ],
                           ),
@@ -359,11 +530,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     builder: (BuildContext context) {
                                       return Container(
                                         padding: const EdgeInsets.all(20),
-                                        height: MediaQuery.of(context).size.height*0.7,
+                                        height: MediaQuery.of(context).size.height*0.6,
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
-                                            const Text('첨부 파일'),
+                                            const Text('첨부 파일',style: TextStyle(fontSize: 20,color:  Color(0xff316a62)),),
+                                            SizedBox(height: 20,),
                                             MaterialButton(
                                               color: Colors.grey,
                                               child: const Text(
@@ -386,23 +558,52 @@ class _MyHomePageState extends State<MyHomePage> {
                                               },
                                             ),
                                             Container(
+                                              margin: EdgeInsets.only(top: 10),
                                                 child: Center(
                                                   child: _image != null ? Image.file(File(_image!.path)) : Text("No image selected"),
                                                 )
                                             ),
-                                            Align(
-                                              alignment: Alignment.bottomCenter,
+                                            Spacer(),
+                                            Padding(
+                                              padding: const EdgeInsets.only(bottom: 20),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                 children: <Widget> [
                                                   ElevatedButton(
-                                                    child: const Text('취소'),
-                                                    onPressed: () => Navigator.pop(context),
-                                                  ),
+                                                      style: ElevatedButton.styleFrom(
+                                                        primary:Color(0xff316a62),
+                                                        shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                            borderRadius: BorderRadius.circular(15)),
+                                                        minimumSize: Size(30, 36),
+                                                      ),
+                                                      child: const Text('취소',
+                                                        style: TextStyle(
+                                                          fontSize: 17,
+                                                          color: Color(0xffffffff),
+                                                        ),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
+                                                      }),
                                                   ElevatedButton(
-                                                    child: const Text('업로드'),
-                                                    onPressed: () => Navigator.pop(context),
-                                                  ),
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary:Color(0xff316a62),
+                                                      shape: RoundedRectangleBorder(	//모서리를 둥글게
+                                                          borderRadius: BorderRadius.circular(15)),
+                                                      minimumSize: Size(30, 36),
+
+                                                    ),
+                                                    child: const Text('업로드',
+                                                      style: TextStyle(
+                                                        fontSize: 17,
+                                                        color: Color(0xffffffff),
+                                                      ),
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
+                                                    },)
                                                 ],
                                               ),
                                             ),
@@ -412,28 +613,75 @@ class _MyHomePageState extends State<MyHomePage> {
                                     }
                                 );
                               },icon: Icon(Icons.arrow_forward_ios)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("긴급 ",style: TextStyle(fontSize: 20,color: Color(0xff9B3131),)),
+                              Switch(
+                                value: _isChecked,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _isChecked = value;
+                                  });
+                                },
+                                activeColor: Color(0xff9B3131),
+                              ),
+                            ],
+                          ),
                         )
                       ]
                   ).toList(),
                 ),
               )
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget> [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary:Color(0xff316a62),
+                      shape: RoundedRectangleBorder(	//모서리를 둥글게
+                          borderRadius: BorderRadius.circular(15)),
+                      minimumSize: Size(30, 36),
+                    ),
+                    child: const Text('취소',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color(0xffffffff),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
+                    }),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary:Color(0xff316a62),
+                    shape: RoundedRectangleBorder(	//모서리를 둥글게
+                        borderRadius: BorderRadius.circular(15)),
+                    minimumSize: Size(30, 36),
 
-          // const SizedBox(height: 200),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              ElevatedButton(
-                  child: Text('취소'),
+                  ),
+                  child: const Text('저장',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xffffffff),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   onPressed: () {
 
-                  }
-              ),
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_m()));
+                  },)
+              ],
+            ),
 
-              ElevatedButton(
-                  child: Text('확인'),
-                  onPressed: () {
-                    final managerReference = FirebaseFirestore.instance.collection("관리자").doc("관리자1");
+                  /*  final managerReference = FirebaseFirestore.instance.collection("관리자").doc("관리자1");
                     final calendarReference = managerReference.collection("calendar").doc("2023-01-05 00:00:00.000");
                     final workReference = calendarReference.collection("업무").doc(inputController1.text);
                     workReference.set({
@@ -484,9 +732,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: '설정',
+            */
+
           ),
         ],
-        selectedItemColor: Color(0xff485ed9),
       ),
     );
   }

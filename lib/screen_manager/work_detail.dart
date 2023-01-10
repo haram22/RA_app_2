@@ -9,9 +9,11 @@ class TaskDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: '업무 상세보기',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'BM Hanna Pro'
       ),
       home: const MyHomePage(title: '3번 작업장 청소'),
     );
@@ -41,11 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: Color(0xffe8c869),
         centerTitle: true,
         title: Text(widget.title),
       ),
       body: Column (
-
         children: <Widget> [
           Expanded(
               child: SingleChildScrollView(
@@ -54,36 +58,48 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     tiles: [
                       ListTile(
-                        leading: ElevatedButton(
-                          child: const Text('진행'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.amber,
-                            onPrimary: Colors.black,
-                          ),
-                          onPressed: () {},
-                        ),
-                        trailing: Container(
-                          width: 100,
-                          child: Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/user.png'),
-                                radius: 17,
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              child: const Text('접수'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xffdddd),
+                                onPrimary: Colors.black,
                               ),
-                              Text('  진행중', style: TextStyle(color: Colors.grey)),
-                            ],
-                          ),
+                              onPressed: () {},
+                            ),
+                            ElevatedButton(
+                              child: const Text('진행 중'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.amber,
+                                onPrimary: Colors.black,
+                              ),
+                              onPressed: () {},
+                            ),
+                            ElevatedButton(
+                              child: const Text('완료'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xffdddd),
+                                onPrimary: Colors.black,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ],
                         ),
                       ),
                       ListTile(
-                        title: Text('A팀'),
+                        title: Text('A팀',style: TextStyle(fontSize: 17),),
                         onTap: () {
                         },
                       ),
-                      ListTile(
-                        title: Text('본사 납품 도정 공정 작업 지시 요청\nAze 12 L-font 10,000 ea 화이트 크림 WC9 도정 작업완료 후 검수팀에게 재요청 금요일까지 완료', style: TextStyle(fontSize: 15)),
-                        onTap: () {
-                        },
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15,top: 15),
+                        child: ListTile(
+                          title: Text('본사 납품 도정 공정 작업 지시 요청\nAze 12 L-font 10,000 ea 화이트 크림 WC9 도정 작업완료 후 검수팀에게 재요청 금요일까지 완료', style: TextStyle(fontSize: 17)),
+                          onTap: () {
+                          },
+                        ),
                       ),
                       ListTile(
                         visualDensity: VisualDensity(vertical: 3),  // listtile 세로 길이 늘림
@@ -93,8 +109,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text('등록자', style: TextStyle(fontSize: 13, color: Colors.grey)),
                             SizedBox(height: 5),
                             CircleAvatar(
-                              backgroundImage: AssetImage('assets/images/user.png'),
-                              radius: 17,
+                              backgroundColor: Color(0xffffffff),
+                              backgroundImage: AssetImage('assets/profile.png'),
+                              radius: 20,
                             ),
                           ],
                         ),
@@ -108,8 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text('담당자', style: TextStyle(fontSize: 13, color: Colors.grey)),
                             SizedBox(height: 5),
                             CircleAvatar(
-                              backgroundImage: AssetImage('assets/images/user.png'),
-                              radius: 17,
+                              backgroundColor: Color(0xffffffff),
+                              backgroundImage: AssetImage('assets/profile.png'),
+                              radius: 20,
                             ),
                           ],
                         ),
@@ -130,37 +148,30 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ).toList(),
                 ),
-              )
+              ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary:Color(0xff316a62),
+                shape: RoundedRectangleBorder(	//모서리를 둥글게
+                    borderRadius: BorderRadius.circular(15)),
+                minimumSize: Size(30, 36),
 
-          // const SizedBox(height: 200),
-
-        ],
-      ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Manager_home()),
-          );
-        },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Color(0xff485ed9)),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '진행상황',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: '설정',
+              ),
+              child: const Text('확인',
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Color(0xffffffff),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
         ],
-        selectedItemColor: Color(0xff485ed9),
-      ),
+      )
     );
   }
 }
