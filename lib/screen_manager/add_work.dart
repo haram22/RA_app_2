@@ -46,7 +46,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late String teamName, content, worker, deadlineDate, deadlineTime;
-  // bool _isChecked  = false;
+  bool _isChecked  = false;
   DateTime? selectedDate;
   File? _image;
   final inputController1 = TextEditingController();

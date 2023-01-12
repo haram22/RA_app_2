@@ -27,16 +27,17 @@ class home_worker extends StatefulWidget {
 
 
   @override
-  State<Home_w> createState() => _Home_wState();
+  State<home_worker> createState() => _Home_wState();
 }
 
-class _Home_wState extends State<Home_w> {
+class _Home_wState extends State<home_worker> {
   bool _isChecked1 = false;
   bool _isChecked2 = false;
   DatePickerController _controller = DatePickerController();
   DateTime _dateTime = DateTime.now();
 
   DateTime _selectedValue = DateTime.now();
+  final inputController1 = TextEditingController();
 
   @override
   void initState() {
@@ -126,7 +127,8 @@ class _Home_wState extends State<Home_w> {
                 ),
               ),
               SizedBox(
-                height: 160,
+                // height: 160,
+                height: 150,
                 width: 400,
                 child: Card(
                   color: Color(0xfffcf8ee),
@@ -221,7 +223,8 @@ class _Home_wState extends State<Home_w> {
                 ),
               ),
               SizedBox(
-                height: 200,
+                // height: 200,
+                height: 180,
                 width: 400,
                 child: Card(
                     color: Color(0xfffcf8ee),
@@ -293,7 +296,8 @@ class _Home_wState extends State<Home_w> {
                 ),
               ),
               SizedBox(
-                height: 160,
+                // height: 160,
+                height: 150,
                 width: 400,
                 child: Card(
                     color: Color(0xfffcf8ee),
@@ -343,7 +347,8 @@ class _Home_wState extends State<Home_w> {
                                                       filled: true,
                                                       fillColor: Colors.grey[100],
                                                       labelText: '할 일을 추가하기',
-                                                    )
+                                                    ),
+                                                  controller: inputController1,
                                                 ),
                                               ),
                                               Spacer(),
@@ -385,7 +390,16 @@ class _Home_wState extends State<Home_w> {
                                                         ),
                                                         textAlign: TextAlign.center,
                                                       ),
-                                                      onPressed: () => Navigator.pop(context),
+                                                      onPressed: () {
+                                                        final workerReference = FirebaseFirestore.instance.collection("작업자").doc('김00');
+                                                        final calReference = workerReference.collection("calendar").doc("2023-01-12");
+                                                        final todayMyTodo = calReference.collection("내가 추가한 일").doc(inputController1.text);
+                                                        todayMyTodo.set({
+                                                          "할 일 ": inputController1.text,
+                                                          "isComplete": false,
+                                                        });
+                                                         Navigator.pop(context);
+                                                      }
                                                     ),
                                                   ],
                                                 ),

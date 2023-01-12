@@ -140,7 +140,8 @@ class _Home_mState extends State<Home_m> {
               ),
               Spacer(flex: 1,),
               SizedBox(
-                height: 330,
+                // height: 330,
+                height: 200,
                 width: 400,
                 child: Card(
                   color: Color(0xfffcf8ee),
