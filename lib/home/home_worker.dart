@@ -382,7 +382,7 @@ class _Home_wState extends State<home_worker> {
                                                             borderRadius: BorderRadius.circular(15)),
                                                         minimumSize: Size(30, 36),
 
-                                                      ),
+                                                      ), //
                                                       child: const Text('저장',
                                                         style: TextStyle(
                                                           fontSize: 17,
