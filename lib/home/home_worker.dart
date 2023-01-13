@@ -10,21 +10,18 @@ import '../screen_manager/manager_home.dart';
 import '../screen_manager/work_detail.dart';
 import '../screen_worker/setting_w.dart';
 
-
 import '../screen_manager/check_detail.dart';
 import '../screen_manager/manager_home.dart';
 import '../screen_manager/work_detail.dart';
 import '../screen_worker/setting_w.dart';
-
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 
 import 'package:flutter/material.dart';
 
-class home_worker extends StatefulWidget {
-  const home_worker({super.key});
-
+class Home_w extends StatefulWidget {
+  const Home_w({super.key});
 
   @override
   State<Home_w> createState() => _Home_wState();
@@ -35,12 +32,14 @@ class _Home_wState extends State<Home_w> {
   bool _isChecked2 = false;
   DatePickerController _controller = DatePickerController();
   DateTime _dateTime = DateTime.now();
-
+  List todos = [];
+  String input = "";
   DateTime _selectedValue = DateTime.now();
 
   @override
   void initState() {
     super.initState();
+    todos.add("안전모 닦기");
   }
 
   @override
@@ -55,7 +54,6 @@ class _Home_wState extends State<Home_w> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-
               IconButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -65,7 +63,6 @@ class _Home_wState extends State<Home_w> {
                 iconSize: 70,
                 icon: Image.asset('assets/profile.png'),
               ),
-
             ],
           )
         ],
@@ -74,7 +71,6 @@ class _Home_wState extends State<Home_w> {
         color: Color(0xffe8c869),
         child: Padding(
           padding: EdgeInsets.only(top: 10, left: 20.0, right: 20),
-
           child: Column(
             children: [
               //인삿말
@@ -135,7 +131,8 @@ class _Home_wState extends State<Home_w> {
                   ),
                   elevation: 5,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 18, bottom: 5),
+                    padding:
+                        const EdgeInsets.only(left: 20, top: 18, bottom: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +155,6 @@ class _Home_wState extends State<Home_w> {
                           dense: true,
                           visualDensity: VisualDensity(vertical: -4),
                           onTap: () {
-
                             showModalBottomSheet<void>(
                                 isScrollControlled: true,
                                 context: context,
@@ -171,13 +167,16 @@ class _Home_wState extends State<Home_w> {
                                 builder: (BuildContext context) {
                                   return Container(
                                     padding: const EdgeInsets.all(20),
-                                    height: MediaQuery.of(context).size.height*0.4,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.4,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         const Text(
                                           '안전모를 꼭 착용하고 작업하시기 바랍니다.',
-                                          style: TextStyle(fontSize: 18,color: Color(0xff316a62)),
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xff316a62)),
                                         ),
                                         SizedBox(height: 40),
                                         Container(
@@ -187,28 +186,29 @@ class _Home_wState extends State<Home_w> {
                                         ),
                                         Spacer(),
                                         ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary:Color(0xff316a62),
-                                              shape: RoundedRectangleBorder(	//모서리를 둥글게
-                                                  borderRadius: BorderRadius.circular(15)),
-                                              minimumSize: Size(30, 36),
-
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color(0xff316a62),
+                                            shape: RoundedRectangleBorder(
+                                                //모서리를 둥글게
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            minimumSize: Size(30, 36),
+                                          ),
+                                          child: const Text(
+                                            '확인',
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              color: Color(0xffffffff),
                                             ),
-                                                child: const Text('확인',
-                                                  style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Color(0xffffffff),
-                                                ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                onPressed: () => Navigator.pop(context),
-                                              ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                        ),
                                       ],
                                     ),
                                   );
-                                }
-                            );
-
+                                });
                           },
                           title: Text(
                             "✔️ 작업 시 안전모를 꼭 착용하세요.",
@@ -224,7 +224,7 @@ class _Home_wState extends State<Home_w> {
                 height: 200,
                 width: 400,
                 child: Card(
-                    color: Color(0xfffcf8ee),
+                  color: Color(0xfffcf8ee),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -296,7 +296,7 @@ class _Home_wState extends State<Home_w> {
                 height: 160,
                 width: 400,
                 child: Card(
-                    color: Color(0xfffcf8ee),
+                  color: Color(0xfffcf8ee),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -309,8 +309,8 @@ class _Home_wState extends State<Home_w> {
                             children: [
                               Text(
                                 "📑 내가 추가한 일",
-                                style:
-                                    TextStyle(color: Colors.black, fontSize: 17),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 17),
                               ),
                               IconButton(
                                 onPressed: () {
@@ -318,7 +318,8 @@ class _Home_wState extends State<Home_w> {
                                       isScrollControlled: true,
                                       context: context,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadiusDirectional.only(
+                                        borderRadius:
+                                            BorderRadiusDirectional.only(
                                           topEnd: Radius.circular(25),
                                           topStart: Radius.circular(25),
                                         ),
@@ -326,140 +327,250 @@ class _Home_wState extends State<Home_w> {
                                       builder: (BuildContext context) {
                                         return Container(
                                           padding: const EdgeInsets.all(20),
-                                          height: MediaQuery.of(context).size.height*0.4,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.4,
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
                                               const Text(
-                                                  '나의 할 일 추가하기',
-                                                  style: TextStyle(fontSize: 20,color:Color(0xff316a62) ),
+                                                '나의 할 일 추가하기',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color(0xff316a62)),
                                               ),
                                               SizedBox(height: 40),
                                               Container(
                                                 height: 100,
                                                 child: TextField(
-                                                      decoration: InputDecoration(
-                                                      border: UnderlineInputBorder(),
+                                                    onChanged: (String value) {
+                                                      input = value;
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          UnderlineInputBorder(),
                                                       filled: true,
-                                                      fillColor: Colors.grey[100],
+                                                      fillColor:
+                                                          Colors.grey[100],
                                                       labelText: '할 일을 추가하기',
-                                                    )
-                                                ),
+                                                    )),
                                               ),
                                               Spacer(),
                                               Padding(
-                                                padding: const EdgeInsets.only(bottom: 20),
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 20),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  children: <Widget> [
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: <Widget>[
                                                     ElevatedButton(
-                                                      style: ElevatedButton.styleFrom(
-                                                        primary:Color(0xff316a62),
-                                                        shape: RoundedRectangleBorder(	//모서리를 둥글게
-                                                            borderRadius: BorderRadius.circular(15)),
-                                                        minimumSize: Size(30, 36),
-
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        primary:
+                                                            Color(0xff316a62),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                                //모서리를 둥글게
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15)),
+                                                        minimumSize:
+                                                            Size(30, 36),
                                                       ),
-                                                      child: const Text('취소',
+                                                      child: const Text(
+                                                        '취소',
                                                         style: TextStyle(
                                                           fontSize: 17,
-                                                          color: Color(0xffffffff),
+                                                          color:
+                                                              Color(0xffffffff),
                                                         ),
-                                                        textAlign: TextAlign.center,
+                                                        textAlign:
+                                                            TextAlign.center,
                                                       ),
-                                                      onPressed: () => Navigator.pop(context),
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              context),
                                                     ),
                                                     SizedBox(width: 20),
                                                     ElevatedButton(
-                                                      style: ElevatedButton.styleFrom(
-                                                        primary:Color(0xff316a62),
-                                                        shape: RoundedRectangleBorder(	//모서리를 둥글게
-                                                            borderRadius: BorderRadius.circular(15)),
-                                                        minimumSize: Size(30, 36),
-
-                                                      ),
-                                                      child: const Text('저장',
-                                                        style: TextStyle(
-                                                          fontSize: 17,
-                                                          color: Color(0xffffffff),
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary:
+                                                              Color(0xff316a62),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                                  //모서리를 둥글게
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15)),
+                                                          minimumSize:
+                                                              Size(30, 36),
                                                         ),
-                                                        textAlign: TextAlign.center,
-                                                      ),
-                                                      onPressed: () => Navigator.pop(context),
-                                                    ),
+                                                        child: const Text(
+                                                          '저장',
+                                                          style: TextStyle(
+                                                            fontSize: 17,
+                                                            color: Color(
+                                                                0xffffffff),
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                        onPressed: () {
+                                                          final WReference =
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      "작업자")
+                                                                  .doc("작업자1");
+                                                          final calendarReference =
+                                                              WReference.collection(
+                                                                      "calendar")
+                                                                  .doc(
+                                                                      "2023-01-05 00:00:00.000");
+                                                          final todomaker =
+                                                              calendarReference
+                                                                  .collection(
+                                                                      "오늘의 할 일")
+                                                                  .doc(input);
+
+                                                          todomaker.update({
+                                                            '할 일': '{input}',
+                                                          });
+                                                          // calendarReference.set({"할 일1": input});
+                                                          setState(() {
+                                                            todos.add(input);
+                                                          });
+                                                          Navigator.pop(
+                                                              context);
+                                                        }),
                                                   ],
                                                 ),
                                               ),
                                             ],
                                           ),
                                         );
-                                      }
-                                  );
+                                      });
                                 },
                                 icon: Icon(Icons.add),
                               ),
                               Spacer()
                             ],
                           ),
-                          ListTile(
-                            trailing: IconButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          // Text({_dateTime}),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          TimePickerSpinner(
-                                            is24HourMode: false,
-                                            normalTextStyle: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black),
-                                            highlightedTextStyle: TextStyle(
-                                                fontSize: 20, color: Colors.blue),
-                                            spacing: 20,
-                                            itemHeight: 50,
-                                            isForce2Digits: true,
-                                            onTimeChange: (time) {
+                          Container(
+                            child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: todos.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Dismissible(
+                                      // 삭제 버튼 및 기능 추가
+                                      key: Key(todos[index]),
+                                      child: ListTile(
+                                        leading: Checkbox(
+                                            // fillColor: Colors.yellow,
+                                            // fillColor: Colors.yellow,
+                                            activeColor: Colors.yellow[700],
+                                            value: _isChecked2,
+                                            onChanged: (bool? value) {
                                               setState(() {
-                                                _dateTime = time;
+                                                _isChecked2 = value!;
                                               });
-                                            },
-                                          ),
-                                          Text(
-                                            _dateTime.hour
-                                                    .toString()
-                                                    .padLeft(2, '0') +
-                                                ':' +
-                                                _dateTime.minute
-                                                    .toString()
-                                                    .padLeft(2, '0'),
-                                            style: TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          TextButton(
-                                              onPressed: () {}, child: Text("확인"))
-                                        ],
-                                      );
-                                    });
-                              },
-                              icon: Icon(Icons.more_horiz_rounded),
-                            ),
-                            leading: Checkbox(
-                                // fillColor: Colors.yellow,
-                                value: _isChecked2,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    _isChecked2 = value!;
-                                  });
+                                            }),
+                                        title: Text(todos[index]),
+                                        trailing: IconButton(
+                                            icon: Icon(Icons.delete,
+                                                color: Colors.red),
+                                            onPressed: () {
+                                              setState(() {
+                                                todos.removeAt(index);
+                                              });
+                                            }),
+                                        // elevation: 4,
+                                        // margin: EdgeInsets.all(8),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        // child: ListTile(
+                                        //   title: Text(todos[index]),
+                                        //   trailing: IconButton(
+                                        //       icon: Icon(Icons.delete,
+                                        //           color: Colors.red),
+                                        //       onPressed: () {
+                                        //         setState(() {
+                                        //           todos.removeAt(index);
+                                        //         });
+                                        //       }),
+                                        // )
+                                      ));
                                 }),
-                            title: Text("안전모 닦기"),
                           ),
+
+                          // ListTile(
+                          //   trailing: IconButton(
+                          //     onPressed: () {
+                          //       showModalBottomSheet(
+                          //           context: context,
+                          //           builder: (context) {
+                          //             return Column(
+                          //               mainAxisSize: MainAxisSize.min,
+                          //               children: <Widget>[
+                          //                 // Text({_dateTime}),
+                          //                 SizedBox(
+                          //                   height: 20,
+                          //                 ),
+                          //                 TimePickerSpinner(
+                          //                   is24HourMode: false,
+                          //                   normalTextStyle: TextStyle(
+                          //                       fontSize: 20,
+                          //                       color: Colors.black),
+                          //                   highlightedTextStyle: TextStyle(
+                          //                       fontSize: 20,
+                          //                       color: Colors.blue),
+                          //                   spacing: 20,
+                          //                   itemHeight: 50,
+                          //                   isForce2Digits: true,
+                          //                   onTimeChange: (time) {
+                          //                     setState(() {
+                          //                       _dateTime = time;
+                          //                     });
+                          //                   },
+                          //                 ),
+                          //                 Text(
+                          //                   _dateTime.hour
+                          //                           .toString()
+                          //                           .padLeft(2, '0') +
+                          //                       ':' +
+                          //                       _dateTime.minute
+                          //                           .toString()
+                          //                           .padLeft(2, '0'),
+                          //                   style: TextStyle(
+                          //                       fontSize: 24,
+                          //                       fontWeight: FontWeight.bold),
+                          //                 ),
+                          //                 TextButton(
+                          //                     onPressed: () {},
+                          //                     child: Text("확인"))
+                          //               ],
+                          //             );
+                          //           });
+                          //     },
+                          //     icon: Icon(Icons.more_horiz_rounded),
+                          //   ),
+                          //   leading: Checkbox(
+                          //       // fillColor: Colors.yellow,
+                          //       value: _isChecked2,
+                          //       onChanged: (bool? value) {
+                          //         setState(() {
+                          //           _isChecked2 = value!;
+                          //         });
+                          //       }),
+                          //   title: Text("안전모 닦기"),
+                          // ),
+
                           Spacer(),
                         ],
                       )),
@@ -471,7 +582,7 @@ class _Home_wState extends State<Home_w> {
       ),
       // bottomNavigationBar: ,
 
-   /*   body: SingleChildScrollView(
+      /*   body: SingleChildScrollView(
           physics: ScrollPhysics(),
 
           child: Column(
@@ -910,7 +1021,6 @@ class _Home_wState extends State<Home_w> {
 //        ),
 //      ),
       // bottomNavigationBar: ,
-
     );
   }
 }
