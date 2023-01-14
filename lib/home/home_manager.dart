@@ -1,4 +1,5 @@
 // 하람 //
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -11,6 +12,7 @@ import '../screen_manager/add_urgent_alarm.dart';
 import '../screen_manager/add_work.dart';
 import '../screen_manager/manager_home.dart';
 import '../screen_manager/setting_m.dart';
+import '../screen_manager/work_detail.dart';
 import '../screen_worker/setting_w.dart';
 
 enum SingingCharacter { ten, fifteen, twenty, none }
@@ -26,6 +28,14 @@ class _Home_mState extends State<Home_m> {
   SingingCharacter? _character = SingingCharacter.ten;
   bool _isChecked1 = false;
   bool _isChecked2 = false;
+  List<bool> _isCheck = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
   DatePickerController _controller = DatePickerController();
   DateTime _dateTime = DateTime.now();
 
@@ -105,7 +115,6 @@ class _Home_mState extends State<Home_m> {
                             _selectedValue = date;
                           });
                         },
-
                       ),
                     ),
                   ],
@@ -132,13 +141,94 @@ class _Home_mState extends State<Home_m> {
                           style: TextStyle(color: Colors.red, fontSize: 17),
                         ),
                         SizedBox(height: 10),
-                        Text("✔️ 3번 작업장 기계2 부품 고장")
+                        Container(
+                          height: 30,
+                          // width: 0,
+                          child: StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection(
+                                // 날짜에 현 날짜 data 넣기
+                                '관리자/관리자1/calendar/2023-01-14/공지').snapshots(),
+                            builder: (BuildContext,
+                                AsyncSnapshot<
+                                        QuerySnapshot<Map<String, dynamic>>>
+                                    snapshot) {
+                              final docs = snapshot.data!.docs;
+                              return ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return docs[index]['isEmergency']
+                                              .toString() ==
+                                          'true'
+                                      ? ListTile(
+                                          dense: true,
+                                          visualDensity:
+                                              VisualDensity(vertical: -4),
+                                          title: Text(
+                                              "✔️ " + docs[index]['content'],
+                                              style:
+                                                  TextStyle(color: Colors.red)),
+                                        )
+                                      : Container();
+                                  // ListTile(
+                                  //   dense: true,
+                                  //   visualDensity:
+                                  //       VisualDensity(vertical: -4),
+                                  //   title:
+                                  //       Text("✔️ " + docs[index]['content']),
+                                  // );
+                                },
+                                itemCount: docs.length,
+                              );
+                            },
+                          ),
+                        ),
+                        Container(
+                          height: 30,
+                          // width: 0,
+                          child: StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection(
+                                // 날짜에 현 날짜 data 넣기
+                                '관리자/관리자1/calendar/2023-01-14/공지').snapshots(),
+                            builder: (BuildContext,
+                                AsyncSnapshot<
+                                        QuerySnapshot<Map<String, dynamic>>>
+                                    snapshot) {
+                              final docs = snapshot.data!.docs;
+                              return ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return docs[index]['isEmergency']
+                                              .toString() ==
+                                          'false'
+                                      ? ListTile(
+                                          dense: true,
+                                          visualDensity:
+                                              VisualDensity(vertical: -4),
+                                          title: Text(
+                                            "✔️ " + docs[index]['content'],
+                                          ),
+                                        )
+                                      : Container();
+                                  // ListTile(
+                                  //   dense: true,
+                                  //   visualDensity:
+                                  //       VisualDensity(vertical: -4),
+                                  //   title:
+                                  //       Text("✔️ " + docs[index]['content']),
+                                  // );
+                                },
+                                itemCount: docs.length,
+                              );
+                            },
+                          ),
+                        ),
+                        // Text("✔️ 3번 작업장 기계2 부품 고장")
                       ],
                     ),
                   ),
                 ),
               ),
-              Spacer(flex: 1,),
+              Spacer(
+                flex: 1,
+              ),
               SizedBox(
                 height: 330,
                 width: 400,
@@ -161,6 +251,134 @@ class _Home_mState extends State<Home_m> {
                               ),
                               Spacer()
                             ],
+                          ),
+                          Container(
+                            height: 120,
+                            child: StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection(
+                                      // 날짜에 현 날짜 data 넣기
+                                      '관리자/관리자1/calendar/2023-01-14/업무')
+                                  .snapshots(),
+                              builder: (BuildContext,
+                                  AsyncSnapshot<
+                                          QuerySnapshot<Map<String, dynamic>>>
+                                      snapshot) {
+                                final docs = snapshot.data!.docs;
+                                return ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      dense: true,
+                                      visualDensity:
+                                          VisualDensity(vertical: -3),
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TaskDetails()));
+                                      },
+                                      title: Text(docs[index]['content']),
+                                      subtitle: Text(
+                                        "18:00까지",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      trailing: IconButton(
+                                        onPressed: () {
+                                          showModalBottomSheet<void>(
+                                            enableDrag: true,
+                                            isScrollControlled: true,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(30.0),
+                                                    topRight:
+                                                        Radius.circular(30.0))),
+                                            context: context,
+                                            builder: (context) {
+                                              return StatefulBuilder(builder:
+                                                  (context,
+                                                      StateSetter setState) {
+                                                return Container(
+                                                  height: 300,
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 20, 0, 0),
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      RadioListTile(
+                                                          title: Text(
+                                                              "10분 전에 알리기"),
+                                                          value:
+                                                              SingingCharacter
+                                                                  .ten,
+                                                          groupValue:
+                                                              _character,
+                                                          onChanged: (value) {
+                                                            _character = value;
+                                                          }),
+                                                      RadioListTile(
+                                                          title: Text(
+                                                              "15분 전에 알리기"),
+                                                          value:
+                                                              SingingCharacter
+                                                                  .fifteen,
+                                                          groupValue:
+                                                              _character,
+                                                          onChanged: (value) {
+                                                            _character = value;
+                                                          }),
+                                                      RadioListTile(
+                                                          title: Text(
+                                                              "20분 전에 알리기"),
+                                                          value:
+                                                              SingingCharacter
+                                                                  .twenty,
+                                                          groupValue:
+                                                              _character,
+                                                          onChanged: (value) {
+                                                            _character = value;
+                                                          }),
+                                                      RadioListTile(
+                                                          title: Text("없음"),
+                                                          value:
+                                                              SingingCharacter
+                                                                  .none,
+                                                          groupValue:
+                                                              _character,
+                                                          onChanged: (value) {
+                                                            _character = value;
+                                                          }),
+                                                      OutlinedButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text("저장"),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              });
+                                            },
+                                          );
+                                        },
+                                        icon: Icon(Icons.more_horiz_rounded),
+                                      ),
+                                      leading: Checkbox(
+                                          // fillColor: Colors.yellow,
+                                          // value: _isChecked1,
+                                          value: _isCheck[index],
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              _isCheck[index] = value!;
+                                            });
+                                          }),
+                                    );
+                                  },
+                                  itemCount: docs.length,
+                                );
+                              },
+                            ),
                           ),
                           ListTile(
                             onTap: () {
@@ -257,8 +475,8 @@ class _Home_mState extends State<Home_m> {
             backgroundColor: Color(0xff316a62),
             children: [
               SpeedDialChild(
-                  child:
-                      const Icon(Icons.notification_add, color: Color(0xff316a62)),
+                  child: const Icon(Icons.notification_add,
+                      color: Color(0xff316a62)),
                   label: "공지 올리기",
                   labelStyle: const TextStyle(
                       fontWeight: FontWeight.w500,

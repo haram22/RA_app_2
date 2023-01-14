@@ -136,7 +136,7 @@ class _Home_wState extends State<Home_w> {
                   ),
                 ),
                 SizedBox(
-                  height: 560,
+                  height: 260,
                   width: 400,
                   child: Card(
                     color: Color(0xfffcf8ee),
@@ -156,40 +156,129 @@ class _Home_wState extends State<Home_w> {
                             style: TextStyle(color: Colors.red, fontSize: 17),
                           ),
                           SizedBox(height: 10),
+                          Container(
+                            height: 30,
+                            // width: 0,
+                            child: StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection(
+                                      // 날짜에 현 날짜 data 넣기
+                                      '관리자/관리자1/calendar/2023-01-14/공지')
+                                  .snapshots(),
+                              builder: (BuildContext,
+                                  AsyncSnapshot<
+                                          QuerySnapshot<Map<String, dynamic>>>
+                                      snapshot) {
+                                final docs = snapshot.data!.docs;
+                                return ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return docs[index]['isEmergency']
+                                                .toString() ==
+                                            'true'
+                                        ? ListTile(
+                                            dense: true,
+                                            visualDensity:
+                                                VisualDensity(vertical: -4),
+                                            title: Text(
+                                                "✔️ " + docs[index]['content'],
+                                                style: TextStyle(
+                                                    color: Colors.red)),
+                                          )
+                                        : Container();
+                                    // ListTile(
+                                    //   dense: true,
+                                    //   visualDensity:
+                                    //       VisualDensity(vertical: -4),
+                                    //   title:
+                                    //       Text("✔️ " + docs[index]['content']),
+                                    // );
+                                  },
+                                  itemCount: docs.length,
+                                );
+                              },
+                            ),
+                          ),
+                          Container(
+                            height: 30,
+                            // width: 0,
+                            child: StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection(
+                                      // 날짜에 현 날짜 data 넣기
+                                      '관리자/관리자1/calendar/2023-01-14/공지')
+                                  .snapshots(),
+                              builder: (BuildContext,
+                                  AsyncSnapshot<
+                                          QuerySnapshot<Map<String, dynamic>>>
+                                      snapshot) {
+                                final docs = snapshot.data!.docs;
+                                return ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return docs[index]['isEmergency']
+                                                .toString() ==
+                                            'false'
+                                        ? ListTile(
+                                            dense: true,
+                                            visualDensity:
+                                                VisualDensity(vertical: -4),
+                                            title: Text(
+                                              "✔️ " + docs[index]['content'],
+                                            ),
+                                          )
+                                        : Container();
+                                    // ListTile(
+                                    //   dense: true,
+                                    //   visualDensity:
+                                    //       VisualDensity(vertical: -4),
+                                    //   title:
+                                    //       Text("✔️ " + docs[index]['content']),
+                                    // );
+                                  },
+                                  itemCount: docs.length,
+                                );
+                              },
+                            ),
+                          ),
+                          // Container(
+                          //   height: 100,
+                          //   // width: 0,
+                          //   child: StreamBuilder(
+                          //     stream: FirebaseFirestore.instance
+                          //         .collection(
+                          //             // 날짜에 현 날짜 data 넣기
+                          //             '관리자/관리자1/calendar/2023-01-14/공지')
+                          //         .snapshots(),
+                          //     builder: (BuildContext,
+                          //         AsyncSnapshot<
+                          //                 QuerySnapshot<Map<String, dynamic>>>
+                          //             snapshot) {
+                          //       final docs = snapshot.data!.docs;
+                          //       return ListView.builder(
+                          //         itemBuilder: (context, index) {
+                          //           return ListTile(
+                          //             dense: true,
+                          //             visualDensity:
+                          //                 VisualDensity(vertical: -4),
+                          //             title:
+                          //                 Text("✔️ " + docs[index]['content']),
+                          //           );
+                          //         },
+                          //         itemCount: docs.length,
+                          //       );
+                          //     },
+                          //   ),
+                          // ),
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -4),
                             onTap: () {
-                              getData();
+                              // getData();
                             },
                             title: Text(
                               "✔️ 3번 작업장 기계2 부품 고장",
                               style: TextStyle(fontSize: 13),
                             ),
                           ),
-                          StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('작업자')
-                                  .snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<
-                                          QuerySnapshot<Map<String, dynamic>>>
-                                      snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                                final docs = snapshot.data!.docs;
-                                return ListView.builder(
-                                    itemCount: docs.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(docs[index]['test']),
-                                      );
-                                    });
-                              }),
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -4),
@@ -262,7 +351,7 @@ class _Home_wState extends State<Home_w> {
                   ),
                 ),
                 SizedBox(
-                  height: 200,
+                  height: 300,
                   width: 400,
                   child: Card(
                     color: Color(0xfffcf8ee),
@@ -306,6 +395,52 @@ class _Home_wState extends State<Home_w> {
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
+                            Container(
+                              height: 120,
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection(
+                                        // 날짜에 현 날짜 data 넣기
+                                        '관리자/관리자1/calendar/2023-01-14/업무')
+                                    .snapshots(),
+                                builder: (BuildContext,
+                                    AsyncSnapshot<
+                                            QuerySnapshot<Map<String, dynamic>>>
+                                        snapshot) {
+                                  final docs = snapshot.data!.docs;
+                                  return ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return ListTile(
+                                        dense: true,
+                                        visualDensity:
+                                            VisualDensity(vertical: -3),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TaskDetails()));
+                                        },
+                                        trailing: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.more_horiz_rounded),
+                                        ),
+                                        leading: Icon(
+                                          Icons.check_box_outlined,
+                                          color: Colors.grey,
+                                        ),
+                                        title: Text(docs[index]['content']),
+                                        subtitle: Text(
+                                          "18:00까지",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      );
+                                    },
+                                    itemCount: docs.length,
+                                  );
+                                },
+                              ),
+                            ),
                             ListTile(
                               dense: true,
                               visualDensity: VisualDensity(vertical: -3),
@@ -334,7 +469,7 @@ class _Home_wState extends State<Home_w> {
                   ),
                 ),
                 SizedBox(
-                  height: 160,
+                  height: 250,
                   width: 400,
                   child: Card(
                     color: Color(0xfffcf8ee),
@@ -463,28 +598,30 @@ class _Home_wState extends State<Home_w> {
                                                                 .center,
                                                           ),
                                                           onPressed: () {
-                                                            final WReference =
+                                                            final workerReference =
                                                                 FirebaseFirestore
                                                                     .instance
                                                                     .collection(
                                                                         "작업자")
-                                                                    .doc(
-                                                                        "작업자1");
-                                                            final calendarReference =
-                                                                WReference.collection(
+                                                                    .doc('김00');
+                                                            final calReference =
+                                                                workerReference
+                                                                    .collection(
                                                                         "calendar")
                                                                     .doc(
-                                                                        "2023-01-05 00:00:00.000");
-                                                            final todomaker =
-                                                                calendarReference
+                                                                        "2023-01-14");
+                                                            final todayMyTodo =
+                                                                calReference
                                                                     .collection(
-                                                                        "오늘의 할 일")
-                                                                    .doc(input);
-
-                                                            todomaker.update({
-                                                              '할 일': '{input}',
+                                                                        "내가 추가한 일")
+                                                                    .doc(input
+                                                                        .toString());
+                                                            todayMyTodo.set({
+                                                              "할 일 ": input
+                                                                  .toString(),
+                                                              "isComplete":
+                                                                  false,
                                                             });
-                                                            // calendarReference.set({"할 일1": input});
                                                             setState(() {
                                                               todos.add(input);
                                                             });
@@ -505,117 +642,63 @@ class _Home_wState extends State<Home_w> {
                               ],
                             ),
                             Container(
-                              child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: todos.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Dismissible(
-                                        // 삭제 버튼 및 기능 추가
-                                        key: Key(todos[index]),
-                                        child: ListTile(
-                                          leading: Checkbox(
-                                              // fillColor: Colors.yellow,
-                                              // fillColor: Colors.yellow,
-                                              activeColor: Colors.yellow[700],
-                                              value: _isChecked2,
-                                              onChanged: (bool? value) {
-                                                setState(() {
-                                                  _isChecked2 = value!;
-                                                });
-                                              }),
-                                          title: Text(todos[index]),
-                                          trailing: IconButton(
-                                              icon: Icon(Icons.delete,
-                                                  color: Colors.red),
-                                              onPressed: () {
-                                                setState(() {
-                                                  todos.removeAt(index);
-                                                });
-                                              }),
-                                          // elevation: 4,
-                                          // margin: EdgeInsets.all(8),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          // child: ListTile(
-                                          //   title: Text(todos[index]),
-                                          //   trailing: IconButton(
-                                          //       icon: Icon(Icons.delete,
-                                          //           color: Colors.red),
-                                          //       onPressed: () {
-                                          //         setState(() {
-                                          //           todos.removeAt(index);
-                                          //         });
-                                          //       }),
-                                          // )
-                                        ));
-                                  }),
+                              height: 100,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    ListView.builder(
+                                        // physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: todos.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Dismissible(
+                                              // 삭제 버튼 및 기능 추가
+                                              key: Key(todos[index]),
+                                              child: ListTile(
+                                                leading: Checkbox(
+                                                    // fillColor: Colors.yellow,
+                                                    // fillColor: Colors.yellow,
+                                                    activeColor:
+                                                        Colors.yellow[700],
+                                                    value: _isChecked2,
+                                                    onChanged: (bool? value) {
+                                                      setState(() {
+                                                        _isChecked2 = value!;
+                                                      });
+                                                    }),
+                                                title: Text(todos[index]),
+                                                trailing: IconButton(
+                                                    icon: Icon(Icons.delete,
+                                                        color: Colors.red),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        todos.removeAt(index);
+                                                      });
+                                                    }),
+                                                // elevation: 4,
+                                                // margin: EdgeInsets.all(8),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8)),
+                                                // child: ListTile(
+                                                //   title: Text(todos[index]),
+                                                //   trailing: IconButton(
+                                                //       icon: Icon(Icons.delete,
+                                                //           color: Colors.red),
+                                                //       onPressed: () {
+                                                //         setState(() {
+                                                //           todos.removeAt(index);
+                                                //         });
+                                                //       }),
+                                                // )
+                                              ));
+                                        }),
+                                  ],
+                                ),
+                              ),
                             ),
-
-                            // ListTile(
-                            //   trailing: IconButton(
-                            //     onPressed: () {
-                            //       showModalBottomSheet(
-                            //           context: context,
-                            //           builder: (context) {
-                            //             return Column(
-                            //               mainAxisSize: MainAxisSize.min,
-                            //               children: <Widget>[
-                            //                 // Text({_dateTime}),
-                            //                 SizedBox(
-                            //                   height: 20,
-                            //                 ),
-                            //                 TimePickerSpinner(
-                            //                   is24HourMode: false,
-                            //                   normalTextStyle: TextStyle(
-                            //                       fontSize: 20,
-                            //                       color: Colors.black),
-                            //                   highlightedTextStyle: TextStyle(
-                            //                       fontSize: 20,
-                            //                       color: Colors.blue),
-                            //                   spacing: 20,
-                            //                   itemHeight: 50,
-                            //                   isForce2Digits: true,
-                            //                   onTimeChange: (time) {
-                            //                     setState(() {
-                            //                       _dateTime = time;
-                            //                     });
-                            //                   },
-                            //                 ),
-                            //                 Text(
-                            //                   _dateTime.hour
-                            //                           .toString()
-                            //                           .padLeft(2, '0') +
-                            //                       ':' +
-                            //                       _dateTime.minute
-                            //                           .toString()
-                            //                           .padLeft(2, '0'),
-                            //                   style: TextStyle(
-                            //                       fontSize: 24,
-                            //                       fontWeight: FontWeight.bold),
-                            //                 ),
-                            //                 TextButton(
-                            //                     onPressed: () {},
-                            //                     child: Text("확인"))
-                            //               ],
-                            //             );
-                            //           });
-                            //     },
-                            //     icon: Icon(Icons.more_horiz_rounded),
-                            //   ),
-                            //   leading: Checkbox(
-                            //       // fillColor: Colors.yellow,
-                            //       value: _isChecked2,
-                            //       onChanged: (bool? value) {
-                            //         setState(() {
-                            //           _isChecked2 = value!;
-                            //         });
-                            //       }),
-                            //   title: Text("안전모 닦기"),
-                            // ),
-
                             Spacer(),
                           ],
                         )),
