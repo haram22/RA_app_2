@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../user/login.dart';
+
 class setting_m extends StatefulWidget {
   const setting_m({super.key});
 
@@ -24,7 +26,9 @@ class _setting_wState extends State<setting_m> {
           backgroundColor: Color(0xffe8c869),
           title: Text(
             '설정',
-            style: TextStyle(color: Colors.white,),
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
           centerTitle: true,
         ),
@@ -42,16 +46,15 @@ class _setting_wState extends State<setting_m> {
                     borderRadius: BorderRadius.circular(100),
                     child: _imagefile != null
                         ? Image.file(
-                      _imagefile!,
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    )
+                            _imagefile!,
+                            width: 300,
+                            height: 300,
+                            fit: BoxFit.cover,
+                          )
                         : Image.asset(
-                      'assets/profile.png',
-                      fit: BoxFit.cover,
-                    )
-                ),
+                            'assets/profile.png',
+                            fit: BoxFit.cover,
+                          )),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -76,16 +79,20 @@ class _setting_wState extends State<setting_m> {
               Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: TextButton(onPressed:() {},
-                    child:
-                    Text('로그아웃',
-                      style: TextStyle(fontSize: 20,color:
-                      Color(0xffBCBCBC),
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => login()));
+                    },
+                    child: Text(
+                      '로그아웃',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xffBCBCBC),
                         decoration: TextDecoration.underline,
                         decorationThickness: 1.5,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),

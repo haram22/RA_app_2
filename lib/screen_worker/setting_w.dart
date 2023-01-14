@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../user/login.dart';
+
 class setting_w extends StatefulWidget {
   const setting_w({super.key});
 
@@ -24,7 +26,9 @@ class _setting_wState extends State<setting_w> {
           backgroundColor: Color(0xffe8c869),
           title: Text(
             '설정',
-            style: TextStyle(color: Colors.white,),
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
           centerTitle: true,
         ),
@@ -50,8 +54,7 @@ class _setting_wState extends State<setting_w> {
                         : Image.asset(
                             'assets/profile.png',
                             fit: BoxFit.cover,
-                          )
-                ),
+                          )),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -76,16 +79,20 @@ class _setting_wState extends State<setting_w> {
               Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: TextButton(onPressed:() {},
-                    child:
-                    Text('로그아웃',
-                      style: TextStyle(fontSize: 20,color:
-                          Color(0xffBCBCBC),
-                          decoration: TextDecoration.underline,
-                          decorationThickness: 1.5,
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => login()));
+                    },
+                    child: Text(
+                      '로그아웃',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xffBCBCBC),
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 1.5,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
