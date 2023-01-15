@@ -180,7 +180,7 @@ class _Home_wState extends State<Home_w> {
                                             visualDensity:
                                                 VisualDensity(vertical: -4),
                                             title: Text(
-                                                "✔️ " + docs[index]['content'],
+                                                "✔️ " + docs[index]['title'],
                                                 style: TextStyle(
                                                     color: Colors.red)),
                                           )
@@ -198,6 +198,7 @@ class _Home_wState extends State<Home_w> {
                               },
                             ),
                           ),
+
                           Container(
                             height: 30,
                             // width: 0,
@@ -222,7 +223,7 @@ class _Home_wState extends State<Home_w> {
                                             visualDensity:
                                                 VisualDensity(vertical: -4),
                                             title: Text(
-                                              "✔️ " + docs[index]['content'],
+                                              "✔️ " + docs[index]['title'],
                                             ),
                                           )
                                         : Container();
