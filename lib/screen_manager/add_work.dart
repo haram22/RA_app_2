@@ -626,27 +626,37 @@ class _MyHomePageState extends State<MyHomePage> {
                       "worker": FieldValue.arrayUnion(selectedName),
                       "isComplete": "접수",
                     });
-                    for (String worker in selectedName) {
-                      workReference.update({
-                        worker: {
-                          'isComplete': "접수",
-                        }
-                      });
+                    final workerReference =
+                        FirebaseFirestore.instance.collection("작업자").doc('김00');
+                    final calReference = workerReference
+                        .collection("calendar")
+                        .doc("2023-01-14");
+                    final todayWork = calReference
+                        .collection("오늘의 할 일")
+                        .doc(inputController1.text);
+                    todayWork.set({"content": inputController1.text});
 
-                      final workerReference = FirebaseFirestore.instance
-                          .collection("작업자")
-                          .doc(worker);
-                      final calReference = workerReference
-                          .collection("calendar")
-                          .doc("2023-01-14");
-                      final todayWork = calReference
-                          .collection("오늘의 할 일")
-                          .doc(inputController1.text);
-                      todayWork.set({
-                        "content": inputController1.text,
-                        "isComplete": "접수",
-                      });
-                    }
+                    // for (String worker in selectedName) {
+                    //   workReference.update({
+                    //     worker: {
+                    //       'isComplete': "접수",
+                    //     }
+                    //   });
+
+                    //   final workerReference = FirebaseFirestore.instance
+                    //       .collection("작업자")
+                    //       .doc('김00');
+                    //   final calReference = workerReference
+                    //       .collection("calendar")
+                    //       .doc("2023-01-14");
+                    //   final todayWork = calReference
+                    //       .collection("오늘의 할 일")
+                    //       .doc(inputController1.text);
+                    //   todayWork.set({
+                    //     "content": inputController1.text,
+                    //     "isComplete": "접수",
+                    //   });
+                    // }
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Home_m()));
