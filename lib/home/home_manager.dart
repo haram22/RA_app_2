@@ -39,6 +39,15 @@ class _Home_mState extends State<Home_m> {
     false,
     false,
     false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
   ];
   DatePickerController _controller = DatePickerController();
   DateTime _dateTime = DateTime.now();
@@ -171,7 +180,7 @@ class _Home_mState extends State<Home_m> {
                                           visualDensity:
                                               VisualDensity(vertical: -4),
                                           title: Text(
-                                              "✔️ " + docs[index]['content'],
+                                              "✔️ " + docs[index]['title'],
                                               style:
                                                   TextStyle(color: Colors.red)),
                                         )
@@ -290,9 +299,15 @@ class _Home_mState extends State<Home_m> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    TaskDetails()));
+                                                    detailPage(
+                                                        title: docs[index]
+                                                            ['title'],
+                                                        contents: docs[index]
+                                                            ['content'],
+                                                        enrollTime:
+                                                            formattedDate)));
                                       },
-                                      title: Text(docs[index]['content']),
+                                      title: Text(docs[index]['title']),
                                       subtitle: Text(
                                         "18:00까지",
                                         style: TextStyle(fontSize: 12),

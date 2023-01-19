@@ -625,7 +625,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         .collection("업무")
                         .doc(inputController1.text);
                     workReference.set({
-                      "content": inputController1.text,
+                      "title": inputController1.text,
+                      "content": inputController2.text,
                       "worker": FieldValue.arrayUnion(selectedName),
                       "isComplete": "접수",
                     });
@@ -637,7 +638,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     final todayWork = calReference
                         .collection("오늘의 할 일")
                         .doc(inputController1.text);
-                    todayWork.set({"content": inputController1.text});
+                    todayWork.set({
+                      "title": inputController1.text,
+                      "content": inputController2.text
+                    });
 
                     // for (String worker in selectedName) {
                     //   workReference.update({

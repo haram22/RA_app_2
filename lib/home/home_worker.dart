@@ -229,85 +229,12 @@ class _Home_wState extends State<Home_w> {
                                             ),
                                           )
                                         : Container();
-                                    // ListTile(
-                                    //   dense: true,
-                                    //   visualDensity:
-                                    //       VisualDensity(vertical: -4),
-                                    //   title:
-                                    //       Text("✔️ " + docs[index]['content']),
-                                    // );
                                   },
                                   itemCount: docs.length,
                                 );
                               },
                             ),
                           ),
-                          // ListTile(
-                          //   dense: true,
-                          //   visualDensity: VisualDensity(vertical: -4),
-                          //   onTap: () {
-                          //     showModalBottomSheet<void>(
-                          //         isScrollControlled: true,
-                          //         context: context,
-                          //         shape: RoundedRectangleBorder(
-                          //           borderRadius: BorderRadiusDirectional.only(
-                          //             topEnd: Radius.circular(30),
-                          //             topStart: Radius.circular(30),
-                          //           ),
-                          //         ),
-                          //         builder: (BuildContext context) {
-                          //           return Container(
-                          //             padding: const EdgeInsets.all(20),
-                          //             height:
-                          //                 MediaQuery.of(context).size.height *
-                          //                     0.4,
-                          //             child: Column(
-                          //               mainAxisSize: MainAxisSize.min,
-                          //               children: <Widget>[
-                          //                 const Text(
-                          //                   '안전모를 꼭 착용하고 작업하시기 바랍니다.',
-                          //                   style: TextStyle(
-                          //                       fontSize: 18,
-                          //                       color: Color(0xff316a62)),
-                          //                 ),
-                          //                 SizedBox(height: 40),
-                          //                 Container(
-                          //                   alignment: Alignment.topLeft,
-                          //                   height: 100,
-                          //                   child: Text('공지 상세 내용'),
-                          //                 ),
-                          //                 Spacer(),
-                          //                 ElevatedButton(
-                          //                   style: ElevatedButton.styleFrom(
-                          //                     primary: Color(0xff316a62),
-                          //                     shape: RoundedRectangleBorder(
-                          //                         //모서리를 둥글게
-                          //                         borderRadius:
-                          //                             BorderRadius.circular(
-                          //                                 15)),
-                          //                     minimumSize: Size(30, 36),
-                          //                   ),
-                          //                   child: const Text(
-                          //                     '확인',
-                          //                     style: TextStyle(
-                          //                       fontSize: 17,
-                          //                       color: Color(0xffffffff),
-                          //                     ),
-                          //                     textAlign: TextAlign.center,
-                          //                   ),
-                          //                   onPressed: () =>
-                          //                       Navigator.pop(context),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           );
-                          //         });
-                          //   },
-                          //   title: Text(
-                          //     "✔️ 작업 시 안전모를 꼭 착용하세요.",
-                          //     style: TextStyle(fontSize: 13),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
@@ -359,11 +286,29 @@ class _Home_wState extends State<Home_w> {
                                         visualDensity:
                                             VisualDensity(vertical: -3),
                                         onTap: () {
-                                          Navigator.push(
-                                              context,
+                                          Navigator.push(context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TaskDetails()));
+                                                  builder: (context) {
+                                            return detailPage(
+                                              title: docs[index]['title'],
+                                              contents: docs[index]['content'],
+                                              enrollTime: formattedDate,
+                                            );
+                                          }));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) => detailPage(title: 'dd');)
+                                          // detailT(
+                                          //     // title: docs[index]
+                                          //     //     ['content'],
+                                          //     // contents: docs[index]
+                                          //     //     ['content'],
+                                          //     // enrollTime: docs[index]
+                                          //     //     ['content'],
+                                          //     // people: docs[index]
+                                          //     //     ['content'],
+                                          //     )));
                                         },
                                         trailing: IconButton(
                                           onPressed: () {
@@ -553,7 +498,7 @@ class _Home_wState extends State<Home_w> {
                                           Icons.check_box_outlined,
                                           color: Colors.grey,
                                         ),
-                                        title: Text(docs[index]['content']),
+                                        title: Text(docs[index]['title']),
                                         subtitle: Text(
                                           "18:00까지",
                                           style: TextStyle(fontSize: 12),
