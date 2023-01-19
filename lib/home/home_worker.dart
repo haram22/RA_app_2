@@ -18,6 +18,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Home_w extends StatefulWidget {
   const Home_w({super.key});
@@ -27,6 +28,9 @@ class Home_w extends StatefulWidget {
 }
 
 enum SingingCharacter { ten, fifteen, twenty, none }
+
+DateTime now = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
 class _Home_wState extends State<Home_w> {
   SingingCharacter? _character = SingingCharacter.ten;
@@ -129,7 +133,9 @@ class _Home_wState extends State<Home_w> {
                           onDateChange: (date) {
                             // New date selected
                             setState(() {
-                              _selectedValue = date;
+                              formattedDate =
+                                  DateFormat('yyyy-MM-dd').format(date);
+                              print(_selectedValue);
                             });
                           },
                         ),
@@ -158,15 +164,15 @@ class _Home_wState extends State<Home_w> {
                             "📢 오늘의 공지",
                             style: TextStyle(color: Colors.red, fontSize: 17),
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 15),
                           Container(
-                            height: 30,
+                            height: 60,
                             // width: 0,
                             child: StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection(
                                       // 날짜에 현 날짜 data 넣기
-                                      '관리자/관리자1/calendar/2023-01-14/공지')
+                                      '관리자/관리자1/calendar/${formattedDate}/공지')
                                   .snapshots(),
                               builder: (BuildContext,
                                   AsyncSnapshot<
@@ -188,27 +194,21 @@ class _Home_wState extends State<Home_w> {
                                                     color: Colors.red)),
                                           )
                                         : Container();
-                                    // ListTile(
-                                    //   dense: true,
-                                    //   visualDensity:
-                                    //       VisualDensity(vertical: -4),
-                                    //   title:
-                                    //       Text("✔️ " + docs[index]['content']),
-                                    // );
                                   },
                                   itemCount: docs.length,
                                 );
                               },
                             ),
                           ),
+                          Divider(),
                           Container(
-                            height: 30,
+                            height: 90,
                             // width: 0,
                             child: StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection(
                                       // 날짜에 현 날짜 data 넣기
-                                      '관리자/관리자1/calendar/2023-01-14/공지')
+                                      '관리자/관리자1/calendar/${formattedDate}/공지')
                                   .snapshots(),
                               builder: (BuildContext,
                                   AsyncSnapshot<
@@ -242,72 +242,72 @@ class _Home_wState extends State<Home_w> {
                               },
                             ),
                           ),
-                          ListTile(
-                            dense: true,
-                            visualDensity: VisualDensity(vertical: -4),
-                            onTap: () {
-                              showModalBottomSheet<void>(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadiusDirectional.only(
-                                      topEnd: Radius.circular(30),
-                                      topStart: Radius.circular(30),
-                                    ),
-                                  ),
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      padding: const EdgeInsets.all(20),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.4,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          const Text(
-                                            '안전모를 꼭 착용하고 작업하시기 바랍니다.',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color(0xff316a62)),
-                                          ),
-                                          SizedBox(height: 40),
-                                          Container(
-                                            alignment: Alignment.topLeft,
-                                            height: 100,
-                                            child: Text('공지 상세 내용'),
-                                          ),
-                                          Spacer(),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color(0xff316a62),
-                                              shape: RoundedRectangleBorder(
-                                                  //모서리를 둥글게
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              minimumSize: Size(30, 36),
-                                            ),
-                                            child: const Text(
-                                              '확인',
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                color: Color(0xffffffff),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                            title: Text(
-                              "✔️ 작업 시 안전모를 꼭 착용하세요.",
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ),
+                          // ListTile(
+                          //   dense: true,
+                          //   visualDensity: VisualDensity(vertical: -4),
+                          //   onTap: () {
+                          //     showModalBottomSheet<void>(
+                          //         isScrollControlled: true,
+                          //         context: context,
+                          //         shape: RoundedRectangleBorder(
+                          //           borderRadius: BorderRadiusDirectional.only(
+                          //             topEnd: Radius.circular(30),
+                          //             topStart: Radius.circular(30),
+                          //           ),
+                          //         ),
+                          //         builder: (BuildContext context) {
+                          //           return Container(
+                          //             padding: const EdgeInsets.all(20),
+                          //             height:
+                          //                 MediaQuery.of(context).size.height *
+                          //                     0.4,
+                          //             child: Column(
+                          //               mainAxisSize: MainAxisSize.min,
+                          //               children: <Widget>[
+                          //                 const Text(
+                          //                   '안전모를 꼭 착용하고 작업하시기 바랍니다.',
+                          //                   style: TextStyle(
+                          //                       fontSize: 18,
+                          //                       color: Color(0xff316a62)),
+                          //                 ),
+                          //                 SizedBox(height: 40),
+                          //                 Container(
+                          //                   alignment: Alignment.topLeft,
+                          //                   height: 100,
+                          //                   child: Text('공지 상세 내용'),
+                          //                 ),
+                          //                 Spacer(),
+                          //                 ElevatedButton(
+                          //                   style: ElevatedButton.styleFrom(
+                          //                     primary: Color(0xff316a62),
+                          //                     shape: RoundedRectangleBorder(
+                          //                         //모서리를 둥글게
+                          //                         borderRadius:
+                          //                             BorderRadius.circular(
+                          //                                 15)),
+                          //                     minimumSize: Size(30, 36),
+                          //                   ),
+                          //                   child: const Text(
+                          //                     '확인',
+                          //                     style: TextStyle(
+                          //                       fontSize: 17,
+                          //                       color: Color(0xffffffff),
+                          //                     ),
+                          //                     textAlign: TextAlign.center,
+                          //                   ),
+                          //                   onPressed: () =>
+                          //                       Navigator.pop(context),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           );
+                          //         });
+                          //   },
+                          //   title: Text(
+                          //     "✔️ 작업 시 안전모를 꼭 착용하세요.",
+                          //     style: TextStyle(fontSize: 13),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -328,40 +328,24 @@ class _Home_wState extends State<Home_w> {
                             left: 18.0, top: 18, bottom: 5),
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Text("📑 오늘의 할 일",
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 17)),
-                                Spacer()
-                              ],
-                            ),
-                            ListTile(
-                              dense: true,
-                              visualDensity: VisualDensity(vertical: -3),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => TaskDetails()));
-                              },
-                              leading: Icon(
-                                Icons.check_box_outlined,
-                                color: Colors.grey,
-                              ),
-                              title: Text("3번 작업장 청소"),
-                              subtitle: Text(
-                                "15:30까지",
-                                style: TextStyle(fontSize: 12),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 8.0),
+                              child: Row(
+                                children: [
+                                  Text("📑 오늘의 할 일",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 17)),
+                                  Spacer()
+                                ],
                               ),
                             ),
                             Container(
-                              height: 180,
+                              height: 230,
                               child: StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection(
                                         // 날짜에 현 날짜 data 넣기
-                                        '관리자/관리자1/calendar/2023-01-14/업무')
+                                        '관리자/관리자1/calendar/${formattedDate}/업무')
                                     .snapshots(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<
@@ -517,15 +501,6 @@ class _Home_wState extends State<Home_w> {
                                                             onPressed: () {
                                                               Navigator.pop(
                                                                   context);
-                                                              // FirebaseFirestore
-                                                              //     .instance
-                                                              //     .collection(
-                                                              //         '작업자')
-                                                              //     .doc('김00')
-                                                              //     .set({
-                                                              //   'alarm time':
-                                                              //       'ds'
-                                                              // });
                                                               final workerReference =
                                                                   FirebaseFirestore
                                                                       .instance
@@ -538,53 +513,18 @@ class _Home_wState extends State<Home_w> {
                                                                       .collection(
                                                                           "calendar")
                                                                       .doc(
-                                                                          "2023-01-14");
+                                                                          formattedDate);
                                                               final todayWork = calReference
                                                                   .collection(
-                                                                      "오늘의 할 일")
+                                                                      "업무 알람")
                                                                   .doc(docs[index]
                                                                           [
                                                                           'content']
-                                                                      .text);
-                                                              final alarms = todayWork
-                                                                  .collection(
-                                                                      '알람스')
-                                                                  .doc(docs[index]
-                                                                          [
-                                                                          'content']
-                                                                      .text);
-                                                              alarms.set({
-                                                                "content": docs[
-                                                                            index]
-                                                                        [
-                                                                        'content']
-                                                                    .text,
-                                                                "alarm Time":
-                                                                    _character
-                                                                        .toString(),
+                                                                      .toString());
+                                                              todayWork.set({
+                                                                "alarm": _character
+                                                                    .toString()
                                                               });
-                                                              // final workerReference =
-                                                              //     FirebaseFirestore
-                                                              //         .instance
-                                                              //         .collection(
-                                                              //             "작업자")
-                                                              //         .doc(
-                                                              //             '김00');
-                                                              // final calReference =
-                                                              //     workerReference
-                                                              //         .collection(
-                                                              //             "calendar")
-                                                              //         .doc(
-                                                              //             "2023-01-14");
-                                                              // final Todayalarm =
-                                                              //     calReference
-                                                              //         .collection(
-                                                              //             "오늘의 할 일")
-                                                              //         .doc(input
-                                                              //             .toString());
-                                                              // Todayalarm.set({
-                                                              //   "알람": _character
-                                                              //       .toString()
 
                                                               //         ==
                                                               //     '10분 전에 알리기'
@@ -770,7 +710,7 @@ class _Home_wState extends State<Home_w> {
                                                                     .collection(
                                                                         "calendar")
                                                                     .doc(
-                                                                        "2023-01-14");
+                                                                        formattedDate);
                                                             final todayMyTodo =
                                                                 calReference
                                                                     .collection(

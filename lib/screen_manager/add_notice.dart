@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './manager_home.dart';
 import '../home/home_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class AddNotice extends StatelessWidget {
   const AddNotice({Key? key}) : super(key: key);
@@ -28,6 +29,9 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+
+DateTime now = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd 00:00:00.000').format(now);
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isChecked = false;
@@ -205,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         .doc("관리자1");
                     final calendarReference = managerReference
                         .collection("calendar")
-                        .doc("2023-01-14");
+                        .doc(formattedDate.toString());
                     final noticeReference = calendarReference
                         .collection("공지")
                         .doc(inputController1.text);
