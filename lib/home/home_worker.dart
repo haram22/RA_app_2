@@ -189,7 +189,7 @@ class _Home_wState extends State<Home_w> {
                                             visualDensity:
                                                 VisualDensity(vertical: -4),
                                             title: Text(
-                                                "✔️ " + docs[index]['content'],
+                                                "✔️ " + docs[index]['title'],
                                                 style: TextStyle(
                                                     color: Colors.red)),
                                           )
@@ -225,7 +225,7 @@ class _Home_wState extends State<Home_w> {
                                             visualDensity:
                                                 VisualDensity(vertical: -4),
                                             title: Text(
-                                              "✔️ " + docs[index]['content'],
+                                              "✔️ " + docs[index]['title'],
                                             ),
                                           )
                                         : Container();
@@ -464,7 +464,7 @@ class _Home_wState extends State<Home_w> {
                                                                       "업무 알람")
                                                                   .doc(docs[index]
                                                                           [
-                                                                          'content']
+                                                                          'title']
                                                                       .toString());
                                                               todayWork.set({
                                                                 "alarm": _character
