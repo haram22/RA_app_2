@@ -7,6 +7,7 @@ import '../home/home_manager.dart';
 import './manager_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];
 late List<String> selectedName = <String>[];
@@ -31,7 +32,9 @@ class AddTask extends StatelessWidget {
   }
 }
 
-//
+DateTime now = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -617,7 +620,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         .doc("관리자1");
                     final calendarReference = managerReference
                         .collection("calendar")
-                        .doc("2023-01-14");
+                        .doc(formattedDate.toString());
                     final workReference = calendarReference
                         .collection("업무")
                         .doc(inputController1.text);
@@ -630,7 +633,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         FirebaseFirestore.instance.collection("작업자").doc('김00');
                     final calReference = workerReference
                         .collection("calendar")
-                        .doc("2023-01-14");
+                        .doc(formattedDate.toString());
                     final todayWork = calReference
                         .collection("오늘의 할 일")
                         .doc(inputController1.text);

@@ -14,6 +14,7 @@ import '../screen_manager/manager_home.dart';
 import '../screen_manager/setting_m.dart';
 import '../screen_manager/work_detail.dart';
 import '../screen_worker/setting_w.dart';
+import 'package:intl/intl.dart';
 
 enum SingingCharacter { ten, fifteen, twenty, none }
 
@@ -23,6 +24,9 @@ class Home_m extends StatefulWidget {
   @override
   State<Home_m> createState() => _Home_mState();
 }
+
+DateTime now = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
 class _Home_mState extends State<Home_m> {
   SingingCharacter? _character = SingingCharacter.ten;
@@ -98,7 +102,7 @@ class _Home_mState extends State<Home_m> {
                     Container(
                       child: DatePicker(
                         DateTime.now(),
-                        // width: 60,
+                        width: 60,
                         height: 80,
                         controller: _controller,
                         initialSelectedDate: DateTime.now(),
@@ -112,7 +116,9 @@ class _Home_mState extends State<Home_m> {
                         onDateChange: (date) {
                           // New date selected
                           setState(() {
-                            _selectedValue = date;
+                            formattedDate =
+                                DateFormat('yyyy-MM-dd').format(date);
+                            print(formattedDate);
                           });
                         },
                       ),
@@ -145,9 +151,11 @@ class _Home_mState extends State<Home_m> {
                           height: 30,
                           // width: 0,
                           child: StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection(
-                                // 날짜에 현 날짜 data 넣기
-                                '관리자/관리자1/calendar/2023-01-14/공지').snapshots(),
+                            stream: FirebaseFirestore.instance
+                                .collection(
+                                    // 날짜에 현 날짜 data 넣기
+                                    '관리자/관리자1/calendar/${formattedDate}/공지')
+                                .snapshots(),
                             builder: (BuildContext,
                                 AsyncSnapshot<
                                         QuerySnapshot<Map<String, dynamic>>>
@@ -181,13 +189,16 @@ class _Home_mState extends State<Home_m> {
                             },
                           ),
                         ),
+                        Divider(),
                         Container(
                           height: 30,
                           // width: 0,
                           child: StreamBuilder(
-                            stream: FirebaseFirestore.instance.collection(
-                                // 날짜에 현 날짜 data 넣기
-                                '관리자/관리자1/calendar/2023-01-14/공지').snapshots(),
+                            stream: FirebaseFirestore.instance
+                                .collection(
+                                    // 날짜에 현 날짜 data 넣기
+                                    '관리자/관리자1/calendar/${formattedDate}/공지')
+                                .snapshots(),
                             builder: (BuildContext,
                                 AsyncSnapshot<
                                         QuerySnapshot<Map<String, dynamic>>>
@@ -242,23 +253,26 @@ class _Home_mState extends State<Home_m> {
                       padding: const EdgeInsets.only(left: 18.0, top: 18),
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                "📑 진행상황 확인하기",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 17),
-                              ),
-                              Spacer()
-                            ],
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "📑 진행상황 확인하기",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 17),
+                                ),
+                                Spacer()
+                              ],
+                            ),
                           ),
                           Container(
-                            height: 120,
+                            height: 240,
                             child: StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection(
                                       // 날짜에 현 날짜 data 넣기
-                                      '관리자/관리자1/calendar/2023-01-14/업무')
+                                      '관리자/관리자1/calendar/${formattedDate}/업무')
                                   .snapshots(),
                               builder: (BuildContext,
                                   AsyncSnapshot<
@@ -379,86 +393,6 @@ class _Home_mState extends State<Home_m> {
                                 );
                               },
                             ),
-                          ),
-                          ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CheckTast()));
-                            },
-                            trailing: IconButton(
-                              onPressed: () {
-                                showModalBottomSheet<void>(
-                                  enableDrag: true,
-                                  isScrollControlled: true,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30.0),
-                                          topRight: Radius.circular(30.0))),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return StatefulBuilder(builder:
-                                        (BuildContext context,
-                                            StateSetter setState) {
-                                      return Container(
-                                        height: 300,
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            RadioListTile(
-                                                title: Text("10분 전에 알리기"),
-                                                value: SingingCharacter.ten,
-                                                groupValue: _character,
-                                                onChanged: (value) {
-                                                  _character = value;
-                                                }),
-                                            RadioListTile(
-                                                title: Text("15분 전에 알리기"),
-                                                value: SingingCharacter.fifteen,
-                                                groupValue: _character,
-                                                onChanged: (value) {
-                                                  _character = value;
-                                                }),
-                                            RadioListTile(
-                                                title: Text("20분 전에 알리기"),
-                                                value: SingingCharacter.twenty,
-                                                groupValue: _character,
-                                                onChanged: (value) {
-                                                  _character = value;
-                                                }),
-                                            RadioListTile(
-                                                title: Text("없음"),
-                                                value: SingingCharacter.none,
-                                                groupValue: _character,
-                                                onChanged: (value) {
-                                                  _character = value;
-                                                }),
-                                            OutlinedButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text("저장"),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    });
-                                  },
-                                );
-                              },
-                              icon: Icon(Icons.more_horiz_rounded),
-                            ),
-                            leading: Checkbox(
-                                // fillColor: Colors.yellow,
-                                value: _isChecked1,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    _isChecked1 = value!;
-                                  });
-                                }),
-                            title: Text("3번 작업장 청소"),
                           ),
                         ],
                       )),
