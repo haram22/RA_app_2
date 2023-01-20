@@ -295,20 +295,6 @@ class _Home_wState extends State<Home_w> {
                                               enrollTime: formattedDate,
                                             );
                                           }));
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => detailPage(title: 'dd');)
-                                          // detailT(
-                                          //     // title: docs[index]
-                                          //     //     ['content'],
-                                          //     // contents: docs[index]
-                                          //     //     ['content'],
-                                          //     // enrollTime: docs[index]
-                                          //     //     ['content'],
-                                          //     // people: docs[index]
-                                          //     //     ['content'],
-                                          //     )));
                                         },
                                         trailing: IconButton(
                                           onPressed: () {
@@ -500,7 +486,7 @@ class _Home_wState extends State<Home_w> {
                                         ),
                                         title: Text(docs[index]['title']),
                                         subtitle: Text(
-                                          "18:00까지",
+                                          "${docs[index]['hour']} : ${docs[index]['min']} 까지",
                                           style: TextStyle(fontSize: 12),
                                         ),
                                       );

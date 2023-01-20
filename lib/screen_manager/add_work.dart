@@ -35,6 +35,10 @@ class AddTask extends StatelessWidget {
 
 DateTime now = DateTime.now();
 String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+DateTime _dateTime = DateTime.now();
+int hour = DateTime.now().hour;
+int min = DateTime.now().minute;
+// String times = '';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -46,7 +50,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime _dateTime = DateTime.now();
   late String teamName, content, worker, deadlineDate, deadlineTime;
   bool _isChecked = false;
   DateTime? selectedDate;
@@ -238,125 +241,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   trailing: Wrap(
                     spacing: 25,
                     children: <Widget>[
-                      /* 날짜 선택
-                      TextButton(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                              isScrollControlled: true,
-                              context: context,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadiusDirectional.only(
-                                  topEnd: Radius.circular(25),
-                                  topStart: Radius.circular(25),
-                                ),
-                              ),
-                              builder: (BuildContext context) {
-                                return Container(
-                                  padding: const EdgeInsets.all(20),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.65,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      const Text(
-                                        '날짜 선택',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Color(0xff316a62)),
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      CalendarDatePicker(
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
-                                        lastDate: DateTime(2100, 12, 31),
-                                        onDateChanged: (date) {
-                                          setState(() {
-                                            selectedDate = date;
-                                          });
-                                        },
-                                      ),
-                                      Spacer(),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  primary: Color(0xff316a62),
-                                                  shape: RoundedRectangleBorder(
-                                                      //모서리를 둥글게
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15)),
-                                                  minimumSize: Size(30, 36),
-                                                ),
-                                                child: const Text(
-                                                  '취소',
-                                                  style: TextStyle(
-                                                    fontSize: 17,
-                                                    color: Color(0xffffffff),
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                }),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Color(0xff316a62),
-                                                shape: RoundedRectangleBorder(
-                                                    //모서리를 둥글게
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                minimumSize: Size(30, 36),
-                                              ),
-                                              child: const Text(
-                                                '저장',
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Color(0xffffffff),
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                ;
-                                              },
-                                            )
-                                          ],
-                                        ),
-/*
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: <Widget> [
-                                                  ElevatedButton(
-                                                    child: const Text('취소'),
-                                                    onPressed: () => Navigator.pop(context),
-                                                  ),
-                                                  ElevatedButton(
-                                                    child: const Text('선택'),
-                                                    // onPressed: () => Navigator.pop(context),
-                                                    onPressed: () {
-
-                                                    },
-                                                  ),
-                                                ],*/
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                        child: const Text('날짜 선택',
-                            style: TextStyle(color: Color(0xff316a62))),
-                      ),
-                      */
                       TextButton(
                         onPressed: () {
                           showModalBottomSheet<void>(
@@ -382,12 +266,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                             fontSize: 20,
                                             color: Color(0xff316a62)),
                                       ),
-                                      Spacer(flex: 3,),
+                                      Spacer(
+                                        flex: 3,
+                                      ),
                                       hourMinute12H(),
                                       new Container(
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 50
-                                        ),
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 50),
                                       ),
                                       //취소 저장 버튼
                                       Padding(
@@ -639,6 +524,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       "title": inputController1.text,
                       "content": inputController2.text,
                       "worker": FieldValue.arrayUnion(selectedName),
+                      "hour": hour,
+                      "min": min,
                       "isComplete": "접수",
                     });
                     final workerReference =
@@ -651,7 +538,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         .doc(inputController1.text);
                     todayWork.set({
                       "title": inputController1.text,
-                      "content": inputController2.text
+                      "content": inputController2.text,
+                      "hour": hour,
+                      "min": min,
                     });
 
                     // for (String worker in selectedName) {
@@ -687,27 +576,26 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-  Widget hourMinute12H(){
+
+  Widget hourMinute12H() {
     return new TimePickerSpinner(
       is24HourMode: false,
       normalTextStyle: TextStyle(
-          fontSize: 30,
+        fontSize: 30,
         color: Colors.black54,
       ),
       highlightedTextStyle: TextStyle(
-          fontSize: 35,
-          color: Color(0xff316a62),
+        fontSize: 35,
+        color: Color(0xff316a62),
       ),
       spacing: 60,
       minutesInterval: 5,
       onTimeChange: (time) {
         setState(() {
-          _dateTime = time;
+          hour = time.hour;
+          min = time.minute;
         });
       },
     );
   }
 }
-
-
-
