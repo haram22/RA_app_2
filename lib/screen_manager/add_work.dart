@@ -8,6 +8,7 @@ import './manager_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];
 late List<String> selectedName = <String>[];
@@ -45,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DateTime _dateTime = DateTime.now();
   late String teamName, content, worker, deadlineDate, deadlineTime;
   bool _isChecked = false;
   DateTime? selectedDate;
@@ -236,6 +238,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   trailing: Wrap(
                     spacing: 25,
                     children: <Widget>[
+                      /* 날짜 선택
                       TextButton(
                         onPressed: () {
                           showModalBottomSheet<void>(
@@ -353,6 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: const Text('날짜 선택',
                             style: TextStyle(color: Color(0xff316a62))),
                       ),
+                      */
                       TextButton(
                         onPressed: () {
                           showModalBottomSheet<void>(
@@ -368,17 +372,24 @@ class _MyHomePageState extends State<MyHomePage> {
                                 return Container(
                                   padding: const EdgeInsets.all(20),
                                   height:
-                                      MediaQuery.of(context).size.height * 0.7,
+                                      MediaQuery.of(context).size.height * 0.6,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
                                       const Text(
-                                        '시간 선택',
+                                        '마감 시간 선택',
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Color(0xff316a62)),
                                       ),
-                                      Spacer(),
+                                      Spacer(flex: 3,),
+                                      hourMinute12H(),
+                                      new Container(
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: 50
+                                        ),
+                                      ),
+                                      //취소 저장 버튼
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 0),
@@ -676,4 +687,27 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+  Widget hourMinute12H(){
+    return new TimePickerSpinner(
+      is24HourMode: false,
+      normalTextStyle: TextStyle(
+          fontSize: 30,
+        color: Colors.black54,
+      ),
+      highlightedTextStyle: TextStyle(
+          fontSize: 35,
+          color: Color(0xff316a62),
+      ),
+      spacing: 60,
+      minutesInterval: 5,
+      onTimeChange: (time) {
+        setState(() {
+          _dateTime = time;
+        });
+      },
+    );
+  }
 }
+
+
+
