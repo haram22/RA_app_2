@@ -309,7 +309,7 @@ class _Home_mState extends State<Home_m> {
                                       },
                                       title: Text(docs[index]['title']),
                                       subtitle: Text(
-                                        "18:00까지",
+                                        "${docs[index]['hour']} : ${docs[index]['min']} 까지",
                                         style: TextStyle(fontSize: 12),
                                       ),
                                       trailing: IconButton(
