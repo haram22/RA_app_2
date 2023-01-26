@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './manager_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];

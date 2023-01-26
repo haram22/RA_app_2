@@ -1,6 +1,5 @@
 // 성경 //
 import 'package:flutter/material.dart';
-import './manager_home.dart';
 import 'package:intl/intl.dart';
 
 DateTime now = DateTime.now();

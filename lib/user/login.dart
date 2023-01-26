@@ -135,7 +135,6 @@ class _loginState extends State<login> {
                           .collection("작업자")
                           .where('id', isEqualTo: id)
                           .get();
-
                       try {
                         if (pw == snap.docs[0]['pw']) {
                           if (_value == 0) {
