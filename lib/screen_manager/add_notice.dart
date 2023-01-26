@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './manager_home.dart';
 import '../home/home_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';

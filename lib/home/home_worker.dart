@@ -107,34 +107,11 @@ class _Home_wState extends State<Home_w> {
                         backgroundColor: Colors.transparent,
                         weekdayTextColor: Colors.black,
                         digitsColor: Colors.black,
-                        selectedBackgroundColor: const Color(0xFF57AF87),
+                        selectedBackgroundColor: const Color(0xff316A62),
                         selectedDigitColor: Colors.white,
                         weekdays: ["Mo", "Tu", "We", "Th", "Fr"],
                         daysInWeek: 5,
                       ),
-                      // DatePicker(
-                      //   DateTime.now(),
-                      //   // width: 60,
-                      //   height: 80,
-                      //   controller: _controller,
-                      //   initialSelectedDate: DateTime.now(),
-                      //   selectionColor: Color(0xff316a62),
-                      //   selectedTextColor: Colors.white,
-                      //   daysCount: 4,
-                      //   inactiveDates: [
-                      //     // DateTime.now().add(Duration(days: 3)),
-                      //     // DateTime.now().add(Duration(days: 4)),
-                      //     // DateTime.now().add(Duration(days: 7))
-                      //   ],
-                      //   onDateChange: (date) {
-                      //     // New date selected
-                      //     setState(() {
-                      //       formattedDate =
-                      //           DateFormat('yyyy-MM-dd').format(date);
-                      //       print(_selectedValue);
-                      //     });
-                      //   },
-                      // ),
                     ],
                   ),
                 ),
@@ -267,251 +244,256 @@ class _Home_wState extends State<Home_w> {
                                 stream: FirebaseFirestore.instance
                                     .collection(
                                         // 날짜에 현 날짜 data 넣기
-                                        '관리자/관리자1/calendar/${formattedDate}/업무')
+                                        '작업자/김00/calendar/${formattedDate}/오늘의 할 일')
                                     .snapshots(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<
                                             QuerySnapshot<Map<String, dynamic>>>
                                         snapshot) {
                                   final docs = snapshot.data!.docs;
-                                  return ListView.builder(
-                                      itemBuilder: (context, index) {
-                                    // for (int i = 0; i < docs.length; i++) {
-                                    return docs[index]['worker'][index] == "김00"
-                                        ? ListTile(
-                                            dense: true,
-                                            visualDensity:
-                                                VisualDensity(vertical: -3),
-                                            onTap: () {
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) {
-                                                return detailPage(
-                                                  title: docs[index]['title'],
-                                                  contents: docs[index]
-                                                      ['content'],
-                                                  enrollTime: formattedDate,
-                                                  hour: docs[index]['hour']
-                                                      .toString(),
-                                                  min: docs[index]['min']
-                                                      .toString(),
-                                                  worker: docs[index]['worker']
-                                                      .toString(),
-                                                );
-                                              }));
-                                            },
-                                            trailing: IconButton(
-                                              onPressed: () {
-                                                showModalBottomSheet(
-                                                  enableDrag: true,
-                                                  isScrollControlled: true,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      30.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      30.0))),
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return StatefulBuilder(
-                                                        builder: (BuildContext
-                                                                context,
-                                                            StateSetter
-                                                                myState) {
-                                                      return Container(
-                                                        height: 350,
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0, 20, 0, 0),
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                            Text(
-                                                              '작업 알림 설정',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Color(
-                                                                      0xff316a62)),
-                                                            ),
-                                                            Spacer(),
-                                                            RadioListTile(
-                                                                title: Text(
-                                                                    "10분 전에 알리기"),
-                                                                value:
-                                                                    SingingCharacter
-                                                                        .ten,
-                                                                groupValue:
-                                                                    _character,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  myState(() {
-                                                                    setState(
-                                                                        () {
-                                                                      _character =
-                                                                          value;
-                                                                    });
-                                                                  });
-                                                                  print("10");
-                                                                  print(
-                                                                      _character);
-                                                                }),
-                                                            RadioListTile(
-                                                                title: Text(
-                                                                    "15분 전에 알리기"),
-                                                                value:
-                                                                    SingingCharacter
-                                                                        .fifteen,
-                                                                groupValue:
-                                                                    _character,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  myState(() {
-                                                                    setState(
-                                                                        () {
-                                                                      _character =
-                                                                          value;
-                                                                    });
-                                                                  });
-                                                                  print("15");
-                                                                  print(
-                                                                      _character);
-                                                                }),
-                                                            RadioListTile(
-                                                                title: Text(
-                                                                    "20분 전에 알리기"),
-                                                                value:
-                                                                    SingingCharacter
-                                                                        .twenty,
-                                                                groupValue:
-                                                                    _character,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  myState(() {
-                                                                    setState(
-                                                                        () {
-                                                                      _character =
-                                                                          value;
-                                                                    });
-                                                                    print("20");
-                                                                    print(
-                                                                        _character);
-                                                                  });
-                                                                }),
-                                                            RadioListTile(
-                                                                title:
-                                                                    Text("없음"),
-                                                                value:
-                                                                    SingingCharacter
-                                                                        .none,
-                                                                groupValue:
-                                                                    _character,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  myState(() {
-                                                                    setState(
-                                                                        () {
-                                                                      _character =
-                                                                          value;
-                                                                    });
-                                                                  });
-                                                                  print("none");
-                                                                  print(
-                                                                      _character);
-                                                                }),
-                                                            Spacer(),
-                                                            ElevatedButton(
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  primary: Color(
-                                                                      0xff316a62),
-                                                                  shape: RoundedRectangleBorder(
-                                                                      //모서리를 둥글게
-                                                                      borderRadius: BorderRadius.circular(15)),
-                                                                  minimumSize:
-                                                                      Size(30,
-                                                                          36),
-                                                                ),
-                                                                child:
-                                                                    const Text(
-                                                                  '확인',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        17,
-                                                                    color: Color(
-                                                                        0xffffffff),
-                                                                  ),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  final workerReference = FirebaseFirestore
-                                                                      .instance
-                                                                      .collection(
-                                                                          "작업자")
-                                                                      .doc(
-                                                                          '김00');
-                                                                  final calReference = workerReference
-                                                                      .collection(
-                                                                          "calendar")
-                                                                      .doc(
-                                                                          formattedDate);
-                                                                  final todayWork = calReference
-                                                                      .collection(
-                                                                          "업무 알람")
-                                                                      .doc(docs[index]
-                                                                              [
-                                                                              'title']
-                                                                          .toString());
-                                                                  todayWork
-                                                                      .set({
-                                                                    "alarm":
-                                                                        _character
-                                                                            .toString()
-                                                                  });
+                                  final managerReference = FirebaseFirestore
+                                      .instance
+                                      .collection("관리자")
+                                      .doc("관리자1");
+                                  final calendarReference = managerReference
+                                      .collection("calendar")
+                                      .doc(formattedDate.toString());
+                                  final workReference =
+                                      calendarReference.collection("업무").doc();
 
-                                                                  //         ==
-                                                                  //     '10분 전에 알리기'
-                                                                  // ? 10
-                                                                  // : _character.toString() ==
-                                                                  //         '15분 전에 알리기'
-                                                                  //     ? 15
-                                                                  //     : _character.toString() ==
-                                                                  //             '20분 전에 알리기'
-                                                                  //         ? 20
-                                                                  //         : _character.toString() == '없음'
-                                                                  //             ? 15
-                                                                  //             : 0,
-                                                                }),
-                                                            Spacer()
-                                                          ],
-                                                        ),
-                                                      );
-                                                    });
-                                                  },
-                                                );
-                                              },
-                                              icon: Icon(
-                                                  Icons.more_horiz_rounded),
-                                            ),
-                                            leading: Icon(
-                                              Icons.check_box_outlined,
-                                              color: Colors.grey,
-                                            ),
-                                            title: Text(docs[index]['title']),
-                                            subtitle: Text(
-                                              "${docs[index]['hour']} : ${docs[index]['min']} 까지",
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          )
-                                        : Container();
-                                  }
+                                  return ListView.builder(
+                                      itemCount: docs.length,
+                                      itemBuilder: (context, index) {
+                                        // for (int i = 0; i < docs.length; i++) {
+                                        return ListTile(
+                                          dense: true,
+                                          visualDensity:
+                                              VisualDensity(vertical: -3),
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return detailPage(
+                                                title: docs[index]['title'],
+                                                contents: docs[index]
+                                                    ['content'],
+                                                enrollTime: formattedDate,
+                                                hour: docs[index]['hour']
+                                                    .toString(),
+                                                min: docs[index]['min']
+                                                    .toString(),
+                                                worker: docs[index]['worker']
+                                                    .toString(),
+                                              );
+                                            }));
+                                          },
+                                          trailing: IconButton(
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                enableDrag: true,
+                                                isScrollControlled: true,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    30.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    30.0))),
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return StatefulBuilder(
+                                                      builder: (BuildContext
+                                                              context,
+                                                          StateSetter myState) {
+                                                    return Container(
+                                                      height: 350,
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              0, 20, 0, 0),
+                                                      child: Column(
+                                                        children: <Widget>[
+                                                          Text(
+                                                            '작업 알림 설정',
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                color: Color(
+                                                                    0xff316a62)),
+                                                          ),
+                                                          Spacer(),
+                                                          RadioListTile(
+                                                              title: Text(
+                                                                  "10분 전에 알리기"),
+                                                              value:
+                                                                  SingingCharacter
+                                                                      .ten,
+                                                              groupValue:
+                                                                  _character,
+                                                              onChanged:
+                                                                  (value) {
+                                                                myState(() {
+                                                                  setState(() {
+                                                                    _character =
+                                                                        value;
+                                                                  });
+                                                                });
+                                                                print("10");
+                                                                print(
+                                                                    _character);
+                                                              }),
+                                                          RadioListTile(
+                                                              title: Text(
+                                                                  "15분 전에 알리기"),
+                                                              value:
+                                                                  SingingCharacter
+                                                                      .fifteen,
+                                                              groupValue:
+                                                                  _character,
+                                                              onChanged:
+                                                                  (value) {
+                                                                myState(() {
+                                                                  setState(() {
+                                                                    _character =
+                                                                        value;
+                                                                  });
+                                                                });
+                                                                print("15");
+                                                                print(
+                                                                    _character);
+                                                              }),
+                                                          RadioListTile(
+                                                              title: Text(
+                                                                  "20분 전에 알리기"),
+                                                              value:
+                                                                  SingingCharacter
+                                                                      .twenty,
+                                                              groupValue:
+                                                                  _character,
+                                                              onChanged:
+                                                                  (value) {
+                                                                myState(() {
+                                                                  setState(() {
+                                                                    _character =
+                                                                        value;
+                                                                  });
+                                                                  print("20");
+                                                                  print(
+                                                                      _character);
+                                                                });
+                                                              }),
+                                                          RadioListTile(
+                                                              title: Text("없음"),
+                                                              value:
+                                                                  SingingCharacter
+                                                                      .none,
+                                                              groupValue:
+                                                                  _character,
+                                                              onChanged:
+                                                                  (value) {
+                                                                myState(() {
+                                                                  setState(() {
+                                                                    _character =
+                                                                        value;
+                                                                  });
+                                                                });
+                                                                print("none");
+                                                                print(
+                                                                    _character);
+                                                              }),
+                                                          Spacer(),
+                                                          ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                primary: Color(
+                                                                    0xff316a62),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                        //모서리를 둥글게
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15)),
+                                                                minimumSize:
+                                                                    Size(
+                                                                        30, 36),
+                                                              ),
+                                                              child: const Text(
+                                                                '확인',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 17,
+                                                                  color: Color(
+                                                                      0xffffffff),
+                                                                ),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                                final workerReference =
+                                                                    FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            "작업자")
+                                                                        .doc(
+                                                                            '김00');
+                                                                final calReference =
+                                                                    workerReference
+                                                                        .collection(
+                                                                            "calendar")
+                                                                        .doc(
+                                                                            formattedDate);
+                                                                final todayWork = calReference
+                                                                    .collection(
+                                                                        "업무 알람")
+                                                                    .doc(docs[index]
+                                                                            [
+                                                                            'title']
+                                                                        .toString());
+                                                                todayWork.set({
+                                                                  "alarm":
+                                                                      _character
+                                                                          .toString()
+                                                                });
+
+                                                                //         ==
+                                                                //     '10분 전에 알리기'
+                                                                // ? 10
+                                                                // : _character.toString() ==
+                                                                //         '15분 전에 알리기'
+                                                                //     ? 15
+                                                                //     : _character.toString() ==
+                                                                //             '20분 전에 알리기'
+                                                                //         ? 20
+                                                                //         : _character.toString() == '없음'
+                                                                //             ? 15
+                                                                //             : 0,
+                                                              }),
+                                                          Spacer()
+                                                        ],
+                                                      ),
+                                                    );
+                                                  });
+                                                },
+                                              );
+                                            },
+                                            icon:
+                                                Icon(Icons.more_horiz_rounded),
+                                          ),
+                                          leading: Icon(
+                                            Icons.check_box_outlined,
+                                            color: Colors.grey,
+                                          ),
+                                          title: Text(docs[index]['title']),
+                                          subtitle: Text(
+                                            "${docs[index]['hour']} : ${docs[index]['min']} 까지",
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        );
+                                      }
                                       // }
 
                                       // itemCount: docs.length,

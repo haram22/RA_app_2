@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 import '../home/home_manager.dart';
-import './manager_home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -528,43 +527,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       "min": min,
                       "isComplete": "접수",
                     });
-                    final workerReference =
-                        FirebaseFirestore.instance.collection("작업자").doc('김00');
-                    final calReference = workerReference
-                        .collection("calendar")
-                        .doc(formattedDate.toString());
-                    final todayWork = calReference
-                        .collection("오늘의 할 일")
-                        .doc(inputController1.text);
-                    todayWork.set({
-                      "title": inputController1.text,
-                      "content": inputController2.text,
-                      "hour": hour,
-                      "min": min,
-                    });
 
                     for (String worker in selectedName) {
+                      final workerReference = FirebaseFirestore.instance
+                          .collection("작업자")
+                          .doc(worker);
+                      final calReference = workerReference
+                          .collection("calendar")
+                          .doc(formattedDate.toString());
+                      final todayWork = calReference
+                          .collection("오늘의 할 일")
+                          .doc(inputController1.text);
+                      todayWork.set({
+                        "title": inputController1.text,
+                        "content": inputController2.text,
+                        "hour": hour,
+                        "min": min,
+                        "worker": FieldValue.arrayUnion(selectedName),
+                      });
                       workReference.update({
                         worker: {
                           'isComplete': "접수",
                         }
                       });
                     }
-
-                    //   final workerReference = FirebaseFirestore.instance
-                    //       .collection("작업자")
-                    //       .doc('김00');
-                    //   final calReference = workerReference
-                    //       .collection("calendar")
-                    //       .doc("2023-01-14");
-                    //   final todayWork = calReference
-                    //       .collection("오늘의 할 일")
-                    //       .doc(inputController1.text);
-                    //   todayWork.set({
-                    //     "content": inputController1.text,
-                    //     "isComplete": "접수",
-                    //   });
-                    // }
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Home_m()));
