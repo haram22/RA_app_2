@@ -11,11 +11,17 @@ class detailPage extends StatefulWidget {
       {super.key,
       required this.title,
       required this.contents,
-      required this.enrollTime});
+      required this.enrollTime,
+      required this.hour,
+      required this.min,
+      required this.worker});
 
   final String title;
   final String contents;
   final String enrollTime;
+  final String hour;
+  final String min;
+  final String worker;
   @override
   State<detailPage> createState() => _detailPageState();
 }
@@ -91,19 +97,16 @@ class _detailPageState extends State<detailPage> {
           ListTile(
             visualDensity: VisualDensity(vertical: 3), // listtile 세로 길이 늘림
             contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 16.0),
-            leading: Column(
-              children: [
+            leading:
                 Text('담당자', style: TextStyle(fontSize: 13, color: Colors.grey)),
-                SizedBox(height: 5),
-                CircleAvatar(
-                  backgroundColor: Color(0xffffffff),
-                  backgroundImage: AssetImage('assets/profile.png'),
-                  radius: 20,
-                ),
-              ],
-            ),
-            // trailing: Icon(Icons.arrow_forward_ios),
+            trailing: Text(widget.worker),
           ),
+          // ListTile(
+          //   visualDensity: VisualDensity(vertical: 3), // listtile 세로 길이 늘림
+          //   contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 16.0),
+          //   leading: Text('담당자', style: TextStyle(color: Colors.grey)),
+          //   trailing: Text(widget.enrollTime),
+          // ),
           ListTile(
             visualDensity: VisualDensity(vertical: 3), // listtile 세로 길이 늘림
             contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 16.0),
@@ -112,7 +115,8 @@ class _detailPageState extends State<detailPage> {
           ),
           ListTile(
             leading: Text('마감일자', style: TextStyle(color: Colors.grey)),
-            trailing: Text('2022.12.26(월) 오후 04:30'),
+            trailing:
+                Text('${widget.enrollTime}   ${widget.hour} : ${widget.min}'),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 100),

@@ -340,131 +340,131 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                ListTile(
-                  title: Text('첨부파일'),
-                  trailing: IconButton(
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                            isScrollControlled: true,
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadiusDirectional.only(
-                                topEnd: Radius.circular(25),
-                                topStart: Radius.circular(25),
-                              ),
-                            ),
-                            builder: (BuildContext context) {
-                              return Container(
-                                padding: const EdgeInsets.all(20),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.6,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    const Text(
-                                      '첨부 파일',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xff316a62)),
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    MaterialButton(
-                                      color: Colors.grey,
-                                      child: const Text("갤러리 +",
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onPressed: () {
-                                        // pickImage();
-                                        getImage(ImageSource.gallery);
-                                      },
-                                    ),
-                                    MaterialButton(
-                                      color: Colors.grey,
-                                      child: const Text("카메라 +",
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onPressed: () {
-                                        getImage(ImageSource.camera);
-                                      },
-                                    ),
-                                    Container(
-                                        margin: EdgeInsets.only(top: 10),
-                                        child: Center(
-                                          child: _image != null
-                                              ? Image.file(File(_image!.path))
-                                              : Text("No image selected"),
-                                        )),
-                                    Spacer(),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Color(0xff316a62),
-                                                shape: RoundedRectangleBorder(
-                                                    //모서리를 둥글게
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                minimumSize: Size(30, 36),
-                                              ),
-                                              child: const Text(
-                                                '취소',
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Color(0xffffffff),
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Home_m()));
-                                              }),
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color(0xff316a62),
-                                              shape: RoundedRectangleBorder(
-                                                  //모서리를 둥글게
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15)),
-                                              minimumSize: Size(30, 36),
-                                            ),
-                                            child: const Text(
-                                              '업로드',
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                color: Color(0xffffffff),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Home_m()));
-                                            },
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            });
-                      },
-                      icon: Icon(Icons.arrow_forward_ios)),
-                ),
+                // ListTile(
+                //   title: Text('첨부파일'),
+                //   trailing: IconButton(
+                //       onPressed: () {
+                //         showModalBottomSheet<void>(
+                //             isScrollControlled: true,
+                //             context: context,
+                //             shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadiusDirectional.only(
+                //                 topEnd: Radius.circular(25),
+                //                 topStart: Radius.circular(25),
+                //               ),
+                //             ),
+                //             builder: (BuildContext context) {
+                //               return Container(
+                //                 padding: const EdgeInsets.all(20),
+                //                 height:
+                //                     MediaQuery.of(context).size.height * 0.6,
+                //                 child: Column(
+                //                   mainAxisSize: MainAxisSize.min,
+                //                   children: <Widget>[
+                //                     const Text(
+                //                       '첨부 파일',
+                //                       style: TextStyle(
+                //                           fontSize: 20,
+                //                           color: Color(0xff316a62)),
+                //                     ),
+                //                     SizedBox(
+                //                       height: 20,
+                //                     ),
+                //                     MaterialButton(
+                //                       color: Colors.grey,
+                //                       child: const Text("갤러리 +",
+                //                           style:
+                //                               TextStyle(color: Colors.white)),
+                //                       onPressed: () {
+                //                         // pickImage();
+                //                         getImage(ImageSource.gallery);
+                //                       },
+                //                     ),
+                //                     MaterialButton(
+                //                       color: Colors.grey,
+                //                       child: const Text("카메라 +",
+                //                           style:
+                //                               TextStyle(color: Colors.white)),
+                //                       onPressed: () {
+                //                         getImage(ImageSource.camera);
+                //                       },
+                //                     ),
+                //                     Container(
+                //                         margin: EdgeInsets.only(top: 10),
+                //                         child: Center(
+                //                           child: _image != null
+                //                               ? Image.file(File(_image!.path))
+                //                               : Text("No image selected"),
+                //                         )),
+                //                     Spacer(),
+                //                     Padding(
+                //                       padding:
+                //                           const EdgeInsets.only(bottom: 20),
+                //                       child: Row(
+                //                         mainAxisAlignment:
+                //                             MainAxisAlignment.spaceEvenly,
+                //                         children: <Widget>[
+                //                           ElevatedButton(
+                //                               style: ElevatedButton.styleFrom(
+                //                                 primary: Color(0xff316a62),
+                //                                 shape: RoundedRectangleBorder(
+                //                                     //모서리를 둥글게
+                //                                     borderRadius:
+                //                                         BorderRadius.circular(
+                //                                             15)),
+                //                                 minimumSize: Size(30, 36),
+                //                               ),
+                //                               child: const Text(
+                //                                 '취소',
+                //                                 style: TextStyle(
+                //                                   fontSize: 17,
+                //                                   color: Color(0xffffffff),
+                //                                 ),
+                //                                 textAlign: TextAlign.center,
+                //                               ),
+                //                               onPressed: () {
+                //                                 Navigator.push(
+                //                                     context,
+                //                                     MaterialPageRoute(
+                //                                         builder: (context) =>
+                //                                             Home_m()));
+                //                               }),
+                //                           ElevatedButton(
+                //                             style: ElevatedButton.styleFrom(
+                //                               primary: Color(0xff316a62),
+                //                               shape: RoundedRectangleBorder(
+                //                                   //모서리를 둥글게
+                //                                   borderRadius:
+                //                                       BorderRadius.circular(
+                //                                           15)),
+                //                               minimumSize: Size(30, 36),
+                //                             ),
+                //                             child: const Text(
+                //                               '업로드',
+                //                               style: TextStyle(
+                //                                 fontSize: 17,
+                //                                 color: Color(0xffffffff),
+                //                               ),
+                //                               textAlign: TextAlign.center,
+                //                             ),
+                //                             onPressed: () {
+                //                               Navigator.push(
+                //                                   context,
+                //                                   MaterialPageRoute(
+                //                                       builder: (context) =>
+                //                                           Home_m()));
+                //                             },
+                //                           )
+                //                         ],
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               );
+                //             });
+                //       },
+                //       icon: Icon(Icons.arrow_forward_ios)),
+                // ),
               ]).toList(),
             ),
           )),
@@ -543,12 +543,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       "min": min,
                     });
 
-                    // for (String worker in selectedName) {
-                    //   workReference.update({
-                    //     worker: {
-                    //       'isComplete': "접수",
-                    //     }
-                    //   });
+                    for (String worker in selectedName) {
+                      workReference.update({
+                        worker: {
+                          'isComplete': "접수",
+                        }
+                      });
+                    }
 
                     //   final workerReference = FirebaseFirestore.instance
                     //       .collection("작업자")
