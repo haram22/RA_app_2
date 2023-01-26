@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'screen_worker/setting_w.dart';
 import 'user/login.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -18,15 +18,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'BM Hanna Pro',
-        primarySwatch: Colors.blue,
-      ),
-      //test
-      home: login()
-      //
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          fontFamily: 'BM Hanna Pro',
+          primarySwatch: Colors.blue,
+        ),
+        //test
+        home: login()
+        //
+        );
   }
 }

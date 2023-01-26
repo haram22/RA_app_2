@@ -1,5 +1,6 @@
 // 하람 //
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -10,10 +11,10 @@ import 'package:ra_application/screen_manager/check_detail.dart';
 import '../screen_manager/add_notice.dart';
 import '../screen_manager/add_urgent_alarm.dart';
 import '../screen_manager/add_work.dart';
-import '../screen_manager/manager_home.dart';
 import '../screen_manager/setting_m.dart';
 import '../screen_manager/work_detail.dart';
 import '../screen_worker/setting_w.dart';
+import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'package:intl/intl.dart';
 
 enum SingingCharacter { ten, fifteen, twenty, none }
@@ -26,7 +27,8 @@ class Home_m extends StatefulWidget {
 }
 
 DateTime now = DateTime.now();
-String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+DateTime _selectedValue = DateTime.now();
+String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedValue);
 
 class _Home_mState extends State<Home_m> {
   SingingCharacter? _character = SingingCharacter.ten;
@@ -50,9 +52,6 @@ class _Home_mState extends State<Home_m> {
     false,
   ];
   DatePickerController _controller = DatePickerController();
-  DateTime _dateTime = DateTime.now();
-
-  DateTime _selectedValue = DateTime.now();
 
   @override
   void initState() {
@@ -93,7 +92,7 @@ class _Home_mState extends State<Home_m> {
           child: Column(
             children: [
               Text(
-                "00님! 오늘 하루도 안전한 하루 되세요 :)",
+                "관리자님! 오늘 하루도 안전한 하루 되세요 :)",
                 style: TextStyle(fontSize: 15.5),
               ),
               Container(
@@ -109,27 +108,22 @@ class _Home_mState extends State<Home_m> {
                     //   padding: EdgeInsets.all(20),
                     // ),
                     Container(
-                      child: DatePicker(
-                        DateTime.now(),
-                        width: 60,
-                        height: 80,
-                        controller: _controller,
-                        initialSelectedDate: DateTime.now(),
-                        selectionColor: Color(0xff316a62),
-                        selectedTextColor: Colors.white,
-                        inactiveDates: [
-                          // DateTime.now().add(Duration(days: 3)),
-                          // DateTime.now().add(Duration(days: 4)),
-                          // DateTime.now().add(Duration(days: 7))
-                        ],
-                        onDateChange: (date) {
-                          // New date selected
-                          setState(() {
-                            formattedDate =
-                                DateFormat('yyyy-MM-dd').format(date);
-                            print(formattedDate);
-                          });
-                        },
+                      child: WeeklyDatePicker(
+                        selectedDay: _selectedValue,
+                        changeDay: (value) => setState(() {
+                          formattedDate =
+                              DateFormat('yyyy-MM-dd').format(value);
+                          _selectedValue = value;
+                          print(_selectedValue);
+                        }),
+                        enableWeeknumberText: false,
+                        backgroundColor: Colors.transparent,
+                        weekdayTextColor: Colors.black,
+                        digitsColor: Colors.black,
+                        selectedBackgroundColor: const Color(0xff316A62),
+                        selectedDigitColor: Colors.white,
+                        weekdays: ["Mo", "Tu", "We", "Th", "Fr"],
+                        daysInWeek: 5,
                       ),
                     ),
                   ],
@@ -304,6 +298,14 @@ class _Home_mState extends State<Home_m> {
                                                             ['title'],
                                                         contents: docs[index]
                                                             ['content'],
+                                                        hour: docs[index]
+                                                                ['hour']
+                                                            .toString(),
+                                                        min: docs[index]['min']
+                                                            .toString(),
+                                                        worker: docs[index]
+                                                                ['worker']
+                                                            .toString(),
                                                         enrollTime:
                                                             formattedDate)));
                                       },

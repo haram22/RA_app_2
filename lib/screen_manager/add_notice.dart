@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 DateTime now = DateTime.now();
-String formattedDate = DateFormat('yyyy-MM-dd 00:00:00.000').format(now);
+String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isChecked = false;
