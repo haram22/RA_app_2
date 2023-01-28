@@ -8,6 +8,20 @@ import 'screen_worker/setting_w.dart';
 import 'user/login.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  flutterLocalNotificationsPlugin.show(
+      message.notification.hashCode,
+      message.notification!.title,
+      message.notification!.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id, channel.name, channelDescription: channel.description,
+          // TODO add a proper drawable resource to android, for now using
+          //      one that already exists in example app.
+          icon: message.notification!.android!.smallIcon,
+        ),
+      ));
   print('Handling a background message ${message.messageId}');
 }
 
@@ -15,7 +29,7 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 
-void main() async{
+Future<String?> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -54,6 +68,7 @@ void main() async{
   runApp(const MyApp());
   final token = await FirebaseMessaging.instance.getToken();
   print("token : ${token ?? 'token NULL!'}");
+  return token;
 }
 
 class MyApp extends StatelessWidget {
@@ -61,7 +76,14 @@ class MyApp extends StatelessWidget {
 
   @override
   void initState() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+
+    var initialzationsettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings =
+    InitializationSettings(android: initialzationsettingsAndroid);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    /*FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       var androidNotiDetails = AndroidNotificationDetails(
@@ -80,12 +102,30 @@ class MyApp extends StatelessWidget {
           details,
         );
       }
+    });*/
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                  channel.id, channel.name, channelDescription: channel.description,
+                  // TODO add a proper drawable resource to android, for now using
+                  //      one that already exists in example app.
+                  icon: android.smallIcon //'launch_background',
+              ),
+            ));
+      }
     });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    /*FirebaseMessaging.onMessageOpenedApp.listen((message) {
       print(message);
       //super.initState();
-    });
+    });*/
 
   }
 

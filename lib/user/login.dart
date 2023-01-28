@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:ra_application/main.dart';
 
 import '../home/home_manager.dart';
 import '../home/home_worker.dart';
@@ -138,12 +140,26 @@ class _loginState extends State<login> {
                       try {
                         if (pw == snap.docs[0]['pw']) {
                           if (_value == 0) {
+                            final token1 = await main();
+                            final tokenReference = FirebaseFirestore.instance
+                                .collection("작업자")
+                                .doc("김00");
+                            tokenReference.update({
+                              "token": '${token1}'
+                            });
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               // return streamT();
                               return Home_w();
                             }));
                           } else {
+                            final token1 = await main();
+                            final tokenReference = FirebaseFirestore.instance
+                                .collection("관리자")
+                                .doc("관리자1");
+                            tokenReference.update({
+                              "token": '${token1}'
+                            });
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return Home_m();

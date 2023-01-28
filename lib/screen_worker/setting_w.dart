@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -81,6 +82,12 @@ class _setting_wState extends State<setting_w> {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: TextButton(
                     onPressed: () {
+                      final tokenReference = FirebaseFirestore.instance
+                          .collection("관리자")
+                          .doc("관리자1");
+                      tokenReference.update({
+                        "token": ''
+                      });
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => login()));
                     },

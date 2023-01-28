@@ -72,4 +72,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    //Okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    //Gson
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
