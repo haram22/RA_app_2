@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../home/home_manager.dart';
 import '../home/home_worker.dart';
-import '../home/streamTest.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -33,7 +32,7 @@ class _loginState extends State<login> {
               decoration: InputDecoration(
                 labelText: 'ID',
                 hintText: 'ID 번호를 입력해주세요.',
-                labelStyle: TextStyle(fontSize: 20, color: Color(0xff316a62)),
+                labelStyle: TextStyle(fontSize:20,color: Color(0xff316a62)),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(width: 2.5, color: Color(0xff316a62)),
@@ -54,7 +53,7 @@ class _loginState extends State<login> {
               decoration: InputDecoration(
                 labelText: '비밀번호',
                 hintText: '비밀번호를 입력해주세요.',
-                labelStyle: TextStyle(color: Color(0xff316a62), fontSize: 20),
+                labelStyle: TextStyle(color: Color(0xff316a62),fontSize: 20),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(width: 2.5, color: Color(0xff316a62)),
@@ -77,13 +76,11 @@ class _loginState extends State<login> {
                     spacing: 10.0,
                     children: List<Widget>.generate(
                       2,
-                      (int index) {
+                          (int index) {
                         return ChoiceChip(
-                          shape: RoundedRectangleBorder(
-                              //모서리를 둥글게
+                          shape: RoundedRectangleBorder(	//모서리를 둥글게
                               borderRadius: BorderRadius.circular(20),
-                              side: BorderSide(
-                                  width: 1.5, color: Color(0xff6A6A6A))),
+                              side: BorderSide(width: 1.5, color: Color(0xff6A6A6A))),
                           selectedColor: Color(0xff6A6A6A),
                           backgroundColor: Color(0xffe8c869),
                           selected: _value == index,
@@ -107,10 +104,11 @@ class _loginState extends State<login> {
             Spacer(),
             Spacer(),
             SizedBox(
+
               height: 60,
               width: 250,
               child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () async{
 /*
               height: 57,
               width: 277,
@@ -131,59 +129,87 @@ class _loginState extends State<login> {
                         content: Text("비밀번호를 입력해주세요"),
                       ));
                     } else {
-                      QuerySnapshot snap = await FirebaseFirestore.instance
-                          .collection("작업자")
-                          .where('id', isEqualTo: id)
-                          .get();
-                      try {
-                        if (pw == snap.docs[0]['pw']) {
-                          if (_value == 0) {
+                      if(_value == 0) {
+                        QuerySnapshot snap = await FirebaseFirestore.instance
+                            .collection("작업자")
+                            .where('id', isEqualTo: id)
+                            .get();
+                        try {
+                          if (pw == snap.docs[0]['pw']) {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              // return streamT();
-                              return Home_w();
-                            }));
+                                  return Home_w(name: snap.docs[0]['name']);
+                                }));
                           } else {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Home_m();
-                            }));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("비밀번호가 일치하지 않습니다"),
+                            ));
                           }
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text("비밀번호가 일치하지 않습니다"),
+                        } catch (e) {
+                          String error = " ";
+                          if (e.toString() ==
+                              "RangeError (index): Invalid value: Valid value range is empty: 0") {
+                            setState(() {
+                              error = "일치하는 아이디가 존재하지 않습니다";
+                            });
+                          } else {
+                            setState(() {
+                              error = "Error occured";
+                            });
+                          }
+
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(error),
                           ));
                         }
-                      } catch (e) {
-                        String error = " ";
-                        if (e.toString() ==
-                            "RangeError (index): Invalid value: Valid value range is empty: 0") {
-                          setState(() {
-                            error = "일치하는 아이디가 존재하지 않습니다";
-                          });
-                        } else {
-                          setState(() {
-                            error = "Error occured";
-                          });
+                      } else {
+                        QuerySnapshot snap = await FirebaseFirestore.instance
+                            .collection("관리자")
+                            .where('id', isEqualTo: id)
+                            .get();
+                        try {
+                          if (pw == snap.docs[0]['pw']) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return Home_m();
+                                }));
+                          } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("비밀번호가 일치하지 않습니다"),
+                            ));
+                          }
+                        } catch (e) {
+                          String error = " ";
+                          if (e.toString() ==
+                              "RangeError (index): Invalid value: Valid value range is empty: 0") {
+                            setState(() {
+                              error = "일치하는 아이디가 존재하지 않습니다";
+                            });
+                          } else {
+                            setState(() {
+                              error = "Error occured";
+                            });
+                          }
+
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(error),
+                          ));
                         }
 
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(error),
-                        ));
                       }
 
-                      print("⭐️⭐️id: " + snap.docs[0]['id']);
+
                     }
                   },
                   child: Text(
                     "Login",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: Colors.white,fontSize: 18),
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xff316a62),
-                    shape: RoundedRectangleBorder(
-                        //모서리를 둥글게
+                    shape: RoundedRectangleBorder(	//모서리를 둥글게
                         borderRadius: BorderRadius.circular(20)),
                   )),
             ),
