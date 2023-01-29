@@ -166,72 +166,79 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                             builder: (BuildContext context) {
-                              return Container(
-                                padding: const EdgeInsets.all(20),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.7,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    const Text(
-                                      '담당자',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xff316a62)),
-                                    ),
-                                    Expanded(
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: name.length,
-                                          itemBuilder: (context, index) {
-                                            return ListTile(
-                                              leading: CircleAvatar(
-                                                backgroundColor: Colors.white,
-                                                backgroundImage: AssetImage(
-                                                    'assets/profile.png'),
-                                              ),
-                                              title: Text('${name[index]}'),
-                                              trailing: Checkbox(
-                                                checkColor: Colors.white,
-                                                activeColor: Colors.redAccent,
-                                                value: isCheckedName[index],
-                                                onChanged: (bool? value) {
-                                                  setState(() {
-                                                    isCheckedName[index] =
-                                                        value!;
-                                                    if (isCheckedName[index]) {
-                                                      selectedName
-                                                          .add(name[index]);
-                                                    } else
-                                                      selectedName
-                                                          .remove(name[index]);
-                                                  });
-                                                },
-                                              ),
-                                            );
-                                          }),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                              return StatefulBuilder(
+                                builder: (BuildContext context,
+                              StateSetter myState){
+                                  return Container(
+                                    padding: const EdgeInsets.all(20),
+                                    height:
+                                        MediaQuery.of(context).size.height * 0.7,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        ElevatedButton(
-                                          child: const Text('취소'),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
+                                        const Text(
+                                          '담당자',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Color(0xff316a62)),
                                         ),
-                                        ElevatedButton(
-                                          child: const Text('선택'),
-                                          onPressed: () =>
-                                              Navigator.pop(context),
+                                        Expanded(
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: name.length,
+                                              itemBuilder: (context, index) {
+                                                return ListTile(
+                                                  leading: CircleAvatar(
+                                                    backgroundColor: Colors.white,
+                                                    backgroundImage: AssetImage(
+                                                        'assets/profile.png'),
+                                                  ),
+                                                  title: Text('${name[index]}'),
+                                                  trailing: Checkbox(
+                                                    checkColor: Colors.white,
+                                                    activeColor: Colors.redAccent,
+                                                    value: isCheckedName[index],
+                                                    onChanged: (bool? value){ myState(() {
+                                                      setState(() {
+                                                        isCheckedName[index] =
+                                                            value!;
+                                                        if (isCheckedName[index]) {
+                                                          selectedName
+                                                              .add(name[index]);
+                                                        } else
+                                                          selectedName
+                                                              .remove(name[index]);
+                                                      });
+                                                      });
+                                                    },
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            ElevatedButton(
+                                              child: const Text('취소'),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                            ElevatedButton(
+                                              child: const Text('선택'),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  );
+                                }
                               );
-                            });
+                            }
+                            );
                       },
                       icon: Icon(Icons.arrow_forward_ios)),
                 ),

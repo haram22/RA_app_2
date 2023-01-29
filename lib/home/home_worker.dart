@@ -315,11 +315,8 @@ class _Home_wState extends State<Home_w> {
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
-                                                    return StatefulBuilder(
-                                                        builder: (BuildContext
-                                                                context,
-                                                            StateSetter
-                                                                myState) {
+                                                    return StatefulBuilder(builder:
+                                                        (BuildContext context, StateSetter myState) {
                                                       return Container(
                                                         height: 350,
                                                         padding:
@@ -343,14 +340,8 @@ class _Home_wState extends State<Home_w> {
                                                                         .ten,
                                                                 groupValue:
                                                                     _character,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  myState(() {
-                                                                    setState(
-                                                                        () {
-                                                                      _character =
-                                                                          value;
-                                                                    });
+                                                                onChanged: (value) {
+                                                                  myState(() { setState(() { _character = value;});
                                                                   });
                                                                   print("10");
                                                                   print(
