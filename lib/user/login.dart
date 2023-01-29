@@ -83,7 +83,6 @@ class _loginState extends State<login> {
                       (int index) {
                         return ChoiceChip(
                           shape: RoundedRectangleBorder(
-
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide(
                                   width: 1.5, color: Color(0xff6A6A6A))),
@@ -143,17 +142,13 @@ class _loginState extends State<login> {
                         try {
                           if (pw == snap.docs[0]['pw']) {
                             final tokenReference = FirebaseFirestore.instance
-                                .collection("작업자")
-                                .doc("김00");
-                            tokenReference.update({
-                              "token": '${token1}'
-                            });
+                                .collection("worker")
+                                .doc("kim00");
+                            tokenReference.update({"token": '${token1}'});
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-
                               return Home_w(name: snap.docs[0]['name']);
                             }));
-
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -177,8 +172,7 @@ class _loginState extends State<login> {
                             content: Text(error),
                           ));
                         }
-                      }
-                      else {
+                      } else {
                         QuerySnapshot snap = await FirebaseFirestore.instance
                             .collection("manager")
                             .where('id', isEqualTo: id)
@@ -186,11 +180,9 @@ class _loginState extends State<login> {
                         try {
                           if (pw == snap.docs[0]['pw']) {
                             final tokenReference = FirebaseFirestore.instance
-                                .collection("관리자")
-                                .doc("관리자1");
-                            tokenReference.update({
-                              "token": '${token1}'
-                            });
+                                .collection("manager")
+                                .doc("manager1");
+                            tokenReference.update({"token": '${token1}'});
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return Home_m();
@@ -201,7 +193,7 @@ class _loginState extends State<login> {
                               content: Text("비밀번호가 일치하지 않습니다"),
                             ));
                           }
-                        }  catch (e) {
+                        } catch (e) {
                           String error = " ";
                           if (e.toString() ==
                               "RangeError (index): Invalid value: Valid value range is empty: 0") {
@@ -228,7 +220,6 @@ class _loginState extends State<login> {
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xff316a62),
                     shape: RoundedRectangleBorder(
-
                         borderRadius: BorderRadius.circular(20)),
                   )),
             ),

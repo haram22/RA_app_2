@@ -14,8 +14,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -24,22 +23,22 @@ void main() async{
     'high_importance_channel', // id
     'High Importance Notifications', // title
     description:
-    'This channel is used for important notifications.', // description
+        'This channel is used for important notifications.', // description
     importance: Importance.high,
   );
 
   var initialzationSettingsAndroid =
-  AndroidInitializationSettings('@mipmap/ic_launcher');
+      AndroidInitializationSettings('@mipmap/ic_launcher');
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
-  var initializationSettings = InitializationSettings(
-      android: initialzationSettingsAndroid);
+  var initializationSettings =
+      InitializationSettings(android: initialzationSettingsAndroid);
 
   await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
@@ -55,7 +54,7 @@ void main() async{
 
   final token = await FirebaseMessaging.instance.getToken();
   print("token : ${token ?? 'token NULL!'}");
-  //return token;
+  // return token;
 }
 
 class MyApp extends StatelessWidget {
@@ -72,8 +71,7 @@ class MyApp extends StatelessWidget {
         channelDescription: channel.description,
       );
       //var iOSNotiDetails = const IOSNotificationDetails();
-      var details =
-      NotificationDetails(android: androidNotiDetails);
+      var details = NotificationDetails(android: androidNotiDetails);
       if (notification != null) {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -88,7 +86,6 @@ class MyApp extends StatelessWidget {
       print(message);
       //super.initState();
     });
-
   }
 
   @override
@@ -102,8 +99,7 @@ class MyApp extends StatelessWidget {
         ),
         //test
         home: login()
-      //
-    );
+        //
+        );
   }
-
 }
