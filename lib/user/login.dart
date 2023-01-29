@@ -18,7 +18,7 @@ class login extends StatefulWidget {
 int? _value = 0;
 
 class _loginState extends State<login> {
-  List<String> role = ["작업자", "관리자"];
+  List<String> role = ["worker", "manager"];
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
 
@@ -80,10 +80,10 @@ class _loginState extends State<login> {
                     spacing: 10.0,
                     children: List<Widget>.generate(
                       2,
-                          (int index) {
+                      (int index) {
                         return ChoiceChip(
                           shape: RoundedRectangleBorder(
-                            //모서리를 둥글게
+
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide(
                                   width: 1.5, color: Color(0xff6A6A6A))),
@@ -135,9 +135,9 @@ class _loginState extends State<login> {
                         content: Text("비밀번호를 입력해주세요"),
                       ));
                     } else {
-                      if(_value == 0) {
+                      if (_value == 0) {
                         QuerySnapshot snap = await FirebaseFirestore.instance
-                            .collection("작업자")
+                            .collection("worker")
                             .where('id', isEqualTo: id)
                             .get();
                         try {
@@ -150,9 +150,10 @@ class _loginState extends State<login> {
                             });
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  // return streamT();
-                                  return Home_w(name: snap.docs[0]['name']);
-                                }));
+
+                              return Home_w(name: snap.docs[0]['name']);
+                            }));
+
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -179,7 +180,7 @@ class _loginState extends State<login> {
                       }
                       else {
                         QuerySnapshot snap = await FirebaseFirestore.instance
-                            .collection("관리자")
+                            .collection("manager")
                             .where('id', isEqualTo: id)
                             .get();
                         try {
@@ -192,8 +193,8 @@ class _loginState extends State<login> {
                             });
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return Home_m();
-                                }));
+                              return Home_m();
+                            }));
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -227,7 +228,7 @@ class _loginState extends State<login> {
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xff316a62),
                     shape: RoundedRectangleBorder(
-                      //모서리를 둥글게
+
                         borderRadius: BorderRadius.circular(20)),
                   )),
             ),

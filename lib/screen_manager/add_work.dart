@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
-late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];
+late List<dynamic> name = <dynamic>["kim00", "lee00", "park00", "jung00"];
 late List<String> selectedName = <String>[];
 
 late List<bool> isCheckedName = <bool>[false, false, false, false];
@@ -22,7 +22,7 @@ class AddTask extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '업무추가(관리자)',
+      title: '업무추가(manager)',
       theme: ThemeData(
         fontFamily: 'BM Hanna Pro',
         primarySwatch: Colors.blue,
@@ -511,13 +511,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     print("❌❌❌");
                     final managerReference = FirebaseFirestore.instance
-                        .collection("관리자")
-                        .doc("관리자1");
+                        .collection("manager")
+                        .doc("manager1");
                     final calendarReference = managerReference
                         .collection("calendar")
                         .doc(formattedDate.toString());
                     final workReference = calendarReference
-                        .collection("업무")
+                        .collection("task")
                         .doc(inputController1.text);
                     workReference.set({
                       "title": inputController1.text,
@@ -530,13 +530,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     for (String worker in selectedName) {
                       final workerReference = FirebaseFirestore.instance
-                          .collection("작업자")
+                          .collection("worker")
                           .doc(worker);
                       final calReference = workerReference
                           .collection("calendar")
                           .doc(formattedDate.toString());
                       final todayWork = calReference
-                          .collection("오늘의 할 일")
+                          .collection("today task")
                           .doc(inputController1.text);
                       todayWork.set({
                         "title": inputController1.text,

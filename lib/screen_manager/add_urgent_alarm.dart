@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];
+late List<dynamic> name = <dynamic>["kim00", "lee00", "park00", "jung00"];
 late List<dynamic> team = <dynamic>["A팀", "B팀", "C팀", "D팀"];
 late List<String> selectedTeam = <String>[];
 late List<String> selectedName = <String>[];
@@ -479,7 +479,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
 
                       final workerReference = FirebaseFirestore.instance
-                          .collection("작업자")
+                          .collection("worker")
                           .doc(worker);
                       final calReference = workerReference
                           .collection("calendar")
