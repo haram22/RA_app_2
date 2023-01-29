@@ -122,8 +122,16 @@ class _Home_mState extends State<Home_m> {
                         digitsColor: Colors.black,
                         selectedBackgroundColor: const Color(0xff316A62),
                         selectedDigitColor: Colors.white,
-                        weekdays: ["Mo", "Tu", "We", "Th", "Fr"],
-                        daysInWeek: 5,
+                        weekdays: [
+                          "Mon",
+                          "Tue",
+                          "Wen",
+                          "Thu",
+                          "Fri",
+                          "Sat",
+                          "Sun"
+                        ],
+                        daysInWeek: 7,
                       ),
                     ),
                   ],
