@@ -55,7 +55,7 @@ void main() async{
 
   final token = await FirebaseMessaging.instance.getToken();
   print("token : ${token ?? 'token NULL!'}");
-  return token;
+  //return token;
 }
 
 class MyApp extends StatelessWidget {
