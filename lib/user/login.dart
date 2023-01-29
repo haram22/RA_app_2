@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:ra_application/main.dart';
 
 import '../home/home_manager.dart';
+import '../main.dart';
 import '../home/home_worker.dart';
+import '../home/streamTest.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -29,7 +33,7 @@ class _loginState extends State<login> {
           children: [
             TextField(
               controller: idController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'ID',
                 hintText: 'ID 번호를 입력해주세요.',
                 labelStyle: TextStyle(fontSize: 20, color: Color(0xff316a62)),
@@ -50,7 +54,7 @@ class _loginState extends State<login> {
             SizedBox(height: 30),
             TextField(
               controller: pwController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: '비밀번호',
                 hintText: '비밀번호를 입력해주세요.',
                 labelStyle: TextStyle(color: Color(0xff316a62), fontSize: 20),
@@ -79,7 +83,7 @@ class _loginState extends State<login> {
                       (int index) {
                         return ChoiceChip(
                           shape: RoundedRectangleBorder(
-                              //모서리를 둥글게
+
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide(
                                   width: 1.5, color: Color(0xff6A6A6A))),
@@ -120,6 +124,7 @@ class _loginState extends State<login> {
                     FocusScope.of(context).unfocus();
                     String id = idController.text.trim();
                     String pw = pwController.text.trim();
+                    final token1 = await FirebaseMessaging.instance.getToken();
 
                     if (id.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -137,10 +142,18 @@ class _loginState extends State<login> {
                             .get();
                         try {
                           if (pw == snap.docs[0]['pw']) {
+                            final tokenReference = FirebaseFirestore.instance
+                                .collection("작업자")
+                                .doc("김00");
+                            tokenReference.update({
+                              "token": '${token1}'
+                            });
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
+
                               return Home_w(name: snap.docs[0]['name']);
                             }));
+
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -164,13 +177,20 @@ class _loginState extends State<login> {
                             content: Text(error),
                           ));
                         }
-                      } else {
+                      }
+                      else {
                         QuerySnapshot snap = await FirebaseFirestore.instance
                             .collection("manager")
                             .where('id', isEqualTo: id)
                             .get();
                         try {
                           if (pw == snap.docs[0]['pw']) {
+                            final tokenReference = FirebaseFirestore.instance
+                                .collection("관리자")
+                                .doc("관리자1");
+                            tokenReference.update({
+                              "token": '${token1}'
+                            });
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return Home_m();
@@ -181,7 +201,7 @@ class _loginState extends State<login> {
                               content: Text("비밀번호가 일치하지 않습니다"),
                             ));
                           }
-                        } catch (e) {
+                        }  catch (e) {
                           String error = " ";
                           if (e.toString() ==
                               "RangeError (index): Invalid value: Valid value range is empty: 0") {
@@ -208,7 +228,7 @@ class _loginState extends State<login> {
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xff316a62),
                     shape: RoundedRectangleBorder(
-                        //모서리를 둥글게
+
                         borderRadius: BorderRadius.circular(20)),
                   )),
             ),
