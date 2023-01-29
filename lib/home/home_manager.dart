@@ -28,7 +28,7 @@ class Home_m extends StatefulWidget {
 DateTime now = DateTime.now();
 DateTime _selectedValue = DateTime.now();
 String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedValue);
-late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];
+late List<dynamic> name = <dynamic>["kim00", "lee00", "park00", "jung00"];
 late List<String> selectedName = <String>[];
 
 class _Home_mState extends State<Home_m> {
@@ -93,7 +93,7 @@ class _Home_mState extends State<Home_m> {
           child: Column(
             children: [
               Text(
-                "관리자님! 오늘 하루도 안전한 하루 되세요 :)",
+                "manager님! 오늘 하루도 안전한 하루 되세요 :)",
                 style: TextStyle(fontSize: 15.5),
               ),
               Container(
@@ -166,7 +166,7 @@ class _Home_mState extends State<Home_m> {
                             stream: FirebaseFirestore.instance
                                 .collection(
                                     // 날짜에 현 날짜 data 넣기
-                                    '관리자/관리자1/calendar/${formattedDate}/공지')
+                                    'manager/manager1/calendar/${formattedDate}/notice')
                                 .snapshots(),
                             builder: (BuildContext,
                                 AsyncSnapshot<
@@ -212,7 +212,7 @@ class _Home_mState extends State<Home_m> {
                             stream: FirebaseFirestore.instance
                                 .collection(
                                     // 날짜에 현 날짜 data 넣기
-                                    '관리자/관리자1/calendar/${formattedDate}/공지')
+                                    'manager/manager1/calendar/${formattedDate}/notice')
                                 .snapshots(),
                             builder: (BuildContext,
                                 AsyncSnapshot<
@@ -290,7 +290,7 @@ class _Home_mState extends State<Home_m> {
                               stream: FirebaseFirestore.instance
                                   .collection(
                                       // 날짜에 현 날짜 data 넣기
-                                      '관리자/관리자1/calendar/${formattedDate}/업무')
+                                      'manager/manager1/calendar/${formattedDate}/task')
                                   .snapshots(),
                               builder: (BuildContext,
                                   AsyncSnapshot<
@@ -406,15 +406,15 @@ class _Home_mState extends State<Home_m> {
                                                                   final managerReference = FirebaseFirestore
                                                                       .instance
                                                                       .collection(
-                                                                          "관리자")
+                                                                          "manager")
                                                                       .doc(
-                                                                          "관리자1")
+                                                                          "manager1")
                                                                       .collection(
                                                                           "calendar")
                                                                       .doc(
                                                                           formattedDate)
                                                                       .collection(
-                                                                          "업무")
+                                                                          "task")
                                                                       .doc(docs[index]
                                                                               [
                                                                               'title']
@@ -425,7 +425,7 @@ class _Home_mState extends State<Home_m> {
                                                                     final workers = FirebaseFirestore
                                                                         .instance
                                                                         .collection(
-                                                                            "작업자")
+                                                                            "worker")
                                                                         .doc(
                                                                             worker)
                                                                         .collection(
@@ -433,7 +433,7 @@ class _Home_mState extends State<Home_m> {
                                                                         .doc(
                                                                             formattedDate)
                                                                         .collection(
-                                                                            "오늘의 할 일")
+                                                                            "today task")
                                                                         .doc(docs?[index]['title']
                                                                             .toString())
                                                                         .delete();

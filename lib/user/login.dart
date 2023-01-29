@@ -14,7 +14,7 @@ class login extends StatefulWidget {
 int? _value = 0;
 
 class _loginState extends State<login> {
-  List<String> role = ["작업자", "관리자"];
+  List<String> role = ["worker", "manager"];
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
 
@@ -32,7 +32,7 @@ class _loginState extends State<login> {
               decoration: InputDecoration(
                 labelText: 'ID',
                 hintText: 'ID 번호를 입력해주세요.',
-                labelStyle: TextStyle(fontSize:20,color: Color(0xff316a62)),
+                labelStyle: TextStyle(fontSize: 20, color: Color(0xff316a62)),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(width: 2.5, color: Color(0xff316a62)),
@@ -53,7 +53,7 @@ class _loginState extends State<login> {
               decoration: InputDecoration(
                 labelText: '비밀번호',
                 hintText: '비밀번호를 입력해주세요.',
-                labelStyle: TextStyle(color: Color(0xff316a62),fontSize: 20),
+                labelStyle: TextStyle(color: Color(0xff316a62), fontSize: 20),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(width: 2.5, color: Color(0xff316a62)),
@@ -76,11 +76,13 @@ class _loginState extends State<login> {
                     spacing: 10.0,
                     children: List<Widget>.generate(
                       2,
-                          (int index) {
+                      (int index) {
                         return ChoiceChip(
-                          shape: RoundedRectangleBorder(	//모서리를 둥글게
+                          shape: RoundedRectangleBorder(
+                              //모서리를 둥글게
                               borderRadius: BorderRadius.circular(20),
-                              side: BorderSide(width: 1.5, color: Color(0xff6A6A6A))),
+                              side: BorderSide(
+                                  width: 1.5, color: Color(0xff6A6A6A))),
                           selectedColor: Color(0xff6A6A6A),
                           backgroundColor: Color(0xffe8c869),
                           selected: _value == index,
@@ -104,11 +106,10 @@ class _loginState extends State<login> {
             Spacer(),
             Spacer(),
             SizedBox(
-
               height: 60,
               width: 250,
               child: ElevatedButton(
-                  onPressed: () async{
+                  onPressed: () async {
 /*
               height: 57,
               width: 277,
@@ -129,17 +130,17 @@ class _loginState extends State<login> {
                         content: Text("비밀번호를 입력해주세요"),
                       ));
                     } else {
-                      if(_value == 0) {
+                      if (_value == 0) {
                         QuerySnapshot snap = await FirebaseFirestore.instance
-                            .collection("작업자")
+                            .collection("worker")
                             .where('id', isEqualTo: id)
                             .get();
                         try {
                           if (pw == snap.docs[0]['pw']) {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return Home_w(name: snap.docs[0]['name']);
-                                }));
+                              return Home_w(name: snap.docs[0]['name']);
+                            }));
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -165,15 +166,15 @@ class _loginState extends State<login> {
                         }
                       } else {
                         QuerySnapshot snap = await FirebaseFirestore.instance
-                            .collection("관리자")
+                            .collection("manager")
                             .where('id', isEqualTo: id)
                             .get();
                         try {
                           if (pw == snap.docs[0]['pw']) {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return Home_m();
-                                }));
+                              return Home_m();
+                            }));
                           } else {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
@@ -197,19 +198,17 @@ class _loginState extends State<login> {
                             content: Text(error),
                           ));
                         }
-
                       }
-
-
                     }
                   },
                   child: Text(
                     "Login",
-                    style: TextStyle(color: Colors.white,fontSize: 18),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xff316a62),
-                    shape: RoundedRectangleBorder(	//모서리를 둥글게
+                    shape: RoundedRectangleBorder(
+                        //모서리를 둥글게
                         borderRadius: BorderRadius.circular(20)),
                   )),
             ),

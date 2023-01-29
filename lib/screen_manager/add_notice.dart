@@ -3,6 +3,9 @@ import '../home/home_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+late List<dynamic> name = <dynamic>["kim00", "lee00", "park00", "jung00"];
+late List<String> selectedName = <String>[];
+
 class AddNotice extends StatelessWidget {
   const AddNotice({Key? key}) : super(key: key);
 
@@ -10,7 +13,7 @@ class AddNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '공지추가(관리자)',
+      title: '공지추가(manager)',
       theme: ThemeData(
         fontFamily: 'BM Hanna Pro',
         primarySwatch: Colors.blue,
@@ -204,13 +207,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   onPressed: () {
                     final managerReference = FirebaseFirestore.instance
-                        .collection("관리자")
-                        .doc("관리자1");
+                        .collection("manager")
+                        .doc("manager1");
                     final calendarReference = managerReference
                         .collection("calendar")
                         .doc(formattedDate.toString());
                     final noticeReference = calendarReference
-                        .collection("공지")
+                        .collection("notice")
                         .doc(inputController1.text);
                     noticeReference.set({
                       "isEmergency":
@@ -219,7 +222,29 @@ class _MyHomePageState extends State<MyHomePage> {
                       "content": inputController2.text,
                       "isComplete": "접수",
                     });
-
+                    for (String worker in name) {
+                      final workerReference = FirebaseFirestore.instance
+                          .collection("worker")
+                          .doc(worker);
+                      final calReference = workerReference
+                          .collection("calendar")
+                          .doc(formattedDate);
+                      final todayNotice = isSwitched1
+                          ? calReference.collection("notice").doc("emergy")
+                          : calReference.collection("notice").doc("normal");
+                      final todayUrgent = isSwitched1
+                          ? todayNotice
+                              .collection("yesEmergy")
+                              .doc(inputController1.text)
+                          : todayNotice
+                              .collection("yesNormal")
+                              .doc(inputController1.text);
+                      todayUrgent.set({
+                        "공지 제목": inputController1.text,
+                        "공지 내용": inputController2.text,
+                        "isComplete": "접수",
+                      });
+                    }
                     //작업자 컬랙션 내 모든 doc에 문서 올리기 지금은 임의로 한명만 보냄
                     // final workerReference = FirebaseFirestore.instance.collection("작업자").doc('김00');
                     // final calReference = workerReference.collection("calendar").doc("2023-01-12");
