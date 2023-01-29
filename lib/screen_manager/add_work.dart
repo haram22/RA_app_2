@@ -199,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     checkColor: Colors.white,
                                                     activeColor: Colors.redAccent,
                                                     value: isCheckedName[index],
-                                                    onChanged: (bool? value){ myState(() {
+                                                    onChanged: (bool? value){  myState(() {
                                                       setState(() {
                                                         isCheckedName[index] =
                                                             value!;
