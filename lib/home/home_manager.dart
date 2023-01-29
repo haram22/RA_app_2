@@ -1,4 +1,3 @@
-// 하람 //
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +28,8 @@ class Home_m extends StatefulWidget {
 DateTime now = DateTime.now();
 DateTime _selectedValue = DateTime.now();
 String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedValue);
+late List<dynamic> name = <dynamic>["김00", "이00", "박00", "정00"];
+late List<String> selectedName = <String>[];
 
 class _Home_mState extends State<Home_m> {
   SingingCharacter? _character = SingingCharacter.ten;
@@ -74,8 +75,8 @@ class _Home_mState extends State<Home_m> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                          return setting_m();
-                        }));
+                      return setting_m();
+                    }));
                   },
                   iconSize: 70,
                   icon: Image.asset('assets/profile.png'),
@@ -164,29 +165,29 @@ class _Home_mState extends State<Home_m> {
                           child: StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection(
-                              // 날짜에 현 날짜 data 넣기
-                                '관리자/관리자1/calendar/${formattedDate}/공지')
+                                    // 날짜에 현 날짜 data 넣기
+                                    '관리자/관리자1/calendar/${formattedDate}/공지')
                                 .snapshots(),
                             builder: (BuildContext,
                                 AsyncSnapshot<
-                                    QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                              if(snapshot.hasData) {
+                                        QuerySnapshot<Map<String, dynamic>>>
+                                    snapshot) {
+                              if (snapshot.hasData) {
                                 final docs = snapshot.data!.docs;
                                 return ListView.builder(
                                   itemBuilder: (context, index) {
                                     return docs[index]['isEmergency']
-                                        .toString() ==
-                                        'true'
+                                                .toString() ==
+                                            'true'
                                         ? ListTile(
-                                      dense: true,
-                                      visualDensity:
-                                      VisualDensity(vertical: -4),
-                                      title: Text(
-                                          "✔️ " + docs[index]['title'],
-                                          style:
-                                          TextStyle(color: Colors.red)),
-                                    )
+                                            dense: true,
+                                            visualDensity:
+                                                VisualDensity(vertical: -4),
+                                            title: Text(
+                                                "✔️ " + docs[index]['title'],
+                                                style: TextStyle(
+                                                    color: Colors.red)),
+                                          )
                                         : Container();
                                     // ListTile(
                                     //   dense: true,
@@ -198,7 +199,8 @@ class _Home_mState extends State<Home_m> {
                                   },
                                   itemCount: docs.length,
                                 );
-                              } else return Text('');
+                              } else
+                                return Text('');
                             },
                           ),
                         ),
@@ -209,28 +211,28 @@ class _Home_mState extends State<Home_m> {
                           child: StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection(
-                              // 날짜에 현 날짜 data 넣기
-                                '관리자/관리자1/calendar/${formattedDate}/공지')
+                                    // 날짜에 현 날짜 data 넣기
+                                    '관리자/관리자1/calendar/${formattedDate}/공지')
                                 .snapshots(),
                             builder: (BuildContext,
                                 AsyncSnapshot<
-                                    QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                              if(snapshot.hasData) {
+                                        QuerySnapshot<Map<String, dynamic>>>
+                                    snapshot) {
+                              if (snapshot.hasData) {
                                 final docs = snapshot.data!.docs;
                                 return ListView.builder(
                                   itemBuilder: (context, index) {
                                     return docs[index]['isEmergency']
-                                        .toString() ==
-                                        'false'
+                                                .toString() ==
+                                            'false'
                                         ? ListTile(
-                                      dense: true,
-                                      visualDensity:
-                                      VisualDensity(vertical: -4),
-                                      title: Text(
-                                        "✔️ " + docs[index]['content'],
-                                      ),
-                                    )
+                                            dense: true,
+                                            visualDensity:
+                                                VisualDensity(vertical: -4),
+                                            title: Text(
+                                              "✔️ " + docs[index]['content'],
+                                            ),
+                                          )
                                         : Container();
                                     // ListTile(
                                     //   dense: true,
@@ -242,7 +244,8 @@ class _Home_mState extends State<Home_m> {
                                   },
                                   itemCount: docs.length,
                                 );
-                              } else return Text('');
+                              } else
+                                return Text('');
                             },
                           ),
                         ),
@@ -286,21 +289,21 @@ class _Home_mState extends State<Home_m> {
                             child: StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection(
-                                // 날짜에 현 날짜 data 넣기
-                                  '관리자/관리자1/calendar/${formattedDate}/업무')
+                                      // 날짜에 현 날짜 data 넣기
+                                      '관리자/관리자1/calendar/${formattedDate}/업무')
                                   .snapshots(),
                               builder: (BuildContext,
                                   AsyncSnapshot<
-                                      QuerySnapshot<Map<String, dynamic>>>
-                                  snapshot) {
-                                if(snapshot.hasData) {
+                                          QuerySnapshot<Map<String, dynamic>>>
+                                      snapshot) {
+                                if (snapshot.hasData) {
                                   final docs = snapshot.data!.docs;
                                   return ListView.builder(
                                     itemBuilder: (context, index) {
                                       return ListTile(
                                         dense: true,
                                         visualDensity:
-                                        VisualDensity(vertical: -3),
+                                            VisualDensity(vertical: -3),
                                         onTap: () {
                                           Navigator.push(
                                               context,
@@ -308,19 +311,20 @@ class _Home_mState extends State<Home_m> {
                                                   builder: (context) =>
                                                       detailPage(
                                                           title: docs[index]
-                                                          ['title'],
+                                                              ['title'],
                                                           contents: docs[index]
-                                                          ['content'],
+                                                              ['content'],
                                                           hour: docs[index]
-                                                          ['hour']
+                                                                  ['hour']
                                                               .toString(),
-                                                          min: docs[index]['min']
+                                                          min: docs[index]
+                                                                  ['min']
                                                               .toString(),
                                                           worker: docs[index]
-                                                          ['worker']
+                                                                  ['worker']
                                                               .toString(),
                                                           enrollTime:
-                                                          formattedDate)));
+                                                              formattedDate)));
                                         },
                                         title: Text(docs[index]['title']),
                                         subtitle: Text(
@@ -333,77 +337,119 @@ class _Home_mState extends State<Home_m> {
                                               enableDrag: true,
                                               isScrollControlled: true,
                                               shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius
-                                                      .only(
-                                                      topLeft:
-                                                      Radius.circular(30.0),
-                                                      topRight:
-                                                      Radius.circular(30.0))),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  30.0),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  30.0))),
                                               context: context,
                                               builder: (context) {
                                                 return StatefulBuilder(builder:
                                                     (context,
-                                                    StateSetter setState) {
+                                                        StateSetter setState) {
                                                   return Container(
-                                                    height: 300,
-                                                    padding: EdgeInsets
-                                                        .fromLTRB(
-                                                        0, 20, 0, 0),
+                                                    height: 170,
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 20, 0, 0),
                                                     child: Column(
                                                       children: <Widget>[
-                                                        RadioListTile(
-                                                            title: Text(
-                                                                "10분 전에 알리기"),
-                                                            value:
-                                                            SingingCharacter
-                                                                .ten,
-                                                            groupValue:
-                                                            _character,
-                                                            onChanged: (value) {
-                                                              _character =
-                                                                  value;
-                                                            }),
-                                                        RadioListTile(
-                                                            title: Text(
-                                                                "15분 전에 알리기"),
-                                                            value:
-                                                            SingingCharacter
-                                                                .fifteen,
-                                                            groupValue:
-                                                            _character,
-                                                            onChanged: (value) {
-                                                              _character =
-                                                                  value;
-                                                            }),
-                                                        RadioListTile(
-                                                            title: Text(
-                                                                "20분 전에 알리기"),
-                                                            value:
-                                                            SingingCharacter
-                                                                .twenty,
-                                                            groupValue:
-                                                            _character,
-                                                            onChanged: (value) {
-                                                              _character =
-                                                                  value;
-                                                            }),
-                                                        RadioListTile(
-                                                            title: Text("없음"),
-                                                            value:
-                                                            SingingCharacter
-                                                                .none,
-                                                            groupValue:
-                                                            _character,
-                                                            onChanged: (value) {
-                                                              _character =
-                                                                  value;
-                                                            }),
-                                                        OutlinedButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Text("저장"),
+                                                        SizedBox(
+                                                          height: 30,
+                                                        ),
+                                                        Text(
+                                                          "해당 업무를 삭제하시겠습니까?",
+                                                          style: TextStyle(
+                                                              fontSize: 20),
+                                                        ),
+                                                        SizedBox(height: 20),
+                                                        Row(
+                                                          children: [
+                                                            SizedBox(width: 30),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left:
+                                                                          30.0),
+                                                              child:
+                                                                  OutlinedButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Text(
+                                                                  "취소",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .grey),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Spacer(),
+                                                            // SizedBox(
+                                                            //     width: 100),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      right:
+                                                                          30.0),
+                                                              child:
+                                                                  OutlinedButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  final managerReference = FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          "관리자")
+                                                                      .doc(
+                                                                          "관리자1")
+                                                                      .collection(
+                                                                          "calendar")
+                                                                      .doc(
+                                                                          formattedDate)
+                                                                      .collection(
+                                                                          "업무")
+                                                                      .doc(docs[index]
+                                                                              [
+                                                                              'title']
+                                                                          .toString())
+                                                                      .delete();
+                                                                  for (String worker
+                                                                      in name) {
+                                                                    final workers = FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            "작업자")
+                                                                        .doc(
+                                                                            worker)
+                                                                        .collection(
+                                                                            "calendar")
+                                                                        .doc(
+                                                                            formattedDate)
+                                                                        .collection(
+                                                                            "오늘의 할 일")
+                                                                        .doc(docs?[index]['title']
+                                                                            .toString())
+                                                                        .delete();
+                                                                  }
+                                                                },
+                                                                child: Text(
+                                                                  "삭제",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                              .red[
+                                                                          700]),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 30)
+                                                          ],
                                                         )
                                                       ],
                                                     ),
@@ -415,8 +461,8 @@ class _Home_mState extends State<Home_m> {
                                           icon: Icon(Icons.more_horiz_rounded),
                                         ),
                                         leading: Checkbox(
-                                          // fillColor: Colors.yellow,
-                                          // value: _isChecked1,
+                                            // fillColor: Colors.yellow,
+                                            // value: _isChecked1,
                                             value: _isCheck[index],
                                             onChanged: (bool? value) {
                                               setState(() {
@@ -427,7 +473,8 @@ class _Home_mState extends State<Home_m> {
                                     },
                                     itemCount: docs.length,
                                   );
-                                } else return Text('');
+                                } else
+                                  return Text('');
                               },
                             ),
                           ),
