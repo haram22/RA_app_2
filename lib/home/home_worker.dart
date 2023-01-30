@@ -35,13 +35,13 @@ class _Home_wState extends State<Home_w> {
   List todos = [];
   String input = "";
 
-  getData() async {
-    var result = await FirebaseFirestore.instance
-        .collection('manager')
-        .doc('manager2')
-        .get();
-    print(result);
-  }
+  // getData() async {
+  //   var result = await FirebaseFirestore.instance
+  //       .collection('manager')
+  //       .doc('manager2')
+  //       .get();
+  //   print(result);
+  // }
 
   @override
   void initState() {
@@ -323,8 +323,11 @@ class _Home_wState extends State<Home_w> {
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
-                                                    return StatefulBuilder(builder:
-                                                        (BuildContext context, StateSetter myState) {
+                                                    return StatefulBuilder(
+                                                        builder: (BuildContext
+                                                                context,
+                                                            StateSetter
+                                                                myState) {
                                                       return Container(
                                                         height: 350,
                                                         padding:
@@ -348,8 +351,14 @@ class _Home_wState extends State<Home_w> {
                                                                         .ten,
                                                                 groupValue:
                                                                     _character,
-                                                                onChanged: (value) {
-                                                                  myState(() { setState(() { _character = value;});
+                                                                onChanged:
+                                                                    (value) {
+                                                                  myState(() {
+                                                                    setState(
+                                                                        () {
+                                                                      _character =
+                                                                          value;
+                                                                    });
                                                                   });
                                                                   print("10");
                                                                   print(
@@ -499,7 +508,13 @@ class _Home_wState extends State<Home_w> {
                                             ),
                                             leading: Icon(
                                               Icons.check_box_outlined,
-                                              color: Colors.grey,
+                                              color:
+                                                  // docs[index]['isComplete']
+                                                  //             .toString() ==
+                                                  //         "완료"
+                                                  //     ? Color(0xffe8c869)
+                                                  // :
+                                                  Colors.grey,
                                             ),
                                             title: Text(docs[index]['title']),
                                             subtitle: Text(
