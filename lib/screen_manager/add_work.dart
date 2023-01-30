@@ -533,6 +533,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       "hour": hour,
                       "min": min,
                       "isComplete": "접수",
+                      "isChecked": false,
                     });
 
                     for (String worker in selectedName) {

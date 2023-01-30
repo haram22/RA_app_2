@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 import '../screen_manager/check_detail.dart';
-import '../screen_manager/work_detail.dart';
+import '../screen_manager/work_detail_worker.dart';
 import '../screen_worker/setting_w.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
+late List<String> peer = [];
 class Home_w extends StatefulWidget {
   final String name;
   const Home_w({super.key, required this.name});
@@ -289,6 +290,11 @@ class _Home_wState extends State<Home_w> {
                                             visualDensity:
                                                 VisualDensity(vertical: -3),
                                             onTap: () {
+                                              for(int i=0; i<docs[index]['worker'].length; i++) {
+                                                if(!peer.contains(docs[index]['worker'][i])) {
+                                                  peer.add(docs[index]['worker'][i]);
+                                                }
+                                              }
                                               Navigator.push(context,
                                                   MaterialPageRoute(
                                                       builder: (context) {
@@ -303,7 +309,8 @@ class _Home_wState extends State<Home_w> {
                                                       .toString(),
                                                   worker: docs[index]['worker']
                                                       .toString(),
-                                                  isComplete: docs[index]['isComplete'].compareTo('완료')==0,
+                                                  isComplete: docs[index]['isComplete'],
+                                                  peer: peer,
                                                 );
                                               }));
                                             },

@@ -26,7 +26,7 @@ class detailPage extends StatefulWidget {
   final String hour;
   final String min;
   final String worker;
-  final bool isComplete;
+  final String isComplete;
   // final String name;
   @override
   State<detailPage> createState() => _detailPageState();
@@ -37,7 +37,7 @@ class detailPage extends StatefulWidget {
 // late bool selected3 = false;
 
 class _detailPageState extends State<detailPage> {
-  late int selected = widget.isComplete ? 3 : 2;
+  late int selected = widget.isComplete.compareTo("접수") == 0 ? 1 : widget.isComplete.compareTo("진행 중") == 0 ? 2 : 3;
   late bool selected1 = false;
   late bool selected2 = true;
   late bool selected3 = false;
@@ -62,13 +62,6 @@ class _detailPageState extends State<detailPage> {
                 ElevatedButton(
                   child: const Text('접수'),
                   onPressed: () {
-                    setState(() {
-                      selected = 1;
-                      // selected1 = true;
-                      // selected2 = false;
-                      // selected3 = false;
-                      print("접수 ${selected}");
-                    });
                   },
                   style: ElevatedButton.styleFrom(
                     primary: selected == 1 ? Colors.amber : Color(0xffdddd),
@@ -78,11 +71,6 @@ class _detailPageState extends State<detailPage> {
                 ElevatedButton(
                   child: const Text('진행 중'),
                   onPressed: () {
-                    selected = 2;
-                    // selected2 = true;
-                    // selected1 = false;
-                    // selected3 = false;
-                    print("진행 중 ${selected}");
                   },
                   style: ElevatedButton.styleFrom(
                     primary: selected == 2 ? Colors.amber : Color(0xffdddd),
@@ -92,11 +80,6 @@ class _detailPageState extends State<detailPage> {
                 ElevatedButton(
                   child: const Text('완료'),
                   onPressed: () {
-                    selected = 3;
-                    // selected3 = true;
-                    // selected2 = false;
-                    // selected1 = false;
-                    print("완료 ${selected}");
                   },
                   style: ElevatedButton.styleFrom(
                     primary: selected == 3 ? Colors.amber : Color(0xffdddd),
@@ -167,23 +150,6 @@ class _detailPageState extends State<detailPage> {
               ),
               onPressed: () {
                 Navigator.pop(context);
-                final managerReference = FirebaseFirestore.instance
-                    .collection("manager")
-                    .doc("manager1");
-                final calendarReference = managerReference
-                    .collection("calendar")
-                    .doc(formattedDate.toString());
-                final MworkReference =
-                    calendarReference.collection("task").doc(widget.title);
-                MworkReference.update({
-                  "isComplete": selected == 1
-                      ? "접수"
-                      : selected == 2
-                          ? "진행 중"
-                          : selected == 3
-                              ? "완료"
-                              : "null",
-                });
               },
             ),
           ),

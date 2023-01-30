@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
   void initState() {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage rm) async {
-      message.value = rm;
+      // message.value = rm;
       RemoteNotification? notification = rm.notification;
       AndroidNotification? android = rm.notification?.android;
 

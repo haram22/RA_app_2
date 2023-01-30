@@ -324,7 +324,7 @@ class _Home_mState extends State<Home_m> {
                                                                   ['worker']
                                                               .toString(),
                                                           enrollTime:
-                                                              formattedDate, isComplete: docs[index]['isComplete'].compareTo('완료')==0,)));
+                                                              formattedDate, isComplete: docs[index]['isComplete'],)));
                                         },
                                         title: Text(docs[index]['title']),
                                         subtitle: Text(
@@ -463,7 +463,7 @@ class _Home_mState extends State<Home_m> {
                                         leading: Checkbox(
                                             // fillColor: Colors.yellow,
                                             // value: _isChecked1,
-                                            value: _isCheck[index],
+                                            value: docs[index]['isChecked'] ? true : false,
                                             onChanged: (bool? value) {
                                               setState(() {
                                                 _isCheck[index] = value!;
@@ -478,7 +478,8 @@ class _Home_mState extends State<Home_m> {
                                                 final MworkReference =
                                                 calendarReference.collection("task").doc(docs[index]['title']);
                                                 MworkReference.update({
-                                                  "isComplete": '완료'
+                                                  "isComplete": '완료',
+                                                  "isChecked": true,
                                                 });
                                                 for(String worker in docs[index]['worker']) {
                                                   final workerReference = FirebaseFirestore.instance
