@@ -160,7 +160,7 @@ class _Home_mState extends State<Home_m> {
                         ),
                         SizedBox(height: 10),
                         Container(
-                          height: 30,
+                          height: 50,
                           // width: 0,
                           child: StreamBuilder(
                             stream: FirebaseFirestore.instance

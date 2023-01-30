@@ -15,39 +15,35 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
+  final Rxn<RemoteMessage> message = Rxn<RemoteMessage>();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  channel = const AndroidNotificationChannel(
+  const channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
     description:
         'This channel is used for important notifications.', // description
-    importance: Importance.high,
+    importance: Importance.max,
   );
 
   var initialzationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
+
   var initializationSettings =
       InitializationSettings(android: initialzationSettingsAndroid);
 
   await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
-  );
-
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
   );
 
   runApp(const MyApp());
@@ -62,22 +58,35 @@ class MyApp extends StatelessWidget {
 
   @override
   void initState() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage rm) async {
+      message.value = rm;
+      RemoteNotification? notification = rm.notification;
+      AndroidNotification? android = rm.notification?.android;
+
       var androidNotiDetails = AndroidNotificationDetails(
         channel.id,
         channel.name,
         channelDescription: channel.description,
       );
+
       //var iOSNotiDetails = const IOSNotificationDetails();
       var details = NotificationDetails(android: androidNotiDetails);
-      if (notification != null) {
+      if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
+          0,
+          //notification.hashCode,
           notification.title,
           notification.body,
-          details,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              'high_importance_channel', // AndroidNotificationChannel()에서 생성한 ID
+              'High Importance Notifications',
+                channelDescription:
+                'This channel is used for important notifications.'
+              // other properties...
+            ),
+          ),
         );
       }
     });
