@@ -16,6 +16,7 @@ class detailPage extends StatefulWidget {
     required this.hour,
     required this.min,
     required this.worker,
+    required this.isComplete,
     // required this.name
   });
 
@@ -25,6 +26,7 @@ class detailPage extends StatefulWidget {
   final String hour;
   final String min;
   final String worker;
+  final bool isComplete;
   // final String name;
   @override
   State<detailPage> createState() => _detailPageState();
@@ -33,9 +35,9 @@ class detailPage extends StatefulWidget {
 // late bool selected1 = false;
 // late bool selected2 = true;
 // late bool selected3 = false;
-late int selected = 2;
 
 class _detailPageState extends State<detailPage> {
+  late int selected = widget.isComplete ? 3 : 2;
   late bool selected1 = false;
   late bool selected2 = true;
   late bool selected3 = false;

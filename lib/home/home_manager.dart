@@ -324,7 +324,7 @@ class _Home_mState extends State<Home_m> {
                                                                   ['worker']
                                                               .toString(),
                                                           enrollTime:
-                                                              formattedDate)));
+                                                              formattedDate, isComplete: docs[index]['isComplete'].compareTo('완료')==0,)));
                                         },
                                         title: Text(docs[index]['title']),
                                         subtitle: Text(
@@ -468,7 +468,32 @@ class _Home_mState extends State<Home_m> {
                                               setState(() {
                                                 _isCheck[index] = value!;
                                               });
-                                            }),
+                                              if(_isCheck[index]) {
+                                                final managerReference = FirebaseFirestore.instance
+                                                    .collection("manager")
+                                                    .doc("manager1");
+                                                final calendarReference = managerReference
+                                                    .collection("calendar")
+                                                    .doc(formattedDate.toString());
+                                                final MworkReference =
+                                                calendarReference.collection("task").doc(docs[index]['title']);
+                                                MworkReference.update({
+                                                  "isComplete": '완료'
+                                                });
+                                                for(String worker in docs[index]['worker']) {
+                                                  final workerReference = FirebaseFirestore.instance
+                                                      .collection("worker")
+                                                      .doc(worker);
+                                                  final calendarReference = workerReference
+                                                      .collection("calendar")
+                                                      .doc(formattedDate.toString());
+                                                  final WworkReference =
+                                                  calendarReference.collection("today task").doc(docs[index]['title']);
+                                                  WworkReference.update({
+                                                    "isComplete": '완료',
+                                                  });
+                                                }
+                                            }}),
                                       );
                                     },
                                     itemCount: docs.length,

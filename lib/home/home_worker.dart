@@ -303,6 +303,7 @@ class _Home_wState extends State<Home_w> {
                                                       .toString(),
                                                   worker: docs[index]['worker']
                                                       .toString(),
+                                                  isComplete: docs[index]['isComplete'].compareTo('완료')==0,
                                                 );
                                               }));
                                             },
@@ -514,7 +515,7 @@ class _Home_wState extends State<Home_w> {
                                                   //         "완료"
                                                   //     ? Color(0xffe8c869)
                                                   // :
-                                                  Colors.grey,
+                                                  docs[index]['isComplete'].compareTo('완료')==0 ? Colors.amber : Colors.grey,
                                             ),
                                             title: Text(docs[index]['title']),
                                             subtitle: Text(

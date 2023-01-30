@@ -551,6 +551,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         "hour": hour,
                         "min": min,
                         "worker": FieldValue.arrayUnion(selectedName),
+                        'isComplete': "접수",
                       });
                       workReference.update({
                         worker: {
